@@ -10,13 +10,5 @@ namespace AutoPlan
     internal class MainPath:Path
     {
         
-        public double FilletRadi { get; set; }
-
-        public MainPath(double width, Curve midCurve, double filletRadi)
-        {
-            base.Width = width;
-            base.MidCurve = midCurve;
-            FilletRadi = filletRadi;
-        }
     }
 }

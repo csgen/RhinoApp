@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace AutoPlan
 {
-    internal class OuterPath
+    internal class OuterPath:Path
     {
-        public double Width { get; set; }
-        public Curve MidCurve { get; set; }
-        public double FilletRadi { get; set; }
+        
     }
 }

@@ -11,5 +11,7 @@ namespace AutoPlan
     {
         public Curve MidCurve { get; set; }
         public double Width { get; set; }
+        public double FilletRadi { get; set; }
+        
     }
 }

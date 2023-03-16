@@ -65,25 +65,68 @@ namespace AutoPlan
 
             //Point3d pt0;
             //Curve curve1;
-            List<Curve> localcurve = new List<Curve>();
+            //List<Curve> localcurve = new List<Curve>();
             RhinoApp.WriteLine("Start");
-            using (GetObject gcurve = new GetObject())
+            List<Point3d> inputPoints = new List<Point3d>();
+            
+            using (GetPoint GPT = new GetPoint())
             {
-                gcurve.SetCommandPrompt("Select");
-                gcurve.GeometryFilter = ObjectType.Curve;
-                gcurve.Get();
-                for (int i = 0; i < gcurve.ObjectCount; i++)
+                while (true)
                 {
-                    localcurve.Add(gcurve.Object(i).Curve());
+                    GPT.SetCommandPrompt("选点");
+                    //GPT.GeometryFilter = ObjectType.Point;
+                    //GPT.GetMultiple(1, 0);
+                    //GPT.DynamicDraw+=(sender,e)=>e.Display.DrawPoint()
+                    GPT.AcceptNothing(true);
+                    GPT.Get();
+                    if (GPT.CommandResult() != Result.Success)
+                        break;
+                    inputPoints.Add(GPT.Point());
                 }
             }
-            foreach(Curve curve in localcurve)
+            List<Building> buildings = new List<Building>();
+            using(GetObject getCurve = new GetObject())
             {
-                foreach (Brep pipe in Brep.CreatePipe(curve, 5, true, PipeCapMode.None, true, 0.01, 0.01))
+                getCurve.SetCommandPrompt("选楼");
+                getCurve.GeometryFilter = ObjectType.Curve;
+                getCurve.GetMultiple(1, 0);
+                for(int i = 0; i < getCurve.ObjectCount; i++)
                 {
-                    doc.Objects.AddBrep(pipe);
+                    getCurve.Object(i).Curve().TryGetPolyline(out Polyline polyline);
+                    Rectangle3d buildingCrv = Rectangle3d.CreateFromPolyline(polyline);
+                    buildings.Add(new Building(buildingCrv, 3));
                 }
             }
+            List<Path> paths = new List<Path>();
+            using (GetObject getCurve = new GetObject())
+            {
+                getCurve.SetCommandPrompt("选主路");
+                getCurve.GeometryFilter = ObjectType.Curve;
+                getCurve.GetMultiple(1, 0);
+                for (int i = 0; i < getCurve.ObjectCount; i++)
+                {
+                    Curve midCurve = getCurve.Object(i).Curve();
+                    Path mainPath = new Path();
+                    mainPath.MidCurve = midCurve;
+                    mainPath.Width = 3;
+                    paths.Add(mainPath);
+                    
+                }
+            }
+            PlaneObjectManager planeObjectM = new PlaneObjectManager();
+            planeObjectM.Buildings = buildings;
+            planeObjectM.Paths = paths;
+            P2P_Path p1 = new P2P_Path(inputPoints, planeObjectM);
+
+            doc.Objects.AddCurve(p1.MidCurve);
+            RhinoApp.WriteLine(inputPoints.Count.ToString());
+            //foreach(Curve curve in localcurve)
+            //{
+            //    foreach (Brep pipe in Brep.CreatePipe(curve, 5, true, PipeCapMode.None, true, 0.01, 0.01))
+            //    {
+            //        doc.Objects.AddBrep(pipe);
+            //    }
+            //}
             
             doc.Views.Redraw();
 

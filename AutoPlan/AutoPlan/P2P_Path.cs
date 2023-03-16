@@ -9,28 +9,25 @@ using System.Threading.Tasks;
 
 namespace AutoPlan
 {
-    internal class P2P_Path
+    internal class P2P_Path:Path
     {
-        public double Width { get; set; }
-        public Curve MidCurve { get; set; }
-        public double FilletRadi { get; set; }
+        //public double Width { get; set; }
+        //public Curve MidCurve { get; set; }
+        //public double FilletRadi { get; set; }
         public Point3d StartPoint { get; set; }
         public Point3d EndPoint { get; set; }
         public Building BaseBuilding { get; set; }
         public MainPath BaseMainPath { get; set; }
-        public P2P_Path(double width, Curve midCurve, double filletRadi, Point3d point1, Point3d point2, List<Building> buildings)
+        
+        public P2P_Path(List<Point3d> points, PlaneObjectManager planeObject)
         {
-            Width = width;
-            MidCurve = midCurve;
-            FilletRadi = filletRadi;
-            List<Point3d> ptList = new List<Point3d>() { point1, point2 };
-            StartPoint = PairPoint(ptList, buildings)[0];
-            EndPoint = PairPoint(ptList, buildings)[1];
-
-
+            StartPoint = PairPoint(points, planeObject.Buildings)[0];
+            EndPoint = PairPoint(points, planeObject.Buildings)[1];
+            MidCurve = CreatePath(planeObject.Buildings, planeObject.Paths);
+            
         }
 
-        public Curve CreatePath(List<Building> buildings, List<Path> paths, List<Point3d> points)
+        public Curve CreatePath(List<Building> buildings, List<Path> paths)//画出完整路径，包括起点针对楼栋和道路各自的偏移
         {
             
             Point3d secondPoint = Get2ndPoint(buildings);
@@ -45,9 +42,12 @@ namespace AutoPlan
             }
             PathSolver pathS = new PathSolver(secondPoint, secondLastPoint, obstacles, 5, true);
             Polyline pathCreate = pathS.PathRhinoSolver();
-
-
-            return new Line(Point3d.Origin, Vector3d.XAxis, 1).ToNurbsCurve();
+            List<Point3d> ptList = GetDiscontinuityPoints(pathCreate.ToNurbsCurve());
+            ptList.Insert(0, StartPoint);
+            ptList.Add(EndPoint);
+            Polyline path = new Polyline(ptList);
+            return path.ToNurbsCurve();
+            
         }
         public Curve PaddingBox(Rectangle3d inputCrv, double padding)
         {

@@ -45,6 +45,7 @@ namespace AutoPlan
                 Point3d point = gridCreation.Grids[path[i].x, path[i].y].Center;
                 pathPt.Add(point);
             }
+            pathPt.Reverse();
             return (PathCreate(pathPt));
         }
         public Polyline PathCreate(List<Point3d> ptList)

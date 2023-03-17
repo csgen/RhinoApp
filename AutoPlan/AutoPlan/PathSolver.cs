@@ -22,7 +22,7 @@ namespace AutoPlan
             this.resolution = resolution;
             this.isOrtho = isOrtho;
         }
-        public Polyline PathRhinoSolver()
+        public List<Point3d> PathRhinoSolver()
         {
             GridCreation gridCreation = new GridCreation(startPoint, endPoint, resolution, obstacles);
             PathFind pf = new PathFind();
@@ -48,12 +48,12 @@ namespace AutoPlan
             pathPt.Reverse();
             return (PathCreate(pathPt));
         }
-        public Polyline PathCreate(List<Point3d> ptList)
+        public List<Point3d> PathCreate(List<Point3d> ptList)
         {
-            ptList.Insert(0, endPoint);
-            ptList.Add(startPoint);
-            Polyline path = new Polyline(ptList);
-            return path;
+            ptList.Insert(0, startPoint);
+            ptList.Add(endPoint);
+            //Polyline path = new Polyline(ptList);
+            return ptList;
         }
     }
 }

@@ -40,9 +40,10 @@ namespace AutoPlan
                 Curve obstacle = PaddingBox(building.BuildingCurve, building.AvoidDistance);
                 obstacles.Add(obstacle);
             }
-            PathSolver pathS = new PathSolver(secondPoint, secondLastPoint, obstacles, 5, true);
-            Polyline pathCreate = pathS.PathRhinoSolver();
-            List<Point3d> ptList = GetDiscontinuityPoints(pathCreate.ToNurbsCurve());
+            PathSolver pathS = new PathSolver(secondPoint, secondLastPoint, obstacles, 25, true);
+            //Polyline pathCreate = pathS.PathRhinoSolver();
+            //List<Point3d> ptList = GetDiscontinuityPoints(pathCreate.ToNurbsCurve());
+            List<Point3d> ptList = pathS.PathRhinoSolver();
             ptList.Insert(0, StartPoint);
             ptList.Add(EndPoint);
             Polyline path = new Polyline(ptList);

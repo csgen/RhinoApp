@@ -6,6 +6,7 @@ using Rhino.Input;
 using Rhino.Input.Custom;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace AutoPlan
 {
@@ -67,59 +68,106 @@ namespace AutoPlan
             //Curve curve1;
             //List<Curve> localcurve = new List<Curve>();
             RhinoApp.WriteLine("Start");
-            List<Point3d> inputPoints = new List<Point3d>();
             
-            using (GetPoint GPT = new GetPoint())
+            List<Path> paths = new List<Path>();
+            using (GetObject getPath = new GetObject())
             {
-                while (true)
+                getPath.SetCommandPrompt("选主路");
+                getPath.GeometryFilter = ObjectType.Curve;
+                getPath.GetMultiple(1, 0);
+                for (int i = 0; i < getPath.ObjectCount; i++)
                 {
-                    GPT.SetCommandPrompt("选点");
-                    //GPT.GeometryFilter = ObjectType.Point;
-                    //GPT.GetMultiple(1, 0);
-                    //GPT.DynamicDraw+=(sender,e)=>e.Display.DrawPoint()
-                    GPT.AcceptNothing(true);
-                    GPT.Get();
-                    if (GPT.CommandResult() != Result.Success)
-                        break;
-                    inputPoints.Add(GPT.Point());
+                    Curve midCurve = getPath.Object(i).Curve();
+                    Path mainPath = new Path();
+                    mainPath.MidCurve = midCurve;
+                    mainPath.Width = 3;
+                    paths.Add(mainPath);
                 }
             }
+            //GetObject getPath = new GetObject();
+            //getPath.SetCommandPrompt("选主路");
+            //getPath.GeometryFilter = ObjectType.Curve;
+            //getPath.GetMultiple(1, 0);
+            //for (int i = 0; i < getPath.ObjectCount; i++)
+            //{
+            //    Curve midCurve = getPath.Object(i).Curve();
+            //    Path mainPath = new Path();
+            //    mainPath.MidCurve = midCurve;
+            //    mainPath.Width = 3;
+            //    paths.Add(mainPath);
+            //}
+
             List<Building> buildings = new List<Building>();
-            using(GetObject getCurve = new GetObject())
+            using (GetObject getCurve = new GetObject())
             {
+                getCurve.EnablePreSelect(false, true);
                 getCurve.SetCommandPrompt("选楼");
                 getCurve.GeometryFilter = ObjectType.Curve;
                 getCurve.GetMultiple(1, 0);
-                for(int i = 0; i < getCurve.ObjectCount; i++)
+                
+                for (int i = 0; i < getCurve.ObjectCount; i++)
                 {
                     getCurve.Object(i).Curve().TryGetPolyline(out Polyline polyline);
                     Rectangle3d buildingCrv = Rectangle3d.CreateFromPolyline(polyline);
                     buildings.Add(new Building(buildingCrv, 3));
                 }
             }
-            List<Path> paths = new List<Path>();
-            using (GetObject getCurve = new GetObject())
-            {
-                getCurve.SetCommandPrompt("选主路");
-                getCurve.GeometryFilter = ObjectType.Curve;
-                getCurve.GetMultiple(1, 0);
-                for (int i = 0; i < getCurve.ObjectCount; i++)
-                {
-                    Curve midCurve = getCurve.Object(i).Curve();
-                    Path mainPath = new Path();
-                    mainPath.MidCurve = midCurve;
-                    mainPath.Width = 3;
-                    paths.Add(mainPath);
-                    
-                }
-            }
+
+
             PlaneObjectManager planeObjectM = new PlaneObjectManager();
             planeObjectM.Buildings = buildings;
             planeObjectM.Paths = paths;
-            P2P_Path p1 = new P2P_Path(inputPoints, planeObjectM);
-
+            //List<Point3d> inputPoints = new List<Point3d>();
+            //using (GetPoint GPT = new GetPoint())
+            //{
+            //    while (true)
+            //    {
+            //        GPT.SetCommandPrompt("第一个点");
+            //        GPT.AcceptNothing(true);
+            //        GPT.Get();
+            //        if (GPT.CommandResult() != Result.Success)
+            //            break;
+            //        inputPoints.Add(GPT.Point());
+            //    }
+            //}
+            Point3d pt0;
+            using (GetPoint GPT = new GetPoint())
+            {
+                GPT.SetCommandPrompt("第一个点");
+                if (GPT.Get() != GetResult.Point)
+                {
+                    RhinoApp.WriteLine("No start point was selected.");
+                    return GPT.CommandResult();
+                }
+                pt0 = GPT.Point();
+            }
+            Point3d pt1;
+            using (GetPoint GPT = new GetPoint())
+            {
+                GPT.SetCommandPrompt("第二个点");
+                GPT.SetBasePoint(pt0, true);
+                GPT.DynamicDraw +=
+                    (sender, e) => e.Display.DrawCurve(new P2P_Path(new List<Point3d> { pt0, e.CurrentPoint }, planeObjectM).MidCurve, System.Drawing.Color.DarkRed);
+                if (GPT.Get() != GetResult.Point)
+                {
+                    RhinoApp.WriteLine("No end point was selected.");
+                    return GPT.CommandResult();
+                }
+                pt1 = GPT.Point();
+            }
+            P2P_Path p1 = new P2P_Path(new List<Point3d> { pt0, pt1 }, planeObjectM);
             doc.Objects.AddCurve(p1.MidCurve);
-            RhinoApp.WriteLine(inputPoints.Count.ToString());
+            //if (paths.Count > 0)
+            //{
+            //    PlaneObjectManager planeObjectM = new PlaneObjectManager();
+            //    planeObjectM.Buildings = buildings;
+            //    planeObjectM.Paths = paths;
+            //    P2P_Path p1 = new P2P_Path(inputPoints, planeObjectM);
+
+            //    doc.Objects.AddCurve(p1.MidCurve);
+            //}
+
+            RhinoApp.WriteLine(paths.Count.ToString());
             //foreach(Curve curve in localcurve)
             //{
             //    foreach (Brep pipe in Brep.CreatePipe(curve, 5, true, PipeCapMode.None, true, 0.01, 0.01))

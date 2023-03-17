@@ -25,6 +25,34 @@ namespace AutoPlan
         public List<Point3d> PathRhinoSolver()
         {
             GridCreation gridCreation = new GridCreation(startPoint, endPoint, resolution, obstacles);
+            List<Fgh> pathGrid = FindInRhino(gridCreation);
+            //while (pathGrid.Count == 0)//用于保证能找到路径，但是会大量减慢速度，待研究
+            //{
+            //    resolution += 5;
+            //    gridCreation = new GridCreation(startPoint, endPoint, resolution, obstacles);
+            //    pathGrid = FindInRhino(gridCreation);
+            //}
+            List<Point3d> pathPt = new List<Point3d>();
+            for (int i = 0; i < pathGrid.Count; i++)
+            {
+                Point3d point = gridCreation.Grids[pathGrid[i].x, pathGrid[i].y].Center;
+                pathPt.Add(point);
+            }
+            pathPt.Reverse();
+            //return (PathCreate(pathPt));
+            
+            return pathPt;
+        }
+        public List<Point3d> PathCreate(List<Point3d> ptList)
+        {
+            ptList.Insert(0, startPoint);
+            ptList.Add(endPoint);
+            //Polyline path = new Polyline(ptList);
+            return ptList;
+        }
+        private List<Fgh> FindInRhino(GridCreation gridCreation)
+        {
+            //GridCreation gridCreation = new GridCreation(startPoint, endPoint, rhinoResolution, obstacles);
             PathFind pf = new PathFind();
             int mapX = gridCreation.Grids.GetLength(0);
             int mapY = gridCreation.Grids.GetLength(1);
@@ -38,22 +66,8 @@ namespace AutoPlan
             }
             int[] startNodeID = gridCreation.StartNodeId;
             int[] endNodeID = gridCreation.EndNodeId;
-            List<Fgh> path = pf.AStarSearch(mapRef, 1, mapX, mapY, startNodeID, endNodeID, isOrtho);
-            List<Point3d> pathPt = new List<Point3d>();
-            for (int i = 0; i < path.Count; i++)
-            {
-                Point3d point = gridCreation.Grids[path[i].x, path[i].y].Center;
-                pathPt.Add(point);
-            }
-            pathPt.Reverse();
-            return (PathCreate(pathPt));
-        }
-        public List<Point3d> PathCreate(List<Point3d> ptList)
-        {
-            ptList.Insert(0, startPoint);
-            ptList.Add(endPoint);
-            //Polyline path = new Polyline(ptList);
-            return ptList;
+            List<Fgh> pathGrid = pf.AStarSearch(mapRef, 1, mapX, mapY, startNodeID, endNodeID, isOrtho);
+            return pathGrid;
         }
     }
 }

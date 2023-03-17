@@ -12,8 +12,8 @@ namespace AutoPlan
         public List<Building> Buildings { get; set; }
         public List<Path> Paths { get; set; }
         public OuterPath OuterPath { get; set; }
-        public MainPath MainPath { get; set; }
-        public P2P_Path P2P_Path { get; set; }
+        public List<MainPath> MainPath { get; set; }
+        public List<P2P_Path> P2P_Path { get; set; }
         public PlantingTrees PlantingTrees { get; set; }
         public double OuterPathWidth { get; set; }
         public double MainPathWidth { get; set; }

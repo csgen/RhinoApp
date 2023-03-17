@@ -21,15 +21,14 @@ namespace AutoPlan
         
         public P2P_Path(List<Point3d> points, PlaneObjectManager planeObject)
         {
+            this.FilletRadi = 2;
             StartPoint = PairPoint(points, planeObject.Buildings)[0];
             EndPoint = PairPoint(points, planeObject.Buildings)[1];
             MidCurve = CreatePath(planeObject.Buildings, planeObject.Paths);
-            
         }
 
         public Curve CreatePath(List<Building> buildings, List<Path> paths)//画出完整路径，包括起点针对楼栋和道路各自的偏移
         {
-            
             Point3d secondPoint = Get2ndPoint(buildings);
 
             Point3d secondLastPoint = Get2ndLastPoint(paths);
@@ -40,13 +39,14 @@ namespace AutoPlan
                 Curve obstacle = PaddingBox(building.BuildingCurve, building.AvoidDistance);
                 obstacles.Add(obstacle);
             }
-            PathSolver pathS = new PathSolver(secondPoint, secondLastPoint, obstacles, 25, true);
+            PathSolver pathS = new PathSolver(secondPoint, secondLastPoint, obstacles, 40, true);
             //Polyline pathCreate = pathS.PathRhinoSolver();
             //List<Point3d> ptList = GetDiscontinuityPoints(pathCreate.ToNurbsCurve());
             List<Point3d> ptList = pathS.PathRhinoSolver();
             ptList.Insert(0, StartPoint);
             ptList.Add(EndPoint);
-            Polyline path = new Polyline(ptList);
+            List<Point3d> simplifiedPts = GetDiscontinuityPoints(new Polyline(ptList).ToNurbsCurve());
+            Polyline path = new Polyline(simplifiedPts);
             return path.ToNurbsCurve();
             
         }
@@ -125,7 +125,7 @@ namespace AutoPlan
         private Point3d Get2ndPoint(List<Building> buildings)
         {
             Building basebuilding = GetBaseBuilding(buildings);
-            Curve paddingCrv = PaddingBox(basebuilding.BuildingCurve, basebuilding.AvoidDistance+1);
+            Curve paddingCrv = PaddingBox(basebuilding.BuildingCurve, basebuilding.AvoidDistance+0.5);
             bool findScondPt = paddingCrv.ClosestPoint(StartPoint, out double secondPoint_t);
             Point3d secondPoint = paddingCrv.PointAt(secondPoint_t);//找到路径上处于paddingbox上的点,即路径上的第二个点
             return secondPoint;
@@ -141,7 +141,7 @@ namespace AutoPlan
             Point3d last2ndPoint1 = offsetCrv1.PointAt(last2ndPoint_t1);
             Point3d last2ndPoint2 = offsetCrv2.PointAt(last2ndPoint_t2);
             Point3d last2ndPoint = last2ndPoint1;
-            if (EndPoint.DistanceTo(last2ndPoint1) > EndPoint.DistanceTo(last2ndPoint2))
+            if (StartPoint.DistanceTo(last2ndPoint1) > StartPoint.DistanceTo(last2ndPoint2))
             {
                 last2ndPoint = last2ndPoint2;
             }

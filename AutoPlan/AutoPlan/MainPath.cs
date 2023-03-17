@@ -9,6 +9,10 @@ namespace AutoPlan
 {
     internal class MainPath:Path
     {
-        
+        public MainPath()
+        {
+            this.FilletRadi = 6;
+            
+        }
     }
 }

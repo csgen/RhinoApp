@@ -13,5 +13,6 @@ namespace AutoPlan
         public double Width { get; set; }
         public double FilletRadi { get; set; }
         
+        
     }
 }

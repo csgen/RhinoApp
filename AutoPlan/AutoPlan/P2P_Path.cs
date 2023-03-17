@@ -18,10 +18,15 @@ namespace AutoPlan
         public Point3d EndPoint { get; set; }
         public Building BaseBuilding { get; set; }
         public MainPath BaseMainPath { get; set; }
-        
+        public P2P_Path()
+        {
+            this.FilletRadi = 2;
+            this.Width = 3;
+        }
         public P2P_Path(List<Point3d> points, PlaneObjectManager planeObject)
         {
             this.FilletRadi = 2;
+            this.Width = 3;
             StartPoint = PairPoint(points, planeObject.Buildings)[0];
             EndPoint = PairPoint(points, planeObject.Buildings)[1];
             MidCurve = CreatePath(planeObject.Buildings, planeObject.Paths);

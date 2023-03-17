@@ -12,6 +12,7 @@ namespace AutoPlan
         public MainPath()
         {
             this.FilletRadi = 6;
+            this.Width = 8;
             
         }
     }

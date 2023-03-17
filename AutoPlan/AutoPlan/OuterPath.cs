@@ -13,6 +13,7 @@ namespace AutoPlan
         public OuterPath()
         {
             this.FilletRadi = 8;
+            this.Width = 8;
         }
     }
 }

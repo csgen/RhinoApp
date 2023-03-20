@@ -1,11 +1,12 @@
-﻿using Rhino.Geometry;
+﻿using AutoPlan;
+using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoPlan
+namespace AutoPlan.AutoPlan.PathFinder
 {
     internal class PathSolver
     {
@@ -40,7 +41,7 @@ namespace AutoPlan
             }
             pathPt.Reverse();
             //return (PathCreate(pathPt));
-            
+
             return pathPt;
         }
         public List<Point3d> PathCreate(List<Point3d> ptList)

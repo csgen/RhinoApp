@@ -1,7 +1,7 @@
 ﻿using Rhino;
 using System;
 
-namespace AutoPlan
+namespace AutoPlan.AutoPlan
 {
     ///<summary>
     /// <para>Every RhinoCommon .rhp assembly must have one and only one PlugIn-derived

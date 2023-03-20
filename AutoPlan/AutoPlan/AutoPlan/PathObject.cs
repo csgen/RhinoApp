@@ -6,14 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoPlan
+namespace AutoPlan.AutoPlan
 {
     internal class PathObject
     {
-        List<Path> Paths { get; set; }
-        OuterPath OuterPath { get; set; }
-        List<MainPath> MainPaths { get; set; }
-        List<P2P_Path> P2P_Paths { get; set; }
+        public List<Path> Paths { get; set; }
+        public OuterPath OuterPath { get; set; }
+        public List<MainPath> MainPaths { get; set; }
+        public List<P2P_Path> P2P_Paths { get; set; }
         //List<Surface> PathSurface { get; set; }
         RhinoDoc RhinoDoc { get; set; }
         Curve OuterPathEdge { get; set; }
@@ -40,8 +40,8 @@ namespace AutoPlan
             Array.Copy(P2P_PathEdge, 0, P2PAndMainEdge, MainPathEdge.Length, P2P_PathEdge.Length);//合并P2P和mainPath
 
             Curve[] edgeUnion = Curve.CreateBooleanUnion(P2PAndMainEdge, 0.01);//BooleanUnion
-            
-            for(int i = 0; i < edgeUnion.Length; i++)//倒角曲线
+
+            for (int i = 0; i < edgeUnion.Length; i++)//倒角曲线
             {
                 edgeUnion[i] = Curve.CreateFilletCornersCurve(edgeUnion[i], 2, 0.001, 0.001);
             }
@@ -49,30 +49,30 @@ namespace AutoPlan
             edgeUnion.CopyTo(AllEdge, 0);
             AllEdge[edgeUnion.Length] = OuterPathEdge;//合并内部Path和OuterPath
             Curve[] edgeUnion2 = Curve.CreateBooleanUnion(AllEdge, 0.01);//BooleanUnion
-            for(int i = 0; i < edgeUnion2.Length; i++)//倒角
+            for (int i = 0; i < edgeUnion2.Length; i++)//倒角
             {
                 edgeUnion2[i] = Curve.CreateFilletCornersCurve(edgeUnion2[i], 4, 0.001, 0.001);
             }
-            return Brep.CreatePlanarBreps(edgeUnion2,0.01);
-            
+            return Brep.CreatePlanarBreps(edgeUnion2, 0.01);
+
         }
-        private Curve OuterPathBrep(double OuterFilletRadi=8)//默认外围道路只有一条，并有一个默认入口，入口也可以单独设置
+        private Curve OuterPathBrep(double OuterFilletRadi = 8)//默认外围道路只有一条，并有一个默认入口，入口也可以单独设置(之后增加)
         {
             Brep pathBrep = CreatePathSurface(OuterPath);
             Curve brepEdge = Curve.JoinCurves(pathBrep.Edges, 0.01)[0];
-            return Curve.CreateFilletCornersCurve(brepEdge,OuterFilletRadi/2,0.001,0.001);
+            return Curve.CreateFilletCornersCurve(brepEdge, OuterFilletRadi / 2, 0.001, 0.001);
         }
-        private Curve[] MainPathBrep(double GMainFilletRadi=6)//G代表General：全局/默认
+        private Curve[] MainPathBrep(double GMainFilletRadi = 6)//G代表General：全局/默认
         {
             List<Path> mainPaths = new List<Path>();
-            foreach(MainPath path in MainPaths) 
+            foreach (MainPath path in MainPaths)
                 mainPaths.Add(path);
             return PathEdge_SingleClass(mainPaths, GMainFilletRadi);
         }
-        private Curve[] P2P_PathBrep(double GP2PFilletRadi=2)
+        private Curve[] P2P_PathBrep(double GP2PFilletRadi = 2)
         {
             List<Path> p2p_Paths = new List<Path>();
-            foreach (P2P_Path path in p2p_Paths)
+            foreach (P2P_Path path in P2P_Paths)
                 p2p_Paths.Add(path);
             return PathEdge_SingleClass(p2p_Paths, GP2PFilletRadi);
         }
@@ -80,15 +80,17 @@ namespace AutoPlan
         {
             Curve[] loftCurves = new Curve[2];
             Curve baseCurve = Curve.CreateFilletCornersCurve(path.MidCurve, path.FilletRadi, RhinoDoc.ModelAbsoluteTolerance, RhinoDoc.ModelAngleToleranceRadians);
-            if (baseCurve != null)
-            {
-                loftCurves[0] = baseCurve.Offset(Plane.WorldXY, path.Width / 2, RhinoDoc.ModelAbsoluteTolerance, CurveOffsetCornerStyle.Sharp)[0];
-                loftCurves[1] = baseCurve.Offset(Plane.WorldXY, -path.Width / 2, RhinoDoc.ModelAbsoluteTolerance, CurveOffsetCornerStyle.Sharp)[0];
-            }
+            if (baseCurve == null)
+                baseCurve = path.MidCurve;
+
+            loftCurves[0] = baseCurve.Offset(Plane.WorldXY, path.Width / 2, RhinoDoc.ModelAbsoluteTolerance, CurveOffsetCornerStyle.Sharp)[0];
+            loftCurves[1] = baseCurve.Offset(Plane.WorldXY, -path.Width / 2, RhinoDoc.ModelAbsoluteTolerance, CurveOffsetCornerStyle.Sharp)[0];
+
+
             Brep pathSrf = Brep.CreateFromLoft(loftCurves, Point3d.Unset, Point3d.Unset, LoftType.Normal, false)[0];
             return pathSrf;
         }
-        private Curve[] PathEdge_SingleClass(List<Path> paths,double generalRadius)//为单一种类的道路建立BooleanUnion,返回封闭边缘线
+        private Curve[] PathEdge_SingleClass(List<Path> paths, double generalRadius)//为单一种类的道路建立BooleanUnion,返回封闭边缘线
         {
             Curve[] brepEdgeArray = new Curve[paths.Count];
             for (int i = 0; i < paths.Count; i++)
@@ -99,7 +101,7 @@ namespace AutoPlan
             Curve[] brepUnionEdge = Curve.CreateBooleanUnion(brepEdgeArray, 0.01);//布尔运算主要道路面并取得边缘线
             //主路倒角（全局统一半径）
             Curve[] filletedEdge = new Curve[brepUnionEdge.Length];
-            for(int i = 0; i < filletedEdge.Length; i++)
+            for (int i = 0; i < filletedEdge.Length; i++)
             {
                 filletedEdge[i] = Curve.CreateFilletCornersCurve(brepUnionEdge[i], generalRadius, 0.001, 0.001);
             }

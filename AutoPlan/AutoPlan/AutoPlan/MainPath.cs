@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoPlan
+namespace AutoPlan.AutoPlan
 {
-    internal class MainPath:Path
+    internal class MainPath : Path
     {
         public MainPath()
         {
-            this.FilletRadi = 6;
-            this.Width = 8;
-            
+            FilletRadi = 6;
+            Width = 8;
+
         }
     }
 }

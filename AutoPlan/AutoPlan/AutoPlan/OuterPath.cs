@@ -6,14 +6,14 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoPlan
+namespace AutoPlan.AutoPlan
 {
-    internal class OuterPath:Path
+    internal class OuterPath : Path
     {
         public OuterPath()
         {
-            this.FilletRadi = 8;
-            this.Width = 8;
+            FilletRadi = 8;
+            Width = 8;
         }
     }
 }

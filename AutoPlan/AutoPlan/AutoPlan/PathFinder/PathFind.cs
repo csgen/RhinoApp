@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoPlan
+namespace AutoPlan.AutoPlan.PathFinder
 {
     internal class PathFind
     {
@@ -76,11 +76,11 @@ namespace AutoPlan
                     int y = curBestFgh.y + dir[i, 1];
                     if (0 <= x && x < mapMaxW && 0 <= y && y < mapMaxH)
                     {
-                        if (mapRef[x, y] == roadValue || (x == endPointX && y == endPointY))
+                        if (mapRef[x, y] == roadValue || x == endPointX && y == endPointY)
                         {
                             //fgh
                             int father_g = curBestFgh.father != null ? curBestFgh.father.g : 0;
-                            int g = father_g + ((x != curBestFgh.x && y != curBestFgh.y) ? 14 : 10);
+                            int g = father_g + (x != curBestFgh.x && y != curBestFgh.y ? 14 : 10);
                             int h = 0;
                             if (isFourDir)
                             {
@@ -102,8 +102,8 @@ namespace AutoPlan
                             Fgh closeFgh;
                             int openIndex;
                             int closeIndex;
-                            this.FindFghByList(tOpenList, x, y, out openFgh, out openIndex);
-                            this.FindFghByList(tCloseList, x, y, out closeFgh, out closeIndex);
+                            FindFghByList(tOpenList, x, y, out openFgh, out openIndex);
+                            FindFghByList(tCloseList, x, y, out closeFgh, out closeIndex);
                             if (openFgh == null && closeFgh == null)
                             {
                                 tOpenList.Add(cFgh);

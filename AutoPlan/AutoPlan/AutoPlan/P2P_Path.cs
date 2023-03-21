@@ -1,5 +1,7 @@
 ﻿using AutoPlan.AutoPlan.PathFinder;
 using Eto.Forms;
+using Rhino.Collections;
+using Rhino.DocObjects.Custom;
 using Rhino.Geometry;
 using System;
 using System.Collections;
@@ -36,7 +38,12 @@ namespace AutoPlan.AutoPlan
             pathList.Add(planeObjectM.OuterPath);
             MidCurve = CreatePath(planeObjectM.Buildings, pathList);
         }
-
+        public void SetData()
+        {
+            //ArchivableDictionary dictionary = new ArchivableDictionary();
+            //dictionary.Set("BaseBuilding", );
+            //UserData userData = new UserData();
+        }
         public Curve CreatePath(List<Building> buildings, List<Path> paths)//画出完整路径，包括起点针对楼栋和道路各自的偏移
         {
             Point3d secondPoint = Get2ndPoint(buildings);

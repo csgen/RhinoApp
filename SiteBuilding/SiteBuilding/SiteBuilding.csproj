@@ -3,17 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <Version>1.0</Version>
-    <Title>AutoPlan</Title>
-    <Description>Description of AutoPlan</Description>
+    <Title>SiteBuilding</Title>
+    <Description>Description of SiteBuilding</Description>
     <TargetExt>.rhp</TargetExt>
   </PropertyGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedResources\**\*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="SampleCsUserDataPlugIn.cs" />
   </ItemGroup>
   
   <ItemGroup>

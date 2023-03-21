@@ -1,5 +1,7 @@
 ﻿using Rhino;
+using Rhino.Collections;
 using Rhino.Commands;
+using Rhino.DocObjects.Custom;
 using Rhino.Geometry;
 using Rhino.Input;
 using Rhino.Input.Custom;
@@ -107,7 +109,18 @@ namespace AutoPlan.AutoPlan.AutoCommands
             P2P_Path p1 = new P2P_Path(new List<Point3d> { pt0, pt1 }, planeObjectM);
             planeObjectM.P2P_Path.Add(p1);
             PathObject pathObject = new PathObject(planeObjectM, doc);
-            doc.Objects.AddCurve(p1.MidCurve);
+
+            Guid id = doc.Objects.AddCurve(p1.MidCurve);
+            var a = new Rhino.DocObjects.ObjRef(doc,id);
+            
+
+            ArchivableDictionary ud = new ArchivableDictionary();
+            ud.Set("a", 1);
+            ud.Set("b", 2);
+
+            a.Object().UserDictionary.AddContentsFrom(ud);
+            RhinoApp.WriteLine(a.Object().UserDictionary.Keys[0]);
+
             foreach (Brep brep in pathObject.PathBreps)
                 doc.Objects.AddBrep(brep);
             return Result.Success;

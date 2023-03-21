@@ -1,4 +1,5 @@
-﻿using Rhino.Geometry;
+﻿using Rhino.Collections;
+using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,17 @@ namespace AutoPlan.AutoPlan
         public Rectangle3d BuildingCurve { get; set; }
         public double AvoidDistance { get; set; }
 
-
+        public ArchivableDictionary ClassData { get; set; }
         public Building(Rectangle3d buildingCurve, double avoidDistance)
         {
             BuildingCurve = buildingCurve;
             AvoidDistance = avoidDistance;
+            SetData();
+        }
+        public void SetData()
+        {
+            ClassData = new ArchivableDictionary();
+            ClassData.Set("AvoidDistance", AvoidDistance);
         }
     }
 }

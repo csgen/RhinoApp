@@ -20,7 +20,8 @@ namespace AutoPlan.AutoPlan
         public Point3d StartPoint { get; set; }
         public Point3d EndPoint { get; set; }
         public Building BaseBuilding { get; set; }
-        public MainPath BaseMainPath { get; set; }
+        public Path BasePath { get; set; }
+        public ArchivableDictionary ClassData { get; set; }
         public P2P_Path()
         {
             FilletRadi = 2;
@@ -37,9 +38,14 @@ namespace AutoPlan.AutoPlan
             pathList.AddRange(planeObjectM.P2P_Path);
             pathList.Add(planeObjectM.OuterPath);
             MidCurve = CreatePath(planeObjectM.Buildings, pathList);
+            SetData();
         }
         public void SetData()
         {
+            ClassData = new ArchivableDictionary();
+            ClassData.Set("BaseBuilding", BaseBuilding.BuildingCurve.ToNurbsCurve());
+            ClassData.Set("BasePath", BasePath.MidCurve);
+            ClassData.Set("Width", Width);
             //ArchivableDictionary dictionary = new ArchivableDictionary();
             //dictionary.Set("BaseBuilding", );
             //UserData userData = new UserData();
@@ -126,7 +132,7 @@ namespace AutoPlan.AutoPlan
             BaseBuilding = basebuilding;
             //return basebuilding;
         }
-        private Path GetBasePath(List<Path> paths)//找到点的附着路径
+        private void GetBasePath(List<Path> paths)//找到点的附着路径
         {
             Path basePath = paths[0];
             foreach (Path path in paths)
@@ -138,7 +144,8 @@ namespace AutoPlan.AutoPlan
                     break;
                 }
             }
-            return basePath;
+            BasePath = basePath;
+            //return basePath;
         }
         private Point3d Get2ndPoint(List<Building> buildings)
         {
@@ -150,10 +157,11 @@ namespace AutoPlan.AutoPlan
         }
         private Point3d Get2ndLastPoint(List<Path> paths)
         {
-            Path basePath = GetBasePath(paths);
-            double pathAvoid = basePath.Width / 2 + 2;
-            Curve offsetCrv1 = basePath.MidCurve.Offset(Plane.WorldXY, pathAvoid, 0.001, CurveOffsetCornerStyle.Sharp)[0];
-            Curve offsetCrv2 = basePath.MidCurve.Offset(Plane.WorldXY, -pathAvoid, 0.001, CurveOffsetCornerStyle.Sharp)[0];
+            GetBasePath(paths);
+            //Path basePath = GetBasePath(paths);
+            double pathAvoid = BasePath.Width / 2 + 2;
+            Curve offsetCrv1 = BasePath.MidCurve.Offset(Plane.WorldXY, pathAvoid, 0.001, CurveOffsetCornerStyle.Sharp)[0];
+            Curve offsetCrv2 = BasePath.MidCurve.Offset(Plane.WorldXY, -pathAvoid, 0.001, CurveOffsetCornerStyle.Sharp)[0];
             offsetCrv1.ClosestPoint(EndPoint, out double last2ndPoint_t1);
             offsetCrv2.ClosestPoint(EndPoint, out double last2ndPoint_t2);
             Point3d last2ndPoint1 = offsetCrv1.PointAt(last2ndPoint_t1);

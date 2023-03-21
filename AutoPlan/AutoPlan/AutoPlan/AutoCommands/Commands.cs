@@ -42,7 +42,8 @@ namespace AutoPlan.AutoPlan.AutoCommands
             List<Building> buildings = new List<Building>();
             using (GetObject getBuilding = new GetObject())
             {
-                Selector.SelectBuidling(buildings, getBuilding, "选楼");
+                Selector s = new Selector(doc);
+                s.SelectBuidling(buildings, getBuilding, "选楼");
             }
             planeObjectM.Buildings = buildings;
             planeObjectM.OuterPath = outerPath;
@@ -73,7 +74,8 @@ namespace AutoPlan.AutoPlan.AutoCommands
             List<Building> buildings = new List<Building>();
             using (GetObject getBuilding = new GetObject())
             {
-                Selector.SelectBuidling(buildings, getBuilding, "选楼");
+                Selector s = new Selector(doc);
+                s.SelectBuidling(buildings, getBuilding, "选楼");
             }
 
 
@@ -113,7 +115,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             Guid id = doc.Objects.AddCurve(p1.MidCurve);
             var a = new Rhino.DocObjects.ObjRef(doc,id);
             
-
+            
             ArchivableDictionary ud = new ArchivableDictionary();
             ud.Set("a", 1);
             ud.Set("b", 2);

@@ -1,6 +1,9 @@
-﻿using Rhino.DocObjects;
+﻿using Rhino;
+using Rhino.Collections;
+using Rhino.DocObjects;
 using Rhino.Geometry;
 using Rhino.Input.Custom;
+using Rhino.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +14,11 @@ namespace AutoPlan.AutoPlan
 {
     internal class Selector
     {
+        public RhinoDoc doc { get; set; }
+        public Selector(RhinoDoc doc)
+        {
+            this.doc = doc;
+        }
         public static void SelectOuterPathCurve(PlaneObjectManager planeObjectM, OuterPath outerPath, GetObject getPath, string prompt = "请选择")
         {
             getPath.EnablePreSelect(false, true);
@@ -67,7 +75,7 @@ namespace AutoPlan.AutoPlan
                 paths.Add(path);
             }
         }
-        public static void SelectBuidling(List<Building> buildings, GetObject getBuildings, string prompt = "请选择")
+        public void SelectBuidling(List<Building> buildings, GetObject getBuildings, string prompt = "请选择")
         {
             getBuildings.EnablePreSelect(false, true);
             getBuildings.SetCommandPrompt(prompt);
@@ -77,8 +85,14 @@ namespace AutoPlan.AutoPlan
             for (int i = 0; i < getBuildings.ObjectCount; i++)
             {
                 getBuildings.Object(i).Curve().TryGetPolyline(out Polyline polyline);
+                
                 Rectangle3d buildingCrv = Rectangle3d.CreateFromPolyline(polyline);
-                buildings.Add(new Building(buildingCrv, 3));
+                Building building = new Building(buildingCrv, 3);
+                buildings.Add(building);
+
+                Guid id = getBuildings.Object(i).ObjectId;
+                var a = new ObjRef(doc, id);
+                a.Object().UserDictionary.AddContentsFrom(building.ClassData);
             }
         }
     }

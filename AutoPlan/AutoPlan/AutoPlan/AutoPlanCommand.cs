@@ -4,12 +4,14 @@ using Rhino.Collections;
 using Rhino.Commands;
 using Rhino.DocObjects;
 using Rhino.DocObjects.Custom;
+using Rhino.FileIO;
 using Rhino.Geometry;
 using Rhino.Input;
 using Rhino.Input.Custom;
 using siteUI.Functions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 
@@ -82,9 +84,11 @@ namespace AutoPlan.AutoPlan
                 TestData td = new TestData();
                 td.a=2; td.b=3;
                 ArchivableDictionary ad = new ArchivableDictionary();
-                
+                ad.Set("a", 2);
+                ad.Set("b", 3);
+                getObject.Object(0).Curve().UserDictionary.AddContentsFrom(ad);
                 //getObject.Object(0).Curve().UserDictionary.Append(new KeyValuePair<string, object>("a",1));
-                getObject.Object(0).Curve().UserData.Add(td);
+                //getObject.Object(0).Curve().UserData.Add(td);
             }
             return Result.Success;
         }
@@ -99,18 +103,20 @@ namespace AutoPlan.AutoPlan
         public override string EnglishName => "GetData";
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
-            UserDataList ud;
+            //UserDataList ud;
+            ArchivableDictionary ad;
             using (GetObject getObject = new GetObject())
             {
                 getObject.SetCommandPrompt("select");
                 getObject.GeometryFilter = ObjectType.Curve;
                 getObject.Get();
-                ud = getObject.Object(0).Curve().UserData;
-                
+                //ud = getObject.Object(0).Curve().UserData;
+                ad = getObject.Object(0).Curve().UserDictionary;
             }
-            
+            //var i = ud.Find(typeof(TestData)) as TestData;
             //foreach(string key in ud.Keys)
-            RhinoApp.WriteLine(ud.ToString());
+
+            RhinoApp.WriteLine(ad["a"].ToString());
             
             return Result.Success;
         }
@@ -118,8 +124,37 @@ namespace AutoPlan.AutoPlan
     public class TestData : UserData
     {
         public int a { get; set; }
+        //public string name { get; set; }
         public int b { get; set; }
+        //BinaryArchiveReader archive;
+        
         public TestData() { }
+        public override bool ShouldWrite
+        {
+            get
+            {
+                return true;
+            }
+        }
+        protected override bool Read(BinaryArchiveReader archive)
+        {
+            ArchivableDictionary dict = archive.ReadDictionary();
+            if(dict.ContainsKey("a")&&dict.ContainsKey("b"))
+            {
+                a = (int)dict["a"];
+                b = (int)dict["b"];
+            }
+            return true;
+        }
+        protected override bool Write(BinaryArchiveWriter archive)
+        {
+            var dict = new ArchivableDictionary(1, "Test");
+            dict.Set("a", a);
+            dict.Set("b", b);
+            archive.WriteDictionary(dict);
+
+            return true;
+        }
         //public override string ToString()
         //{
         //    return string.Format("a={0},b={1}", a, b);

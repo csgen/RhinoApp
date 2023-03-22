@@ -1,7 +1,10 @@
 ﻿using Rhino;
+using Rhino.DocObjects;
 using Rhino.Geometry;
+using Rhino.Geometry.Intersect;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,13 +13,14 @@ namespace AutoPlan.AutoPlan
 {
     internal class PathObject
     {
+        public const double DOC_TOLERANCE = 0.001;
         public List<Path> Paths { get; set; }
         public OuterPath OuterPath { get; set; }
         public List<MainPath> MainPaths { get; set; }
         public List<P2P_Path> P2P_Paths { get; set; }
         //List<Surface> PathSurface { get; set; }
         RhinoDoc RhinoDoc { get; set; }
-        Curve OuterPathEdge { get; set; }
+        Curve[] OuterPathEdge { get; set; }
         Curve[] MainPathEdge { get; set; }
         Curve[] P2P_PathEdge { get; set; }
         public Brep[] PathBreps { get; set; }
@@ -45,9 +49,11 @@ namespace AutoPlan.AutoPlan
             {
                 edgeUnion[i] = Curve.CreateFilletCornersCurve(edgeUnion[i], 2, 0.001, 0.001);
             }
-            Curve[] AllEdge = new Curve[edgeUnion.Length + 1];
-            edgeUnion.CopyTo(AllEdge, 0);
-            AllEdge[edgeUnion.Length] = OuterPathEdge;//合并内部Path和OuterPath
+            Curve[] AllEdge = new Curve[edgeUnion.Length + OuterPathEdge.Length];
+            Array.Copy(edgeUnion, AllEdge, edgeUnion.Length);
+            Array.Copy(OuterPathEdge, 0, AllEdge, edgeUnion.Length, OuterPathEdge.Length);
+            //edgeUnion.CopyTo(AllEdge, 0);
+            //AllEdge[edgeUnion.Length] = OuterPathEdge;//合并内部Path和OuterPath
             Curve[] edgeUnion2 = Curve.CreateBooleanUnion(AllEdge, 0.01);//BooleanUnion
             for (int i = 0; i < edgeUnion2.Length; i++)//倒角
             {
@@ -56,11 +62,97 @@ namespace AutoPlan.AutoPlan
             return Brep.CreatePlanarBreps(edgeUnion2, 0.01);
 
         }
-        private Curve OuterPathBrep(double OuterFilletRadi = 8)//默认外围道路只有一条，并有一个默认入口，入口也可以单独设置(之后增加)
+        private Curve[] OuterPathBrep(double outerFilletRadi = 8, List<Point3d> entry=null)//默认外围道路只有一条，并有一个默认入口，入口也可以单独设置(之后增加)
         {
-            Brep pathBrep = CreatePathSurface(OuterPath);
-            Curve brepEdge = Curve.JoinCurves(pathBrep.Edges, 0.01)[0];
-            return Curve.CreateFilletCornersCurve(brepEdge, OuterFilletRadi / 2, 0.001, 0.001);
+            List<Curve> curves = AddEntry(OuterPath.MidCurve, entry);//在入口处打断
+            Curve[] brepEdgeArray = new Curve[curves.Count];
+            for(int i = 0; i < curves.Count; i++)
+            {
+                Curve[] loftCurves = new Curve[2];
+                Curve baseCurve = Curve.CreateFilletCornersCurve(curves[i], outerFilletRadi, DOC_TOLERANCE, RhinoDoc.ModelAngleToleranceRadians);
+                if (baseCurve == null)
+                    baseCurve = curves[i];
+
+                loftCurves[0] = baseCurve.Offset(Plane.WorldXY, outerFilletRadi / 2, DOC_TOLERANCE, CurveOffsetCornerStyle.Sharp)[0];
+                loftCurves[1] = baseCurve.Offset(Plane.WorldXY, -outerFilletRadi / 2, DOC_TOLERANCE, CurveOffsetCornerStyle.Sharp)[0];
+                Brep pathSrf = Brep.CreateFromLoft(loftCurves, Point3d.Unset, Point3d.Unset, LoftType.Normal, false)[0];
+                Curve brepEdge = Curve.JoinCurves(pathSrf.Edges, 0.01)[0];
+                brepEdgeArray[i] = Curve.CreateFilletCornersCurve(brepEdge, outerFilletRadi / 2, 0.001, 0.001);
+            }
+            return brepEdgeArray;
+            //Brep pathBrep = CreatePathSurface(OuterPath);
+            //Curve brepEdge = Curve.JoinCurves(pathBrep.Edges, 0.01)[0];
+            //return Curve.CreateFilletCornersCurve(brepEdge, OuterFilletRadi / 2, 0.001, 0.001);
+        }
+        private List<Curve> AddEntry(Curve OuterCurve, List<Point3d> entryPoint)//在入口位置将封闭外围线打断
+        {
+            if (entryPoint == null)
+            {
+                entryPoint = new List<Point3d>();
+                Curve entryPath = MainPaths[0].MidCurve;
+                var events = Intersection.CurveCurve(OuterCurve, entryPath,0.001,0.001);
+                if (events != null)
+                {
+                    for (int i = 0; i < events.Count; i++)
+                    {
+                        entryPoint.Add(events[i].PointA);
+                    }
+                }
+                if (events == null)
+                {
+                    Point3d point = OuterCurve.PointAt((OuterCurve.Domain.T0 + OuterCurve.Domain.T1) / 2);//中点
+                    entryPoint.Add(point);
+                }
+            }
+            
+            List<Curve> trimmedCrv = new List<Curve>();
+            foreach(Point3d point in entryPoint)
+            {
+                Circle entryCircle = new Circle(point, 3);
+                trimmedCrv.Add(entryCircle.ToNurbsCurve());
+            }
+            return TrimCurveWithCurves(OuterCurve, trimmedCrv);
+        }
+        public List<Curve> TrimCurveWithCurves(Curve oCurve, List<Curve> trimmingCurves)
+        {
+            //double docTolerance = RhinoDoc.ActiveDoc.ModelAbsoluteTolerance;
+            List<double> tList = new List<double>();
+            List<Curve> pieces = new List<Curve>();
+            foreach(Curve trimmingCurve in trimmingCurves)
+            {
+                var events = Intersection.CurveCurve(oCurve, trimmingCurve, DOC_TOLERANCE, DOC_TOLERANCE);
+                if (events != null)
+                {
+                    for (int i = 0; i < events.Count; i++)
+                    {
+                        var ccx = events[i];
+                        tList.Add(ccx.ParameterA);
+                    }
+                }
+            }
+            
+            if (!tList.Any())
+            {
+                pieces.Add(oCurve);
+                return pieces;
+            }
+            pieces = oCurve.Split(tList).ToList();
+            List<Curve> remainList = new List<Curve>();
+            foreach(Curve piece in pieces)
+            {
+                bool remain = true;
+                Point3d midPoint = piece.PointAt((piece.Domain.T0 + piece.Domain.T1) / 2);
+                foreach(Curve trimmingCurve in trimmingCurves)
+                {
+                    if (trimmingCurve.Contains(midPoint, Plane.WorldXY, DOC_TOLERANCE) != PointContainment.Outside)
+                        remain = false;
+                }
+                if (remain)
+                {
+                    remainList.Add(piece);
+                }
+            }
+            return remainList;
         }
         private Curve[] MainPathBrep(double GMainFilletRadi = 6)//G代表General：全局/默认
         {
@@ -108,5 +200,15 @@ namespace AutoPlan.AutoPlan
             return filletedEdge;
             //return Brep.CreatePlanarBreps(filletedEdge, 0.01);
         }
+        public bool ReplayPathObjectHistory(ReplayHistoryData replay)
+        {
+            ObjRef objRef = null;
+            return true;
+        }
+        //public bool WritePathObjectHistory(HistoryRecord history, ObjRef objRef)
+        //{
+        //    if(!history.SetObjRef())
+        //    return true;
+        //}
     }
 }

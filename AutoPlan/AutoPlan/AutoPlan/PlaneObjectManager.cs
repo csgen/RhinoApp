@@ -20,6 +20,8 @@ namespace AutoPlan.AutoPlan
         public double P2P_PathWidth { get; set; }
         public double OuterPlantingWidth { get; set; }
         public double GMainFilletRadi { get; set; }//主路MainPath全局倒角半径
+        public PathObject PathObject { get; set; }
+        public TreeManager TreeM { get; set; }
 
         public PlaneObjectManager()
         {
@@ -30,6 +32,7 @@ namespace AutoPlan.AutoPlan
             Paths.AddRange(MainPath);
             Paths.AddRange(P2P_Path);
             Paths.Add(OuterPath);
+            //TreeM = new TreeManager(this);
         }
     }
 }

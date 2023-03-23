@@ -137,22 +137,22 @@ namespace AutoPlan.AutoPlan
                 return pieces;
             }
             pieces = oCurve.Split(tList).ToList();
-            List<Curve> remainList = new List<Curve>();
+            List<Curve> keepList = new List<Curve>();
             foreach(Curve piece in pieces)
             {
-                bool remain = true;
+                bool keep = true;//是否保留此曲线
                 Point3d midPoint = piece.PointAt((piece.Domain.T0 + piece.Domain.T1) / 2);
                 foreach(Curve trimmingCurve in trimmingCurves)
                 {
                     if (trimmingCurve.Contains(midPoint, Plane.WorldXY, DOC_TOLERANCE) != PointContainment.Outside)
-                        remain = false;
+                        keep = false;
                 }
-                if (remain)
+                if (keep)
                 {
-                    remainList.Add(piece);
+                    keepList.Add(piece);
                 }
             }
-            return remainList;
+            return keepList;
         }
         private Curve[] MainPathBrep(double GMainFilletRadi = 6)//G代表General：全局/默认
         {

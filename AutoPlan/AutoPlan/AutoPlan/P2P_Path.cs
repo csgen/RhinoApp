@@ -173,7 +173,7 @@ namespace AutoPlan.AutoPlan
             }
             return last2ndPoint;
         }
-        public List<Point3d> GetDiscontinuityPoints(Curve curve)
+        public static List<Point3d> GetDiscontinuityPoints(Curve curve)
         {
             double t0 = curve.Domain.Min;
             double t1 = curve.Domain.Max;

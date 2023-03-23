@@ -50,8 +50,13 @@ namespace AutoPlan.AutoPlan.AutoCommands
             planeObjectM.MainPath = mainPaths;
             planeObjectM.P2P_Path = p2p_Paths;
             PathObject pathObject = new PathObject(planeObjectM, doc);
+            planeObjectM.PathObject = pathObject;
+            TreeManager treeM = new TreeManager(planeObjectM);
             foreach (Brep brep in pathObject.PathBreps)
                 doc.Objects.AddBrep(brep);
+            foreach (Tree tree in treeM.Trees)
+                doc.Objects.AddMesh(tree.TreeMesh);
+            RhinoApp.WriteLine(treeM.Trees.Count().ToString());
         }
         public static Result DrawP2P_Path(RhinoDoc doc)
         {

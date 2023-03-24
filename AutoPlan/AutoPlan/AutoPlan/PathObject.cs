@@ -13,7 +13,7 @@ namespace AutoPlan.AutoPlan
 {
     internal class PathObject
     {
-        public const double DOC_TOLERANCE = 0.001;
+        public double DOC_TOLERANCE = RhinoDoc.ActiveDoc.ModelAbsoluteTolerance;
         public List<Path> Paths { get; set; }
         public OuterPath OuterPath { get; set; }
         public List<MainPath> MainPaths { get; set; }

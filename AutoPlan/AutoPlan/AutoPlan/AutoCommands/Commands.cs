@@ -116,17 +116,8 @@ namespace AutoPlan.AutoPlan.AutoCommands
             planeObjectM.P2P_Path.Add(p1);
             PathObject pathObject = new PathObject(planeObjectM, doc);
 
-            Guid id = doc.Objects.AddCurve(p1.MidCurve);
-            var a = new Rhino.DocObjects.ObjRef(doc,id);
+            Guid id = doc.Objects.AddCurve(p1.MidCurve,doc,null,);
             
-            
-            ArchivableDictionary ud = new ArchivableDictionary();
-            ud.Set("a", 1);
-            ud.Set("b", 2);
-
-            a.Object().UserDictionary.AddContentsFrom(ud);
-            RhinoApp.WriteLine(a.Object().UserDictionary.Keys[0]);
-
             foreach (Brep brep in pathObject.PathBreps)
                 doc.Objects.AddBrep(brep);
             return Result.Success;

@@ -1,6 +1,9 @@
 ﻿using AutoPlan.AutoPlan.PathFinder;
 using Eto.Forms;
+using Rhino;
 using Rhino.Collections;
+using Rhino.Commands;
+using Rhino.DocObjects;
 using Rhino.DocObjects.Custom;
 using Rhino.Geometry;
 using System;
@@ -20,6 +23,8 @@ namespace AutoPlan.AutoPlan
         public Point3d StartPoint { get; set; }
         public Point3d EndPoint { get; set; }
         public Building BaseBuilding { get; set; }
+        public double BaseBuildingtValue { get; set; }
+        public Guid BaseBuildingID { get; set; }
         public Path BasePath { get; set; }
         public ArchivableDictionary ClassData { get; set; }
         public P2P_Path()
@@ -43,7 +48,7 @@ namespace AutoPlan.AutoPlan
         public void SetData()
         {
             ClassData = new ArchivableDictionary();
-            ClassData.Set("BaseBuilding", BaseBuilding.BuildingCurve.ToNurbsCurve());
+            ClassData.Set("BaseBuilding", BaseBuilding.BuildingCurve);
             ClassData.Set("BasePath", BasePath.MidCurve);
             ClassData.Set("Width", Width);
             //ArchivableDictionary dictionary = new ArchivableDictionary();
@@ -73,13 +78,15 @@ namespace AutoPlan.AutoPlan
             return path.ToNurbsCurve();
 
         }
-        public Curve PaddingBox(Rectangle3d inputCrv, double padding)
+        public Curve PaddingBox(Curve inputCrv, double padding)
         {
-            Plane basePlane = inputCrv.Plane;
-            Interval domainX = new Interval(inputCrv.X.T0 - padding, inputCrv.X.T1 + padding);
-            Interval domainY = new Interval(inputCrv.Y.T0 - padding, inputCrv.Y.T1 + padding);
-            Rectangle3d paddingBox = new Rectangle3d(basePlane, domainX, domainY);
-            return paddingBox.ToNurbsCurve();
+            Curve paddingCurve = inputCrv.Offset(Plane.WorldXY, padding, RhinoDoc.ActiveDoc.ModelAbsoluteTolerance, CurveOffsetCornerStyle.Sharp)[0];
+            //Plane basePlane = inputCrv.Plane;
+            //Interval domainX = new Interval(inputCrv.X.T0 - padding, inputCrv.X.T1 + padding);
+            //Interval domainY = new Interval(inputCrv.Y.T0 - padding, inputCrv.Y.T1 + padding);
+            //Rectangle3d paddingBox = new Rectangle3d(basePlane, domainX, domainY);
+            //return paddingBox.ToNurbsCurve();
+            return paddingCurve;
         }
         public List<Point3d> PairPoint(List<Point3d> points, List<Building> buildings)
         {
@@ -91,7 +98,7 @@ namespace AutoPlan.AutoPlan
                 //List<Curve> buildingPlans = new List<Curve>();
                 for (int i = 0; i < buildings.Count; i++)
                 {
-                    Curve baseCurve = buildings[i].BuildingCurve.ToNurbsCurve();
+                    Curve baseCurve = buildings[i].BuildingCurve;
                     double t1, t2;
                     bool b1 = baseCurve.ClosestPoint(startPt, out t1, 1);
                     bool b2 = baseCurve.ClosestPoint(endPt, out t2, 1);
@@ -119,10 +126,11 @@ namespace AutoPlan.AutoPlan
         private void GetBaseBuilding(List<Building> buildings)
         {
             Building basebuilding = buildings[0];
+            double t = 0;
             foreach (Building building in buildings)
             {
-                Curve basePlan = building.BuildingCurve.ToNurbsCurve();
-                bool findbase = basePlan.ClosestPoint(StartPoint, out double t, 1);
+                Curve basePlan = building.BuildingCurve;
+                bool findbase = basePlan.ClosestPoint(StartPoint, out t, 1);
                 if (findbase)
                 {
                     basebuilding = building;
@@ -130,6 +138,8 @@ namespace AutoPlan.AutoPlan
                 }
             }
             BaseBuilding = basebuilding;
+            BaseBuildingID = basebuilding.ID;
+            BaseBuildingtValue = t;
             //return basebuilding;
         }
         private void GetBasePath(List<Path> paths)//找到点的附着路径
@@ -194,6 +204,111 @@ namespace AutoPlan.AutoPlan
             }
             while (true);
             return discontinuityList;
+        }
+        public static bool ReplayHistory(int historyVersion, ReplayHistoryData replay,Rhino.Commands.Command command,PlaneObjectManager planeObjectM)
+        {
+            P2P_Path p2p_path;
+            //Brep[] p2p_Paths;
+            List<ObjRef> refBuilidngs = new List<ObjRef>();
+            List<Point3d> points = new List<Point3d>();
+            Guid baseBuildingID = Guid.Empty;
+            double baseBuildingtValue = 0;
+            if (!ReadHistory(historyVersion, replay, ref refBuilidngs, ref points, ref baseBuildingtValue, ref baseBuildingID))
+                return false;
+
+            if (refBuilidngs.Count != 0) { planeObjectM.Buildings = new List<Building>(); }
+
+            Curve baseBuildingCurve = refBuilidngs[0].Curve();
+            for(int i = 0; i < refBuilidngs.Count; i++)
+            {
+                ArchivableDictionary userDict = refBuilidngs[i].Curve().UserDictionary;
+                var x = userDict["AvoidDistance"];
+                var y = userDict["ID"];
+                double avoidDist = (double)x;
+                Guid id = (Guid)y;
+                Building building = new Building(refBuilidngs[i].Curve(), avoidDist);
+                building.ID = id;
+                planeObjectM.Buildings.Add(building);//更新Buildings
+                if(id == baseBuildingID)
+                {
+                    baseBuildingCurve = refBuilidngs[i].Curve();
+                }
+            }
+            Point3d startPt = baseBuildingCurve.PointAt(baseBuildingtValue);
+            List<Point3d> pathPoints = new List<Point3d>() { startPt, points[3] };
+            p2p_path = new P2P_Path(pathPoints, planeObjectM);
+            replay.Results[0].UpdateToCurve(p2p_path.MidCurve, null);
+            return true;
+        }
+        private static bool ReadHistory
+            (
+            int historyVersion, ReplayHistoryData replay, 
+            ref List<ObjRef> refBuildings, 
+            ref List<Point3d> points,
+            ref double baseBuildingtValue, 
+            ref Guid baseBuildingID
+            )
+        {
+            points = new List<Point3d>();
+            if (historyVersion != replay.HistoryVersion)
+                return false;
+            int n;
+            replay.TryGetInt(0, out n);//n为building数量
+            for(int i = 0; i < n; i++)
+            {
+                ObjRef objref = replay.GetRhinoObjRef(i+1);//id是否从0开始？调试后确认
+                if (null == objref)
+                    return false;
+                refBuildings.Add(objref);
+            }
+            Point3d pt0, pt1, startPoint, endPoint;
+            if (!replay.TryGetPoint3d(n + 1, out pt0))
+                return false;
+            if (!replay.TryGetPoint3d(n + 2, out pt1))
+                return false;
+            if (!replay.TryGetPoint3d(n + 3, out startPoint))
+                return false;
+            if (!replay.TryGetPoint3d(n + 4, out endPoint))
+                return false;
+            if (!replay.TryGetDouble(n + 5, out baseBuildingtValue))
+                return false;
+            if (!replay.TryGetGuid(n + 6, out baseBuildingID))
+                return false;
+
+            points.Add(pt0);
+            points.Add(pt1);
+            points.Add(startPoint);
+            points.Add(endPoint);
+            return true;
+        }
+        private static bool WriteHistory(HistoryRecord history, List<ObjRef> refBuildings, List<Point3d> points, P2P_Path path)
+        {
+            int n = refBuildings.Count;
+            if(!history.SetInt(0,n))
+                return false;
+            for(int i = 0; i < n; i++)
+            {
+                if (!history.SetObjRef(i+1, refBuildings[i]))
+                    return false;
+            }
+            if (!history.SetPoint3d(n + 1, points[0]))
+                return false;
+            if (!history.SetPoint3d(n + 2, points[1]))
+                return false;
+            if (!history.SetPoint3d(n + 3, path.StartPoint))
+                return false;
+            if (!history.SetPoint3d(n + 4, path.EndPoint))
+                return false;
+            if(!history.SetDouble(n+5,path.BaseBuildingtValue))
+                return false;
+            if (!history.SetGuid(n + 6, path.BaseBuildingID))
+                return false;
+            //if (!history.SetCurve(2, BaseBuilding.BuildingCurve.ToNurbsCurve()))
+            //    return false;
+                
+            //if (!history.SetCurve(3 + planeObjectM.Buildings.Count, BasePath.MidCurve))
+            //    return false;
+            return true;
         }
     }
 }

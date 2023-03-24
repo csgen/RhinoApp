@@ -20,6 +20,7 @@ namespace AutoPlan.AutoPlan
 {
     public class AutoPlanCommand : Command
     {
+        public const int HISTORY_VERSION = 20230324;
         public AutoPlanCommand()
         {
             // Rhino only creates one instance of each command class defined in a
@@ -45,6 +46,10 @@ namespace AutoPlan.AutoPlan
             doc.Views.Redraw();
             // ---
             return Result.Success;
+        }
+        protected override bool ReplayHistory(ReplayHistoryData replayData)
+        {
+            return P2P_Path.ReplayHistory(HISTORY_VERSION, replayData,this,);
         }
     }
     public class AutoDrawCommand : Command
@@ -116,7 +121,7 @@ namespace AutoPlan.AutoPlan
             }
             //var i = ud.Find(typeof(TestData)) as TestData;
             //foreach(string key in ud.Keys)
-
+            
             RhinoApp.WriteLine(ad["a"].ToString());
             
             return Result.Success;
@@ -385,6 +390,90 @@ namespace AutoPlan.AutoPlan
                 return false;
 
             return true;
+        }
+    }
+    public class HistoryTestCommand : Command
+    {
+        public const int HISTORY_VERSION = 20230324;
+        public HistoryTestCommand()
+        {
+            // Rhino only creates one instance of each command class defined in a
+            // plug-in, so it is safe to store a refence in a static property.
+            Instance = this;
+        }
+        ///<summary>The only instance of this command.</summary>
+        public static HistoryTestCommand Instance { get; private set; }
+        public PlaneObjectManager PlaneObjectM { get; private set; }
+        ///<returns>The command name as it appears on the Rhino command line.</returns>
+        public override string EnglishName => "AutoPlan";
+        protected override Result RunCommand(RhinoDoc doc, RunMode mode)
+        {
+            RhinoApp.WriteLine("Start");
+
+            PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
+
+            OuterPath outerPath = new OuterPath();
+            using (GetObject getPath = new GetObject())
+            {
+                Selector.SelectOuterPathCurve(planeObjectM, outerPath, getPath, "选外围道路");
+            }
+
+            List<MainPath> mainPaths = new List<MainPath>();
+            using (GetObject getPath = new GetObject())
+            {
+                Selector.SelectMainPathCurve(planeObjectM, mainPaths, getPath, "选主路");
+            }
+
+            List<Building> buildings = new List<Building>();
+            using (GetObject getBuilding = new GetObject())
+            {
+                Selector s = new Selector(doc);
+                s.SelectBuidling(buildings, getBuilding, "选楼");
+            }
+
+
+            planeObjectM.Buildings = buildings;
+            planeObjectM.OuterPath = outerPath;
+            planeObjectM.MainPath = mainPaths;
+
+            Point3d pt0;
+            using (GetPoint GPT = new GetPoint())
+            {
+                GPT.SetCommandPrompt("第一个点");
+                if (GPT.Get() != GetResult.Point)
+                {
+                    RhinoApp.WriteLine("No start point was selected.");
+                    return GPT.CommandResult();
+                }
+                pt0 = GPT.Point();
+            }
+            Point3d pt1;
+            using (GetPoint GPT = new GetPoint())
+            {
+                GPT.SetCommandPrompt("第二个点");
+                GPT.SetBasePoint(pt0, true);
+                GPT.DynamicDraw +=
+                    (sender, e) => e.Display.DrawCurve(new P2P_Path(new List<Point3d> { pt0, e.CurrentPoint }, planeObjectM).MidCurve, System.Drawing.Color.DarkRed);
+                if (GPT.Get() != GetResult.Point)
+                {
+                    RhinoApp.WriteLine("No end point was selected.");
+                    return GPT.CommandResult();
+                }
+                pt1 = GPT.Point();
+            }
+            P2P_Path p1 = new P2P_Path(new List<Point3d> { pt0, pt1 }, planeObjectM);
+            planeObjectM.P2P_Path.Add(p1);
+            PathObject pathObject = new PathObject(planeObjectM, doc);
+            HistoryRecord history = new HistoryRecord(this, HISTORY_VERSION);
+            Guid id = doc.Objects.AddCurve(p1.MidCurve,null,history,false);
+
+            foreach (Brep brep in pathObject.PathBreps)
+                doc.Objects.AddBrep(brep);
+            return Result.Success;
+        }
+        protected override bool ReplayHistory(ReplayHistoryData replayData)
+        {
+            return P2P_Path.ReplayHistory(HISTORY_VERSION,replayData,this,);
         }
     }
 }

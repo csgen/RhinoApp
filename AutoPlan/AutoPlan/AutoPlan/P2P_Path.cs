@@ -281,7 +281,7 @@ namespace AutoPlan.AutoPlan
             points.Add(endPoint);
             return true;
         }
-        private static bool WriteHistory(HistoryRecord history, List<ObjRef> refBuildings, List<Point3d> points, P2P_Path path)
+        public static bool WriteHistory(HistoryRecord history, List<ObjRef> refBuildings, List<Point3d> points, P2P_Path path)
         {
             int n = refBuildings.Count;
             if(!history.SetInt(0,n))

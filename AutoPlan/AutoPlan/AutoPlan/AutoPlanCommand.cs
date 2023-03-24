@@ -47,10 +47,10 @@ namespace AutoPlan.AutoPlan
             // ---
             return Result.Success;
         }
-        protected override bool ReplayHistory(ReplayHistoryData replayData)
-        {
-            return P2P_Path.ReplayHistory(HISTORY_VERSION, replayData,this,);
-        }
+        //protected override bool ReplayHistory(ReplayHistoryData replayData)
+        //{
+        //    //return P2P_Path.ReplayHistory(HISTORY_VERSION, replayData,this,);
+        //}
     }
     public class AutoDrawCommand : Command
     {
@@ -403,9 +403,9 @@ namespace AutoPlan.AutoPlan
         }
         ///<summary>The only instance of this command.</summary>
         public static HistoryTestCommand Instance { get; private set; }
-        public PlaneObjectManager PlaneObjectM { get; private set; }
+        private PlaneObjectManager PlaneObjectM { get; set; }
         ///<returns>The command name as it appears on the Rhino command line.</returns>
-        public override string EnglishName => "AutoPlan";
+        public override string EnglishName => "HistoryTestCommand";
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
             RhinoApp.WriteLine("Start");
@@ -425,10 +425,12 @@ namespace AutoPlan.AutoPlan
             }
 
             List<Building> buildings = new List<Building>();
+            List<ObjRef> refBuildings;
             using (GetObject getBuilding = new GetObject())
             {
                 Selector s = new Selector(doc);
-                s.SelectBuidling(buildings, getBuilding, "选楼");
+                
+                s.SelectBuidling(buildings, getBuilding, out refBuildings, "选楼");
             }
 
 
@@ -464,16 +466,17 @@ namespace AutoPlan.AutoPlan
             P2P_Path p1 = new P2P_Path(new List<Point3d> { pt0, pt1 }, planeObjectM);
             planeObjectM.P2P_Path.Add(p1);
             PathObject pathObject = new PathObject(planeObjectM, doc);
+            this.PlaneObjectM = planeObjectM;
             HistoryRecord history = new HistoryRecord(this, HISTORY_VERSION);
             Guid id = doc.Objects.AddCurve(p1.MidCurve,null,history,false);
-
+            P2P_Path.WriteHistory(history, refBuildings, new List<Point3d> { pt0, pt1 }, p1);
             foreach (Brep brep in pathObject.PathBreps)
                 doc.Objects.AddBrep(brep);
             return Result.Success;
         }
         protected override bool ReplayHistory(ReplayHistoryData replayData)
         {
-            return P2P_Path.ReplayHistory(HISTORY_VERSION,replayData,this,);
+            return P2P_Path.ReplayHistory(HISTORY_VERSION,replayData,this,this.PlaneObjectM);
         }
     }
 }

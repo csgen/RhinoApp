@@ -1,6 +1,7 @@
 ﻿using Rhino;
 using Rhino.Collections;
 using Rhino.Commands;
+using Rhino.DocObjects;
 using Rhino.DocObjects.Custom;
 using Rhino.Geometry;
 using Rhino.Input;
@@ -40,10 +41,11 @@ namespace AutoPlan.AutoPlan.AutoCommands
             }
 
             List<Building> buildings = new List<Building>();
+            List<ObjRef> refBuildings;
             using (GetObject getBuilding = new GetObject())
             {
                 Selector s = new Selector(doc);
-                s.SelectBuidling(buildings, getBuilding, "选楼");
+                s.SelectBuidling(buildings, getBuilding, out refBuildings, "选楼");
             }
             planeObjectM.Buildings = buildings;
             planeObjectM.OuterPath = outerPath;
@@ -76,10 +78,11 @@ namespace AutoPlan.AutoPlan.AutoCommands
             }
 
             List<Building> buildings = new List<Building>();
+            List<ObjRef> refBuildings;
             using (GetObject getBuilding = new GetObject())
             {
                 Selector s = new Selector(doc);
-                s.SelectBuidling(buildings, getBuilding, "选楼");
+                s.SelectBuidling(buildings, getBuilding, out refBuildings, "选楼");
             }
 
 
@@ -116,7 +119,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             planeObjectM.P2P_Path.Add(p1);
             PathObject pathObject = new PathObject(planeObjectM, doc);
 
-            Guid id = doc.Objects.AddCurve(p1.MidCurve,doc,null,);
+            Guid id = doc.Objects.AddCurve(p1.MidCurve);
             
             foreach (Brep brep in pathObject.PathBreps)
                 doc.Objects.AddBrep(brep);

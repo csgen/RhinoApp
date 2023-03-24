@@ -75,24 +75,27 @@ namespace AutoPlan.AutoPlan
                 paths.Add(path);
             }
         }
-        public void SelectBuidling(List<Building> buildings, GetObject getBuildings, string prompt = "请选择")
+        public void SelectBuidling(List<Building> buildings, GetObject getBuildings, out List<ObjRef> refBuildings, string prompt = "请选择")
         {
             getBuildings.EnablePreSelect(false, true);
             getBuildings.SetCommandPrompt(prompt);
             getBuildings.GeometryFilter = ObjectType.Curve;
             getBuildings.GetMultiple(1, 0);
-
+            refBuildings = new List<ObjRef>();
             for (int i = 0; i < getBuildings.ObjectCount; i++)
             {
-                getBuildings.Object(i).Curve().TryGetPolyline(out Polyline polyline);
-                
-                Rectangle3d buildingCrv = Rectangle3d.CreateFromPolyline(polyline);
-                Building building = new Building(buildingCrv, 3);
+                Curve buildingCurve = getBuildings.Object(i).Curve();
+                Guid id = getBuildings.Object(i).ObjectId;
+                //Rectangle3d buildingCrv = Rectangle3d.CreateFromPolyline(polyline);
+                Building building = new Building(buildingCurve);
+                building.ID = id;
                 buildings.Add(building);
 
-                Guid id = getBuildings.Object(i).ObjectId;
-                var a = new ObjRef(doc, id);
-                a.Object().UserDictionary.AddContentsFrom(building.ClassData);
+                getBuildings.Object(i).Curve().UserDictionary.AddContentsFrom(building.ClassData);//添加数据
+                refBuildings.Add(getBuildings.Object(i));
+                //Guid id = getBuildings.Object(i).ObjectId;
+                //var a = new ObjRef(doc, id);
+                //a.Object().UserDictionary.AddContentsFrom(building.ClassData);
             }
         }
     }

@@ -45,7 +45,7 @@ namespace AutoPlan.AutoPlan
             }
             foreach(Building building in buildings)
             {
-                Curve curve = building.BuildingCurve.ToNurbsCurve();
+                Curve curve = building.BuildingCurve;
                 Brep buildingSrf = Brep.CreatePlanarBreps(new Curve[] {curve},DocTolerance)[0];
                 if (buildingSrf.Transform(Transform.Translation(Vector3d.ZAxis * -10)))
                 {

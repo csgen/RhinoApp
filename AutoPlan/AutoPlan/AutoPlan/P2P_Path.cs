@@ -25,7 +25,7 @@ namespace AutoPlan.AutoPlan
         public P2P_Path()
         {
             FilletRadi = 2;
-            Width = 3;
+            Width = 4;//宽度太小创建Object时有问题，可能是boolean/fillet其中之一的bug，目前经验值最小是4
         }
         public P2P_Path(List<Point3d> points, PlaneObjectManager planeObjectM)
         {

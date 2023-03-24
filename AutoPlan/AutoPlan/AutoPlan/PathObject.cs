@@ -43,18 +43,18 @@ namespace AutoPlan.AutoPlan
             Array.Copy(MainPathEdge, P2PAndMainEdge, MainPathEdge.Length);
             Array.Copy(P2P_PathEdge, 0, P2PAndMainEdge, MainPathEdge.Length, P2P_PathEdge.Length);//合并P2P和mainPath
 
-            Curve[] edgeUnion = Curve.CreateBooleanUnion(P2PAndMainEdge, 0.01);//BooleanUnion
+            Curve[] edgeUnion = Curve.CreateBooleanUnion(P2PAndMainEdge, 0.001);//BooleanUnion
 
             for (int i = 0; i < edgeUnion.Length; i++)//倒角曲线
             {
-                edgeUnion[i] = Curve.CreateFilletCornersCurve(edgeUnion[i], 2, 0.001, 0.001);
+                edgeUnion[i] = Curve.CreateFilletCornersCurve(edgeUnion[i], 2, 0.001, 0.001);//倒角大小还需测试
             }
             Curve[] AllEdge = new Curve[edgeUnion.Length + OuterPathEdge.Length];
             Array.Copy(edgeUnion, AllEdge, edgeUnion.Length);
             Array.Copy(OuterPathEdge, 0, AllEdge, edgeUnion.Length, OuterPathEdge.Length);
             //edgeUnion.CopyTo(AllEdge, 0);
             //AllEdge[edgeUnion.Length] = OuterPathEdge;//合并内部Path和OuterPath
-            Curve[] edgeUnion2 = Curve.CreateBooleanUnion(AllEdge, 0.01);//BooleanUnion
+            Curve[] edgeUnion2 = Curve.CreateBooleanUnion(AllEdge, 0.001);//BooleanUnion
             for (int i = 0; i < edgeUnion2.Length; i++)//倒角
             {
                 edgeUnion2[i] = Curve.CreateFilletCornersCurve(edgeUnion2[i], 4, 0.001, 0.001);

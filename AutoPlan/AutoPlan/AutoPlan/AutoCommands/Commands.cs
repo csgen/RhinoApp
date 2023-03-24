@@ -54,8 +54,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             TreeManager treeM = new TreeManager(planeObjectM);
             foreach (Brep brep in pathObject.PathBreps)
                 doc.Objects.AddBrep(brep);
-            foreach (Tree tree in treeM.Trees)
-                doc.Objects.AddMesh(tree.TreeMesh);
+            treeM.AddTreeToDoc();
             RhinoApp.WriteLine(treeM.Trees.Count().ToString());
         }
         public static Result DrawP2P_Path(RhinoDoc doc)

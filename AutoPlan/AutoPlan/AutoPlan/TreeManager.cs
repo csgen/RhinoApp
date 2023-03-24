@@ -1,9 +1,11 @@
 ﻿using Rhino;
+using Rhino.Display;
 using Rhino.Geometry;
 using Rhino.Geometry.Collections;
 using Rhino.Geometry.Intersect;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -35,9 +37,9 @@ namespace AutoPlan.AutoPlan
             List<Brep> cuttingBreps = new List<Brep>();
             foreach(Brep brep in pathBreps)
             {
-                if(brep.Transform(Transform.Translation(Vector3d.ZAxis * -1)))
+                if(brep.Transform(Transform.Translation(Vector3d.ZAxis * -10)))
                 {
-                    Brep cuttingBrep = brep.Faces[0].CreateExtrusion(new Line(Point3d.Origin, Vector3d.ZAxis, 2).ToNurbsCurve(), true);
+                    Brep cuttingBrep = brep.Faces[0].CreateExtrusion(new Line(Point3d.Origin, Vector3d.ZAxis, 20).ToNurbsCurve(), true);
                     cuttingBreps.Add(cuttingBrep);
                 }
             }
@@ -45,9 +47,9 @@ namespace AutoPlan.AutoPlan
             {
                 Curve curve = building.BuildingCurve.ToNurbsCurve();
                 Brep buildingSrf = Brep.CreatePlanarBreps(new Curve[] {curve},DocTolerance)[0];
-                if (buildingSrf.Transform(Transform.Translation(Vector3d.ZAxis * -1)))
+                if (buildingSrf.Transform(Transform.Translation(Vector3d.ZAxis * -10)))
                 {
-                    Brep cuttingBrep = buildingSrf.Faces[0].CreateExtrusion(new Line(Point3d.Origin, Vector3d.ZAxis, 2).ToNurbsCurve(), true);
+                    Brep cuttingBrep = buildingSrf.Faces[0].CreateExtrusion(new Line(Point3d.Origin, Vector3d.ZAxis, 20).ToNurbsCurve(), true);
                     cuttingBreps.Add(cuttingBrep);
                 }
             }
@@ -70,8 +72,12 @@ namespace AutoPlan.AutoPlan
             foreach(Curve faceEdge in meshFaceEdges)
             {
                 Circle circle = InCircle(faceEdge);
-                Tree tree = new Tree(circle.Radius, circle.Center);
-                Trees.Add(tree);
+                if (circle.Radius > 3 && circle.Radius < 20)
+                {
+                    Tree tree = new Tree(circle.Radius, circle.Center);
+                    Trees.Add(tree);
+                }
+                
             }
         }
         public List<Brep> TrimSolid(Brep brepA, Brep[] brepArray)//BrepB来布尔切割brepA,类似GH中的TrimSolid电池
@@ -107,7 +113,7 @@ namespace AutoPlan.AutoPlan
                     Point3d testPoint = crv.PointAt((crv.Domain.T0 + crv.Domain.T1) / 2);
                     foreach (Brep brep in brepArray)
                     {
-                        if (brep.IsPointInside(testPoint, rhinoTol, true))
+                        if (IsPointInsideBrep(testPoint,brep))
                             keep = false;
                     }
                 }
@@ -185,12 +191,51 @@ namespace AutoPlan.AutoPlan
                 double l3 = (p2 - p3).Length;
                 double minLength = Math.Min(l1, l2);
                 minLength = Math.Min(minLength, l3);
-                if (minLength < filterValue)//筛掉太小的三角形
+                if (minLength > filterValue)//筛掉太小的三角形
                 {
                     goodFaceEdges.Add(faceEdge);
                 }
             }
             return goodFaceEdges;
+        }
+        public bool IsPointInsideBrep(Point3d point, Brep brep)
+        {
+            double C = 0;
+            foreach(Curve edge in brep.Edges)
+            {
+                C += edge.GetLength();
+            }
+            Line testLine = new Line(point, Vector3d.ZAxis, C * 10);
+            Curve[] overlapCrv;
+            Point3d[] xPoints;
+            Intersection.CurveBrep(testLine.ToNurbsCurve(), brep, DocTolerance, out overlapCrv, out xPoints);
+            if (xPoints.Length % 2 != 0)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        public void AddTreeToDoc()
+        {
+            var addedGeoIds = new List<Guid>();
+            var doc = Rhino.RhinoDoc.ActiveDoc;
+            var layer = new Rhino.DocObjects.Layer() { Name = "Trees" };
+            if (!doc.Layers.Any(x => x.Name == layer.Name))
+            {
+                doc.Layers.Add(layer);
+            }
+            layer = doc.Layers.First(x => x.Name == "Trees");
+            layer.Color = Color.Green;
+            foreach(Tree tree in Trees)
+            {
+                var attribute = new Rhino.DocObjects.ObjectAttributes
+                {
+                    ColorSource = Rhino.DocObjects.ObjectColorSource.ColorFromLayer,
+                    LayerIndex = layer.Index
+                };
+                doc.Objects.Add(tree.TreeMesh, attribute);
+            }
         }
     }
 }

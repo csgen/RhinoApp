@@ -1,5 +1,6 @@
 ﻿using AutoPlan.AutoPlan.AutoCommands;
 using Rhino;
+using Rhino.ApplicationSettings;
 using Rhino.Collections;
 using Rhino.Commands;
 using Rhino.Display;
@@ -18,19 +19,20 @@ using System.Security.Cryptography;
 
 namespace AutoPlan.AutoPlan
 {
-    public class AutoPlanCommand : Command
+    public class AutoDrawCommand : Command
     {
         public const int HISTORY_VERSION = 20230324;
-        public AutoPlanCommand()
+        public AutoDrawCommand()
         {
             // Rhino only creates one instance of each command class defined in a
             // plug-in, so it is safe to store a refence in a static property.
             Instance = this;
         }
         ///<summary>The only instance of this command.</summary>
-        public static AutoPlanCommand Instance { get; private set; }
+        public static AutoDrawCommand Instance { get; private set; }
+        private PlaneObjectManager PlaneObjectM { get; set; }
         ///<returns>The command name as it appears on the Rhino command line.</returns>
-        public override string EnglishName => "AutoPlan";
+        public override string EnglishName => "AutoDraw";
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
             // TODO: start here modifying the behaviour of your command.
@@ -42,24 +44,35 @@ namespace AutoPlan.AutoPlan
             //        doc.Objects.AddBrep(pipe);
             //    }
             //}
-            Commands.DrawP2P_Path(doc);
+            HistorySettings.RecordingEnabled = true;
+            PlaneObjectManager planeObjectM = new PlaneObjectManager();
+            P2P_Path path;
+            List<ObjRef> refBuildings;
+            Point3d pt0, pt1;
+            Commands.DrawP2P_Path(doc, this, out planeObjectM, out path, out refBuildings, out pt0, out pt1);
+            this.PlaneObjectM = planeObjectM;
+
+            HistoryRecord history = new HistoryRecord(this, HISTORY_VERSION);
+            P2P_Path.WriteHistory(history, refBuildings, new List<Point3d> { pt0, pt1 }, path);
+            Guid id = doc.Objects.AddCurve(path.MidCurve, null, history, false);
+
             doc.Views.Redraw();
             // ---
             return Result.Success;
         }
-        //protected override bool ReplayHistory(ReplayHistoryData replayData)
-        //{
-        //    //return P2P_Path.ReplayHistory(HISTORY_VERSION, replayData,this,);
-        //}
+        protected override bool ReplayHistory(ReplayHistoryData replayData)
+        {
+            return P2P_Path.ReplayHistory(HISTORY_VERSION, replayData, this, this.PlaneObjectM);
+        }
     }
-    public class AutoDrawCommand : Command
+    public class AutoPlanCommand : Command
     {
-        public AutoDrawCommand()
+        public AutoPlanCommand()
         {
             Instance = this;
         }
-        public static AutoDrawCommand Instance { get; private set; }
-        public override string EnglishName => "AutoDraw";
+        public static AutoPlanCommand Instance { get; private set; }
+        public override string EnglishName => "AutoPlan";
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
             // TODO: start here modifying the behaviour of your command.
@@ -467,9 +480,11 @@ namespace AutoPlan.AutoPlan
             planeObjectM.P2P_Path.Add(p1);
             PathObject pathObject = new PathObject(planeObjectM, doc);
             this.PlaneObjectM = planeObjectM;
+
             HistoryRecord history = new HistoryRecord(this, HISTORY_VERSION);
-            Guid id = doc.Objects.AddCurve(p1.MidCurve,null,history,false);
             P2P_Path.WriteHistory(history, refBuildings, new List<Point3d> { pt0, pt1 }, p1);
+            Guid id = doc.Objects.AddCurve(p1.MidCurve, null, history, false);
+
             foreach (Brep brep in pathObject.PathBreps)
                 doc.Objects.AddBrep(brep);
             return Result.Success;

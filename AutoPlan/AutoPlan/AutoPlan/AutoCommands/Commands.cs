@@ -59,7 +59,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             treeM.AddTreeToDoc();
             RhinoApp.WriteLine(treeM.Trees.Count().ToString());
         }
-        public static Result DrawP2P_Path(RhinoDoc doc)
+        public static Result DrawP2P_Path(RhinoDoc doc,Command command,out PlaneObjectManager planeObjectManager, out P2P_Path path, out List<ObjRef> refBuildings, out Point3d pt0, out Point3d pt1)
         {
             RhinoApp.WriteLine("Start");
 
@@ -78,7 +78,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             }
 
             List<Building> buildings = new List<Building>();
-            List<ObjRef> refBuildings;
+            //List<ObjRef> refBuildings;
             using (GetObject getBuilding = new GetObject())
             {
                 Selector s = new Selector(doc);
@@ -90,18 +90,42 @@ namespace AutoPlan.AutoPlan.AutoCommands
             planeObjectM.OuterPath = outerPath;
             planeObjectM.MainPath = mainPaths;
 
-            Point3d pt0;
+
+            //P2P_Path p1 = new P2P_Path(new List<Point3d> { pt0, pt1 }, planeObjectM);
+            //P2P_Path path;
+            List<Point3d> points = DrawP2PPolyline(planeObjectM, out path);
+            pt0 = points[0];
+            pt1 = points[1];
+            planeObjectM.P2P_Path.Add(path);
+            PathObject pathObject = new PathObject(planeObjectM, doc);
+
+            planeObjectManager = planeObjectM;
+
+            //Guid id = doc.Objects.AddCurve(p1.MidCurve);
+            
+            //foreach (Brep brep in pathObject.PathBreps)
+            //    doc.Objects.AddBrep(brep);
+            return Result.Success;
+        }
+        public static List<Point3d> DrawP2PPolyline(PlaneObjectManager planeObjectM, out P2P_Path path)
+        {
+            Point3d pt0 = Point3d.Unset;
+            Point3d pt1 = Point3d.Unset;
+            List<Point3d> points = new List<Point3d>();
+
             using (GetPoint GPT = new GetPoint())
             {
                 GPT.SetCommandPrompt("第一个点");
                 if (GPT.Get() != GetResult.Point)
                 {
                     RhinoApp.WriteLine("No start point was selected.");
-                    return GPT.CommandResult();
+                    path = null;
+                    return points;
+                    //return GPT.CommandResult();
                 }
                 pt0 = GPT.Point();
             }
-            Point3d pt1;
+            
             using (GetPoint GPT = new GetPoint())
             {
                 GPT.SetCommandPrompt("第二个点");
@@ -111,19 +135,16 @@ namespace AutoPlan.AutoPlan.AutoCommands
                 if (GPT.Get() != GetResult.Point)
                 {
                     RhinoApp.WriteLine("No end point was selected.");
-                    return GPT.CommandResult();
+                    path = null;
+                    return points;
+                    //return GPT.CommandResult();
                 }
                 pt1 = GPT.Point();
             }
-            P2P_Path p1 = new P2P_Path(new List<Point3d> { pt0, pt1 }, planeObjectM);
-            planeObjectM.P2P_Path.Add(p1);
-            PathObject pathObject = new PathObject(planeObjectM, doc);
-
-            Guid id = doc.Objects.AddCurve(p1.MidCurve);
-            
-            foreach (Brep brep in pathObject.PathBreps)
-                doc.Objects.AddBrep(brep);
-            return Result.Success;
+            points.Add(pt0);
+            points.Add(pt1);
+            path = new P2P_Path(points, planeObjectM);
+            return points;
         }
     }
 }

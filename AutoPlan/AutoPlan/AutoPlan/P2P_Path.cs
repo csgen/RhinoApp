@@ -223,7 +223,7 @@ namespace AutoPlan.AutoPlan
             {
                 ArchivableDictionary userDict = refBuilidngs[i].Curve().UserDictionary;
                 var x = userDict["AvoidDistance"];
-                var y = userDict["ID"];
+                var y = userDict["GUID"];
                 double avoidDist = (double)x;
                 Guid id = (Guid)y;
                 Building building = new Building(refBuilidngs[i].Curve(), avoidDist);
@@ -299,7 +299,7 @@ namespace AutoPlan.AutoPlan
                 return false;
             if (!history.SetPoint3d(n + 4, path.EndPoint))
                 return false;
-            if(!history.SetDouble(n+5,path.BaseBuildingtValue))
+            if (!history.SetDouble(n + 5, path.BaseBuildingtValue))
                 return false;
             if (!history.SetGuid(n + 6, path.BaseBuildingID))
                 return false;

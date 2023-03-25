@@ -11,20 +11,38 @@ namespace AutoPlan.AutoPlan
     internal class Building
     {
         public Curve BuildingCurve { get; set; }
-        public double AvoidDistance { get; set; }
-        public Guid ID { get; set; }
-        public ArchivableDictionary ClassData { get; set; }
+        public double avoidDistance;
+        public Guid id;
+        public double AvoidDistance 
+        {
+            get { return avoidDistance; }
+            set
+            {
+                avoidDistance = value;
+                UpdateData();
+            }
+        }
+        public Guid ID
+        {
+            get { return id; }
+            set
+            {
+                id = value;
+                UpdateData();
+            }
+        }
+        public ArchivableDictionary ClassData { get; private set; }
         public Building(Curve buildingCurve, double avoidDistance = 3)
         {
             BuildingCurve = buildingCurve;
             AvoidDistance = avoidDistance;
-            SetData();
+            UpdateData();
         }
-        public void SetData()
+        public void UpdateData()
         {
             ClassData = new ArchivableDictionary();
-            ClassData.Set("AvoidDistance", AvoidDistance);
-            ClassData.Set("GUID", ID);
+            ClassData.Set("AvoidDistance", avoidDistance);
+            ClassData.Set("GUID", id);
         }
     }
 }

@@ -54,10 +54,51 @@ namespace AutoPlan.AutoPlan.AutoCommands
             PathObject pathObject = new PathObject(planeObjectM, doc);
             planeObjectM.PathObject = pathObject;
             TreeManager treeM = new TreeManager(planeObjectM);
+            List<Guid> pathObjectIDs = new List<Guid>();
             foreach (Brep brep in pathObject.PathBreps)
-                doc.Objects.AddBrep(brep);
+                pathObjectIDs.Add(doc.Objects.AddBrep(brep));
             treeM.AddTreeToDoc();
             RhinoApp.WriteLine(treeM.Trees.Count().ToString());
+
+            planeObjectM.SetData(AutoPlanPlugin.Instance.Dictionary);
+            AutoPlanPlugin.Instance.Dictionary.Set("GUID", pathObjectIDs);
+        }
+        public static void AddPath(RhinoDoc doc)
+        {
+            RhinoApp.WriteLine("Start");
+            PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
+            planeObjectM.GetData(AutoPlanPlugin.Instance.Dictionary);
+            List<MainPath> mainPaths = new List<MainPath>();
+            using (GetObject getPath = new GetObject())
+            {
+                Selector.SelectMainPathCurve(planeObjectM, mainPaths, getPath, "选主路");
+            }
+            foreach(MainPath path in mainPaths)
+            {
+                planeObjectM.MainPath.Add(path);
+            }
+            List<P2P_Path> p2p_Paths = new List<P2P_Path>();
+            using (GetObject getPath = new GetObject())
+            {
+                Selector.SelectP2P_PathCurve(planeObjectM, p2p_Paths, getPath, "选小路");
+            }
+            foreach(P2P_Path path in p2p_Paths)
+            {
+                planeObjectM.P2P_Path.Add(path);
+            }
+            PathObject pathObject = new PathObject(planeObjectM, doc);
+
+            List<Guid> pathObjectIDs = AutoPlanPlugin.Instance.Dictionary["GUID"] as List<Guid>;
+            foreach (Guid id in pathObjectIDs)
+            {
+                doc.Objects.Delete(id, true);
+            }
+            List<Guid> pathObjNewIDs = new List<Guid>();
+            foreach (Brep brep in pathObject.PathBreps)
+            pathObjNewIDs.Add(doc.Objects.AddBrep(brep));
+            
+            planeObjectM.SetData(AutoPlanPlugin.Instance.Dictionary);
+            AutoPlanPlugin.Instance.Dictionary.Set("GUID", pathObjNewIDs);
         }
         public static Result DrawP2P_Path(RhinoDoc doc,Command command,out PlaneObjectManager planeObjectManager, out P2P_Path path, out List<ObjRef> refBuildings, out Point3d pt0, out Point3d pt1)
         {

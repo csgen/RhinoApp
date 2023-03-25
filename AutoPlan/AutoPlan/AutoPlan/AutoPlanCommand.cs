@@ -83,6 +83,22 @@ namespace AutoPlan.AutoPlan
             return Result.Success;
         }
     }
+    public class AddPathCommand : Command
+    {
+        public AddPathCommand()
+        {
+            Instance = this;
+        }
+        public static AddPathCommand Instance { get; private set; }
+        public override string EnglishName => "AddPath";
+        protected override Result RunCommand(RhinoDoc doc, RunMode mode)
+        {
+            Commands.AddPath(doc);
+            doc.Views.Redraw();
+            // ---
+            return Result.Success;
+        }
+    }
     public class AddDataCommand : Command
     {
         public AddDataCommand()

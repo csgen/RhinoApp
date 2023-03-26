@@ -1,9 +1,0 @@
-D:\华东院\平面生成\RhinoApp\AutoPlan\AutoPlan\bin\Debug\net48\AutoPlan.rhp
-D:\华东院\平面生成\RhinoApp\AutoPlan\AutoPlan\bin\Debug\net48\AutoPlan.pdb
-D:\华东院\平面生成\RhinoApp\AutoPlan\AutoPlan\obj\Debug\net48\AutoPlan.csproj.AssemblyReference.cache
-D:\华东院\平面生成\RhinoApp\AutoPlan\AutoPlan\obj\Debug\net48\AutoPlan.GeneratedMSBuildEditorConfig.editorconfig
-D:\华东院\平面生成\RhinoApp\AutoPlan\AutoPlan\obj\Debug\net48\AutoPlan.AssemblyInfoInputs.cache
-D:\华东院\平面生成\RhinoApp\AutoPlan\AutoPlan\obj\Debug\net48\AutoPlan.AssemblyInfo.cs
-D:\华东院\平面生成\RhinoApp\AutoPlan\AutoPlan\obj\Debug\net48\AutoPlan.csproj.CoreCompileInputs.cache
-D:\华东院\平面生成\RhinoApp\AutoPlan\AutoPlan\obj\Debug\net48\AutoPlan.rhp
-D:\华东院\平面生成\RhinoApp\AutoPlan\AutoPlan\obj\Debug\net48\AutoPlan.pdb

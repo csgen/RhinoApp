@@ -9,6 +9,24 @@ using System.Collections.Generic;
 
 namespace SiteBuilding
 {
+    public class WPFStart : Command
+    {
+        public WPFStart()
+        {
+            Instance = this;
+        }
+        ///<summary>The only instance of this command.</summary>
+        public static WPFStart Instance { get; private set; }
+        public override string EnglishName => "SitePlan";
+
+        protected override Result RunCommand(RhinoDoc doc, RunMode mode)
+        {
+            var dialog = new PlanGenerator.MainWindow();
+            dialog.Show();
+
+            return Result.Success;
+        }
+    }
     public class SiteBuildingCommand : Command
     {
         public SiteBuildingCommand()

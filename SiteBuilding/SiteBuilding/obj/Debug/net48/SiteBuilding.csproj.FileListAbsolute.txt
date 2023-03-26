@@ -16,3 +16,12 @@ D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\obj\Debug\net48\Sit
 D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\obj\Debug\net48\SiteBuilding.pdb
 D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\SiteBuilding.rhp
 D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\SiteBuilding.pdb
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\FontAwesome.WPF.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\MaterialDesignColors.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\MaterialDesignThemes.Wpf.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\Microsoft.Xaml.Behaviors.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\ShowMeTheXAML.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\PlanGenerator.exe
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\PlanGenerator.pdb
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\PlanGenerator.exe.config
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\obj\Debug\net48\SiteBuilding.csproj.CopyComplete

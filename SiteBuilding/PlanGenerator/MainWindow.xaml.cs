@@ -1,0 +1,55 @@
+﻿using System.Windows;
+using System.Windows.Input;
+
+namespace PlanGenerator
+{
+    public partial class MainWindow : Window
+    {
+        
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+
+        private void BtnClickRoadGenerator(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new RoadGen();
+        }
+
+        private void btnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnClickProfile(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new Profile();
+        }
+
+        private void BtnClickLandGen(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new LandGen();
+        }
+
+        private void BtnClickClrPln(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new ClrPln();
+        }
+
+        private void BtnClickDesignDes(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new DesignDes();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+           this.Close();
+        }
+    }
+}

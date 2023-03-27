@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:local ="clr-namespace:PlanGenerator"
         
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" 
@@ -14,7 +15,12 @@
         Width="1180">
 
     <Window.Resources>
-        <ResourceDictionary Source="Styles.xaml"/>
+        <ResourceDictionary>
+            <local:myArgs x:Key="totalArea" Area="0"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
 
     <Grid>
@@ -167,14 +173,14 @@
                         </LinearGradientBrush>
                     </Border.Background>
 
-                    <Grid>
+                    <Grid DataContext="{StaticResource totalArea}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="86*"/>
                             <ColumnDefinition Width="40*"/>
                             <ColumnDefinition Width="50*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="计容面积" Style="{StaticResource textLabel}" VerticalAlignment="Top" Margin="15 8 0 0" FontSize="14" FontWeight="SemiBold" Grid.ColumnSpan="2"/>
-                        <TextBlock Text="2,000,000" Style="{StaticResource textLabel}" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Top" Margin="15,45,0,0" Grid.ColumnSpan="2" />
+                        <TextBlock Text="{Binding Area}" Style="{StaticResource textLabel}" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Top" Margin="15,45,0,0" Grid.ColumnSpan="2" />
 
                         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 8 10 0" Grid.Column="1">
 

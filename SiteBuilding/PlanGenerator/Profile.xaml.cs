@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Rhino;
 using Rhino.DocObjects;
 using Rhino.Input.Custom;
+using MyArgs;
 
 namespace PlanGenerator
 {
@@ -36,6 +37,7 @@ namespace PlanGenerator
         private void SelectOuterBoundary(object sender, RoutedEventArgs e)
         {
             Rhino.RhinoApp.RunScript("GetOuterPathCommand", true);
+            MainWindow.totalArea.Area = string.Format("{0:0.0}", MyArgs.MyArgs.area.ToString());
         }
 
         private void SelectBuildingProfile(object sender, RoutedEventArgs e)

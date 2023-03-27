@@ -1,16 +1,24 @@
 {
   "version": 2,
-  "dgSpecHash": "An17rLZMWQPckBnSGlEr1aaTQlXQnLqApsLXiW2MULs+wOerRYhAmY7UnyJI1kDC65ZH7hvwpaDXxvP58gAk2g==",
+  "dgSpecHash": "F7jXzafJYo+ET9CYErscmyklZp4xTQBJgJQm8wOxHQ6B09CP1iZq6mMP2Ir/FXnq3UczsazVSb57x2xxngS7HQ==",
   "success": true,
   "projectFilePath": "D:\\华东院\\平面生成\\RhinoApp\\SiteBuilding\\AutoPlan\\AutoPlan\\AutoPlan.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\communitytoolkit.mvvm\\8.1.0\\communitytoolkit.mvvm.8.1.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\fontawesome.wpf\\4.7.0.9\\fontawesome.wpf.4.7.0.9.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\materialdesigncolors\\2.1.2\\materialdesigncolors.2.1.2.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\materialdesignthemes\\4.8.0\\materialdesignthemes.4.8.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\rhinocommon\\7.13.21348.13001\\rhinocommon.7.13.21348.13001.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\showmethexaml\\2.0.0\\showmethexaml.2.0.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\showmethexaml.msbuild\\2.0.0\\showmethexaml.msbuild.2.0.0.nupkg.sha512"
+    "C:\\Users\\user\\.nuget\\packages\\showmethexaml.msbuild\\2.0.0\\showmethexaml.msbuild.2.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512"
   ],
   "logs": []
 }

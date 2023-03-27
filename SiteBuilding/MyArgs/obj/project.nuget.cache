@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "II1QgQGBNj85/qi6vyHO+TuFMoqiJTw7iwx6JhgSl4g/vFaPX+R7qwiOj/+74RYrgRffA4Yjq3OdDtWstEgyTA==",
+  "success": true,
+  "projectFilePath": "D:\\华东院\\平面生成\\RhinoApp\\SiteBuilding\\MyArgs\\MyArgs.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

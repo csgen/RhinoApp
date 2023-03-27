@@ -1,0 +1,10 @@
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyArgs\bin\Debug\netstandard2.0\MyArgs.deps.json
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyArgs\bin\Debug\netstandard2.0\MyArgs.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyArgs\bin\Debug\netstandard2.0\MyArgs.pdb
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyArgs\obj\Debug\netstandard2.0\MyArgs.csproj.AssemblyReference.cache
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyArgs\obj\Debug\netstandard2.0\MyArgs.GeneratedMSBuildEditorConfig.editorconfig
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyArgs\obj\Debug\netstandard2.0\MyArgs.AssemblyInfoInputs.cache
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyArgs\obj\Debug\netstandard2.0\MyArgs.AssemblyInfo.cs
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyArgs\obj\Debug\netstandard2.0\MyArgs.csproj.CoreCompileInputs.cache
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyArgs\obj\Debug\netstandard2.0\MyArgs.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyArgs\obj\Debug\netstandard2.0\MyArgs.pdb

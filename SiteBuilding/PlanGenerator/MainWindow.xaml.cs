@@ -5,10 +5,11 @@ namespace PlanGenerator
 {
     public partial class MainWindow : Window
     {
-        
+        public static myArgs totalArea;
         public MainWindow()
         {
             InitializeComponent();
+            totalArea = Resources["totalArea"] as myArgs;
         }
 
         private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

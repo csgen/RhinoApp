@@ -25,3 +25,13 @@ D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\Pla
 D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\PlanGenerator.pdb
 D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\PlanGenerator.exe.config
 D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\obj\Debug\net48\SiteBuilding.csproj.CopyComplete
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\CommunityToolkit.Mvvm.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\Microsoft.Bcl.AsyncInterfaces.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\System.Buffers.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\System.ComponentModel.Annotations.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\System.Memory.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\System.Numerics.Vectors.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\System.Runtime.CompilerServices.Unsafe.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\System.Threading.Tasks.Extensions.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\MyArgs.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\MyArgs.pdb

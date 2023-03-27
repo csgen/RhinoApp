@@ -48,14 +48,17 @@ namespace SiteBuilding.Sitebuilding
             var corner1 = Corners
                 .OrderBy(x => -1 * Toolkit.Intersept(x, v1))
                 .First();
-            var p1 = Toolkit.GetPoint(corner1, v1);
+            var corner1_height = corner1 + new Vector3d(0, 0, 10);
+            var p1 = Toolkit.GetPoint(corner1_height, v1);
 
             var corner2 = Corners
                 .OrderBy(x => -1 * Toolkit.Intersept(x, v2))
                 .First();
-            var p2 = Toolkit.GetPoint(corner2, v2);
+            var corner2_height = corner1 + new Vector3d(0, 0, 10);
+            var p2 = Toolkit.GetPoint(corner2_height, v2);
 
-            var result = Toolkit.TestIntersection(corner1, p1, corner2, p2);
+             
+            var result = Toolkit.TestIntersection(corner1_height, p1, corner2_height, p2);
 
             if (!result)
             {
@@ -82,7 +85,12 @@ namespace SiteBuilding.Sitebuilding
             var p1 = Profile;
             var p2 = building.Profile;
             var line = Toolkit.CheckDistance(p1, p2);
+        }
 
+        public double GetArea()
+        {
+            var area = AreaMassProperties.Compute(this.Profile, 0.001).Area;
+            return area;
         }
 
     }

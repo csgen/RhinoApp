@@ -17,6 +17,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\MyArgs\MyArgs.csproj" />
     <ProjectReference Include="..\PlanGenerator\PlanGenerator.csproj" />
   </ItemGroup>
   

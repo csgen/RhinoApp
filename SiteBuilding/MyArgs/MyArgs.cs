@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MyArgs
 {
     public class MyArgs
     {
-        public static double area { get; set; }
+        
+        
+        //public static List<ObjRef>
     }
 }

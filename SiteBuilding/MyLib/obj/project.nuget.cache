@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "THCh6ra7N3RB76caTbkCsQBY4xJmya0ct8hZoDH7KS2D4HAw2+tCYXtgkuXPEZQD0+HEylXvCwUq8Do8A+kxuA==",
+  "success": true,
+  "projectFilePath": "D:\\华东院\\平面生成\\RhinoApp\\SiteBuilding\\MyLib\\MyLib.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\rhinocommon\\7.13.21348.13001\\rhinocommon.7.13.21348.13001.nupkg.sha512"
+  ],
+  "logs": []
+}

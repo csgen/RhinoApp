@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using Rhino;
 using Rhino.DocObjects;
 using Rhino.Input.Custom;
-using MyArgs;
 
 namespace PlanGenerator
 {
@@ -31,13 +30,14 @@ namespace PlanGenerator
 
         private void Draw_Profile(object sender, RoutedEventArgs e)
         {
-            Rhino.RhinoApp.RunScript("SiteBuildingCommand", true);
+            Rhino.RhinoApp.RunScript("AddShadow", true);
+            MainWindow.totalArea.Area = string.Format("{0:0.0}", Math.Round(MyLib.MyLib.area, 2).ToString());
         } 
 
         private void SelectOuterBoundary(object sender, RoutedEventArgs e)
         {
             Rhino.RhinoApp.RunScript("GetOuterPathCommand", true);
-            MainWindow.totalArea.Area = string.Format("{0:0.0}", MyArgs.MyArgs.area.ToString());
+            
         }
 
         private void SelectBuildingProfile(object sender, RoutedEventArgs e)

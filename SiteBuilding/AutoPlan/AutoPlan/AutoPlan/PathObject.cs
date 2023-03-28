@@ -24,9 +24,11 @@ namespace AutoPlan.AutoPlan
         Curve[] MainPathEdge { get; set; }
         Curve[] P2P_PathEdge { get; set; }
         public Brep[] PathBreps { get; set; }
+        public PlaneObjectManager planeObjectM { get; set; }
 
         public PathObject(PlaneObjectManager planeObjectM, RhinoDoc rhinoDoc)
         {
+            this.planeObjectM = planeObjectM;
             OuterPath = planeObjectM.OuterPath;
             MainPaths = planeObjectM.MainPath;
             P2P_Paths = planeObjectM.P2P_Path;
@@ -39,6 +41,24 @@ namespace AutoPlan.AutoPlan
 
         private Brep[] PathBrep()
         {
+            //Curve[] MainAndOuterPathEdge = new Curve[MainPathEdge.Length + OuterPathEdge.Length];
+            //Array.Copy(MainPathEdge, MainAndOuterPathEdge, MainPathEdge.Length);
+            //Array.Copy(OuterPathEdge, 0, MainAndOuterPathEdge, MainPathEdge.Length, OuterPathEdge.Length);
+            //Curve[] union1 = Curve.CreateBooleanUnion(MainAndOuterPathEdge, 0.001);
+            //for(int i = 0; i < union1.Length; i++)
+            //{
+            //    union1[i] = Curve.CreateFilletCornersCurve(union1[i], 4, 0.001, 0.001);
+            //}
+            //Curve[] union2 = new Curve[union1.Length + P2P_PathEdge.Length];
+            //Array.Copy(union1, union2, union1.Length);
+            //Array.Copy(P2P_PathEdge, 0, union2, union1.Length, P2P_PathEdge.Length);
+            //Curve[] union3 = Curve.CreateBooleanUnion(union2, 0.001);
+            //for(int i = 0; i < union3.Length; i++)
+            //{
+            //    union3[i] = Curve.CreateFilletCornersCurve(union3[i], 2, 0.001, 0.001);
+            //}
+            //return Brep.CreatePlanarBreps(union3, 0.001);
+
             Curve[] P2PAndMainEdge = new Curve[MainPathEdge.Length + P2P_PathEdge.Length];
             Array.Copy(MainPathEdge, P2PAndMainEdge, MainPathEdge.Length);
             Array.Copy(P2P_PathEdge, 0, P2PAndMainEdge, MainPathEdge.Length, P2P_PathEdge.Length);//合并P2P和mainPath
@@ -108,7 +128,7 @@ namespace AutoPlan.AutoPlan
             List<Curve> trimmedCrv = new List<Curve>();
             foreach(Point3d point in entryPoint)
             {
-                Circle entryCircle = new Circle(point, 3);
+                Circle entryCircle = new Circle(point, 2);
                 trimmedCrv.Add(entryCircle.ToNurbsCurve());
             }
             return TrimCurveWithCurves(OuterCurve, trimmedCrv);
@@ -158,14 +178,62 @@ namespace AutoPlan.AutoPlan
         {
             List<Path> mainPaths = new List<Path>();
             foreach (MainPath path in MainPaths)
+            {
+                Curve c = path.MidCurve;
+                var events = Intersection.CurveCurve(c, OuterPath.MidCurve, 0.001, 0.001);
+                if (events != null)
+                {
+                    for (int i = 0; i < events.Count; i++)
+                    {
+                        var e = events[i];
+                        Point3d p1 = c.PointAtStart;
+                        Point3d p2 = c.PointAtEnd;
+                        double d1 = p1.DistanceTo(e.PointA);
+                        double d2 = p2.DistanceTo(e.PointA);
+                        if (d1 > d2)
+                        {
+                            Curve c1 = c.Extend(CurveEnd.Start, OuterPath.Width, CurveExtensionStyle.Line);
+                            c = c1;
+                        }
+                        if (d1 < d2)
+                        {
+                            Curve c1 = c.Extend(CurveEnd.End, OuterPath.Width, CurveExtensionStyle.Line);
+                            c = c1;
+                        }
+                    }
+                }
+                path.MidCurve = c;
+                
                 mainPaths.Add(path);
+            }
             return PathEdge_SingleClass(mainPaths, GMainFilletRadi);
         }
         private Curve[] P2P_PathBrep(double GP2PFilletRadi = 2)
         {
             List<Path> p2p_Paths = new List<Path>();
             foreach (P2P_Path path in P2P_Paths)
-                p2p_Paths.Add(path);
+            {
+                Curve c = path.MidCurve;
+                Point3d p = path.StartPoint;
+                Point3d p1 = c.PointAtStart;
+                Point3d p2 = c.PointAtEnd;
+                double d1 = p1.DistanceTo(p);
+                double d2 = p2.DistanceTo(p);
+                P2P_Path path1 = new P2P_Path(path.MidCurve,planeObjectM);
+                path1.Width = path.Width;
+                if (d1 < d2)
+                {
+                    Curve c1 = c.Extend(CurveEnd.Start, 15, CurveExtensionStyle.Line);
+                    path1.MidCurve = c1;
+                    
+                }
+                if (d1 > d2)
+                {
+                    Curve c1 = c.Extend(CurveEnd.End, 15, CurveExtensionStyle.Line);
+                    path1.MidCurve = c1;
+                }
+                p2p_Paths.Add(path1);
+            }
             return PathEdge_SingleClass(p2p_Paths, GP2PFilletRadi);
         }
         private Brep CreatePathSurface(Path path)//倒角后，往两边偏移并loft出曲面

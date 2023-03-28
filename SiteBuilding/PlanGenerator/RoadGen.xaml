@@ -12,98 +12,108 @@
     <Page.Resources>
         <ResourceDictionary Source="Styles.xaml"/>
     </Page.Resources>
-    
+
     <Grid>
         <!--Transfer Panel-->
         <Border Style="{StaticResource border}" Margin="20,110,20,0" Height="540">
             <StackPanel Margin="10 20 10 20">
                 <TextBlock Text="道路生成" Foreground="#fcfcfc" TextAlignment="Center" FontSize="34" FontWeight="SemiBold"/>
-                <Grid Margin="0 12 0 22">
+                <Grid Margin="0 0 0 0" Width="400" Height="200">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    <TextBlock Text="主干道" Style="{StaticResource textLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Text="次干道" Grid.Row="1" Grid.Column="0" Style="{StaticResource textLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Text="宅间路" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource textLabel}" HorizontalAlignment="Center" />
+                    <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1">
+                        <Button Style="{StaticResource tabButton}" Content="选择" FontSize="10" Click="SelectOuterPath" Height="33"/>
+                        <Button Style="{StaticResource tabButton}" Content="添加" FontSize="10" Click="DrawOuterPath" Height="33"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+                        <Button Style="{StaticResource tabButton}" Content="选择" FontSize="10" Click="SelectMainPath" Height="33"/>
+                        <Button Style="{StaticResource tabButton}" Content="添加" FontSize="10" Click="DrawMainPath" Height="33"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1">
+                        <Button Style="{StaticResource tabButton}" Content="选择" FontSize="10" Click="SelectP2P_Path" Height="33"/>
+                        <Button Style="{StaticResource tabButton}" Content="添加" FontSize="10" Click="AutoDrawP2P" Height="33"/>
+                    </StackPanel>
+                    <TextBlock Text="主通道宽度 单位:m" Foreground="#FFA0A0A0" Grid.Row="0" Grid.Column="2" FontSize="10" Height="11"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="3">
 
+                        <Slider x:Name="stRd" Margin="10 0 0 0"
+                        Width="70"
+                        Height="8"
+                        Maximum="8"
+                        Minimum="3.0"
+                        SmallChange="0.5" TickFrequency="0.5"
+                        Style="{DynamicResource SliderStyle1}" ValueChanged="UpdateOuterPathWidth"
+                        />
+                        <TextBox Text="{Binding Value, ElementName=stRd, Mode=TwoWay, StringFormat=\{0:N1\}, UpdateSourceTrigger=PropertyChanged}" TextChanged="TextBox_TextChanged" Height="36" Width="50"/>
+                    </StackPanel>
+                    <TextBlock Text="支路宽度 单位:m" Foreground="#FFA0A0A0" Grid.Row="1" Grid.Column="2" FontSize="10" Height="11"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3">
 
-                    <Button Style="{StaticResource tabButton}" Content="选择主通道中线" FontSize="10" Click="SelectOuterPath"/>
-                    <Button Style="{StaticResource tabButton}" Content="选择支路中线" Grid.Column="1" FontSize="10" Click="SelectMainPath"/>
-                    <Button Style="{StaticResource tabButton}" Content="选择宅间道路中线" Grid.Column="2" FontSize="10" Click="SelectP2P_Path"/>
+                        <Slider  x:Name="ndRd" Margin="10 0 0 0"
+                        Width="70"
+                        Height="8"
+                        Maximum="6"
+                        Minimum="3"
+                        SmallChange="0.5" TickFrequency="0.5"
+                        Style="{DynamicResource SliderStyle1}" ValueChanged="UpdateMainPathWidth"
+                        />
+                        <TextBox Text="{Binding Value, ElementName=ndRd, Mode=TwoWay, StringFormat=\{0:N1\}, UpdateSourceTrigger=PropertyChanged}" TextChanged="TextBox_TextChanged" Height="36" Width="50"/>
+                    </StackPanel>
+                    <TextBlock Text="宅间道路宽度 单位:m" Foreground="#FFA0A0A0" Grid.Row="2" Grid.Column="2" FontSize="10" Height="11"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3">
+
+                        <Slider x:Name="rdRd" Margin="10 0 0 0"
+                        Width="70"
+                        Height="8"
+                        Maximum="5"
+                        Minimum="2.0"
+                        SmallChange="0.5" TickFrequency="0.5"
+                        Style="{DynamicResource SliderStyle1}" ValueChanged="UpdateP2P_Path"
+                        />
+                        <TextBox Text="{Binding Value, ElementName=rdRd, Mode=TwoWay, StringFormat=\{0:N1\}, UpdateSourceTrigger=PropertyChanged}" TextChanged="TextBox_TextChanged" Height="36" Width="50"/>
+                    </StackPanel>
+
                 </Grid>
-                
+
+
+
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="主通道宽度 单位:m" Foreground="#FFA0A0A0" FontSize="10" HorizontalAlignment="Center" Margin="0,0,0,5"/>
-                        <Slider x:Name="stRd"
-                        Width="100"
-                        Height="12"
-                        Maximum="20"
-                        Minimum="0.5"
-                        SmallChange="0.5" TickFrequency="0.5"
-                        Style="{DynamicResource SliderStyle1}"
-                        />
-                        <TextBox Text="{Binding ElementName=stRd,Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N1}}" HorizontalAlignment="Center" TextChanged="TextBox_TextChanged"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Vertical" Grid.Column="1">
-                        <TextBlock Text="支路宽度 单位:m" Foreground="#FFA0A0A0" FontSize="10" HorizontalAlignment="Center" Margin="0,0,0,5"/>
-                        <Slider x:Name="ndRd"
-                        Width="100"
-                        Height="12"
-                        Maximum="20"
-                        Minimum="0.5"
-                        SmallChange="0.5" TickFrequency="0.5"
-                        Style="{DynamicResource SliderStyle1}"
-                        />
-                        <TextBox Text="{Binding ElementName=ndRd,Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N1}}" HorizontalAlignment="Center" TextChanged="TextBox_TextChanged"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Vertical" Grid.Column="2">
-                        <TextBlock Text="宅间道路宽度 单位:m" Foreground="#FFA0A0A0" FontSize="10" HorizontalAlignment="Center" Margin="0,0,0,5"/>
-                        <Slider x:Name="rdRd"
-                        Width="100"
-                        Height="12"
-                        Maximum="20"
-                        Minimum="0.5"
-                        SmallChange="0.5" TickFrequency="0.5"
-                        Style="{DynamicResource SliderStyle1}"
-                         />
-                        <TextBox Text="{Binding ElementName=rdRd,Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N1}}" HorizontalAlignment="Center" TextChanged="TextBox_TextChanged"/>
-                    </StackPanel>
-                   
-                </Grid>
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Style="{StaticResource sendButton}" Click="Button_Click" Margin="10">
+                    <Button Style="{StaticResource sendButton}" Click="AddPath" Margin="0,10,20,10">
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="spinner" Style="{StaticResource whiteIcon}" Grid.Row="3" VerticalAlignment="Center" />
-                            <TextBlock Text="点击选择障碍物轮廓" Margin="10 0 0 0" FontWeight="SemiBold"/>
+                            <TextBlock Text="点击添加道路" Margin="10 0 0 0" FontWeight="SemiBold"/>
                         </StackPanel>
-                        
+
                     </Button>
 
-                    <Button Style="{StaticResource sendButton}" Click="AutoDrawP2P" Grid.Column="1" Margin="10">
+                    <Button Style="{StaticResource sendButton}" Click="EditPath" Grid.Column="1" Margin="20,10,0,10">
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="spinner" Style="{StaticResource whiteIcon}" Grid.Row="3" VerticalAlignment="Center" />
-                            <TextBlock Text="点击选择道路起点" Margin="10 0 0 0" FontWeight="SemiBold"/>
+                            <TextBlock Text="点击修改道路" Margin="10 0 0 0" FontWeight="SemiBold"/>
                         </StackPanel>
 
                     </Button>
                 </Grid>
-               
-                
-                
+
+
+
                 <Button Style="{StaticResource sendButton}" Margin="300,20,0,0">
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="Refresh" Style="{StaticResource whiteIcon}" Grid.Row="3" VerticalAlignment="Center" />
@@ -111,14 +121,14 @@
                     </StackPanel>
                 </Button>
                 <TextBlock Text="小心！将重置所有道路输入信息" FontSize="9" Foreground="#e0e0e0" TextAlignment="Right" Opacity="0.5" Margin="0 0 0 20"/>
-                
+
                 <Button Style="{StaticResource sendButton}" Click="Generate">
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="spinner" Style="{StaticResource whiteIcon}" Grid.Row="3" VerticalAlignment="Center" />
                         <TextBlock Text="点击生成" Margin="10 0 0 0" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Button>
-                
+
             </StackPanel>
         </Border>
     </Grid>

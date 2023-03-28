@@ -35,8 +35,9 @@ namespace AutoPlan.AutoPlan
             Brep[] pathBreps = PlaneObjectM.PathObject.PathBreps;
             List<Building> buildings = PlaneObjectM.Buildings;
             List<Brep> cuttingBreps = new List<Brep>();
-            foreach(Brep brep in pathBreps)
+            foreach(Brep brep1 in pathBreps)
             {
+                Brep brep = (Brep)brep1.Duplicate();
                 if(brep.Transform(Transform.Translation(Vector3d.ZAxis * -10)))
                 {
                     Brep cuttingBrep = brep.Faces[0].CreateExtrusion(new Line(Point3d.Origin, Vector3d.ZAxis, 20).ToNurbsCurve(), true);

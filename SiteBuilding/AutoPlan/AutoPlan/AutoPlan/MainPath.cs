@@ -12,7 +12,7 @@ namespace AutoPlan.AutoPlan
         public MainPath()
         {
             FilletRadi = 6;
-            Width = 8;
+            Width = 6;
 
         }
     }

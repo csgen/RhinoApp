@@ -29,5 +29,36 @@ namespace PlanGenerator
         {
 
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TestDraw(object sender, RoutedEventArgs e)
+        {
+            Rhino.RhinoApp.RunScript("TestDrawCommand", true);
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            
+            
+        }
+
+        private bool isUpdating=false;
+        
+        private void Slider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (isUpdating) return;
+            if (e.OldValue == e.NewValue) return;
+            
+
+            isUpdating = true;
+            MyLib.MyLib.testRadius = e.NewValue;
+            Rhino.RhinoApp.RunScript("TestUpdateCommand", true);
+            
+            isUpdating = false;
+        }
     }
 }

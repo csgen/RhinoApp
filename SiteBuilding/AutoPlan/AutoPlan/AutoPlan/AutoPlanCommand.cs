@@ -619,4 +619,86 @@ namespace AutoPlan.AutoPlan
             return P2P_Path.ReplayHistory(HISTORY_VERSION,replayData,this,this.PlaneObjectM);
         }
     }
+    public class Test20230327 : Command
+    {
+        public Test20230327()
+        {
+            Instance = this;
+        }
+        public static Test20230327 Instance { get; private set; }
+        public override string EnglishName => "TestDrawCommand";
+        protected override Result RunCommand(RhinoDoc doc, RunMode mode)
+        {
+            // TODO: start here modifying the behaviour of your command.
+            // ---
+            List<Guid> gl = new List<Guid>();
+            AutoPlanPlugin.Instance.Dictionary.Set("testId", gl);
+            if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("testId"))
+            {
+                List<Guid> idList = AutoPlanPlugin.Instance.Dictionary["testId"] as List<Guid>;
+                if (idList.Count == 0)
+                {
+                    TestDraw(doc);
+                }
+            }
+            //UpdateDraw(doc);
+            doc.Views.Redraw();
+            // ---
+            return Result.Success;
+        }
+        public static void TestDraw(RhinoDoc doc)
+        {
+            Circle c1 = new Circle(Point3d.Origin, MyLib.MyLib.testRadius);
+            //Circle c2 = new Circle(new Point3d(5, 5, 0), MyLib.MyLib.testRadius);
+            List<Circle> cL = new List<Circle> { c1 };
+            List<ObjRef> refL = new List<ObjRef>();
+            List<Guid> guidL = new List<Guid>();
+            foreach (Circle c in cL)
+            {
+                Guid id = doc.Objects.AddCircle(c);
+                //refL.Add(new ObjRef(doc, id));
+                guidL.Add(id);
+            }
+            //MyLib.MyLib.refList = refL;
+            AutoPlanPlugin.Instance.Dictionary.Set("testId", guidL);
+            //MyLib.MyLib.guidList = guidL;
+            return;
+            //MyArgs.MyArgs.ref
+        }
+        public static void UpdateDraw(RhinoDoc doc)
+        {
+            List<Guid> idList = AutoPlanPlugin.Instance.Dictionary["testId"] as List<Guid>;
+            List<Guid> nullList = new List<Guid>();
+            AutoPlanPlugin.Instance.Dictionary.Set("testId", nullList);
+            foreach(Guid id in idList)
+            {
+                doc.Objects.Delete(id, true);
+                TestDraw(doc);
+            }
+            
+        }
+    }
+    public class Test20230328 : Command
+    {
+        public Test20230328()
+        {
+            Instance = this;
+        }
+        public static Test20230328 Instance { get; private set; }
+        public override string EnglishName => "TestUpdateCommand";
+        protected override Result RunCommand(RhinoDoc doc, RunMode mode)
+        {
+            // TODO: start here modifying the behaviour of your command.
+            // ---
+            //TestDraw(doc);
+            if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("testId"))
+                Test20230327.UpdateDraw(doc);
+            //Test20230327.UpdateDraw(doc);
+            doc.Views.Redraw();
+            // ---
+            return Result.Success;
+        }
+        
+    }
+
 }

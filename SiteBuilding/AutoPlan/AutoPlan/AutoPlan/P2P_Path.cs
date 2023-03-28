@@ -27,15 +27,21 @@ namespace AutoPlan.AutoPlan
         public Guid BaseBuildingID { get; set; }
         public Path BasePath { get; set; }
         public ArchivableDictionary ClassData { get; set; }
-        public P2P_Path()
+        public P2P_Path(Curve midCurve, PlaneObjectManager planeObjectM)
         {
-            FilletRadi = 2;
+            FilletRadi = 1;
             Width = 4;//宽度太小创建Object时有问题，可能是boolean/fillet其中之一的bug，目前经验值最小是4
+            MidCurve = midCurve;
+            Point3d p1 = MidCurve.PointAtStart;
+            Point3d p2 = MidCurve.PointAtEnd;
+            List<Point3d> points = new List<Point3d> { p1, p2 };
+            StartPoint = PairPoint(points, planeObjectM.Buildings)[0];
+            EndPoint = PairPoint(points, planeObjectM.Buildings)[1];
         }
         public P2P_Path(List<Point3d> points, PlaneObjectManager planeObjectM)
         {
-            FilletRadi = 2;
-            Width = 3;
+            FilletRadi = 1;
+            Width = 4;
             StartPoint = PairPoint(points, planeObjectM.Buildings)[0];
             EndPoint = PairPoint(points, planeObjectM.Buildings)[1];
             List<Path> pathList = new List<Path>();

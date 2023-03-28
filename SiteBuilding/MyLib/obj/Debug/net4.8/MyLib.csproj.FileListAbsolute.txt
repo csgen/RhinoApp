@@ -1,0 +1,9 @@
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\obj\Debug\net4.8\MyLib.csproj.AssemblyReference.cache
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\obj\Debug\net4.8\MyLib.GeneratedMSBuildEditorConfig.editorconfig
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\obj\Debug\net4.8\MyLib.AssemblyInfoInputs.cache
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\obj\Debug\net4.8\MyLib.AssemblyInfo.cs
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\obj\Debug\net4.8\MyLib.csproj.CoreCompileInputs.cache
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\MyLib.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\MyLib.pdb
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\obj\Debug\net4.8\MyLib.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\obj\Debug\net4.8\MyLib.pdb

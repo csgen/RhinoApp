@@ -75,5 +75,49 @@ namespace PlanGenerator
         {
             RhinoApp.RunScript("AutoDraw", true);
         }
+
+        private void AddPath(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditPath(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DrawOuterPath(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DrawMainPath(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void stRd_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void ndRd_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            
+        }
+
+        private void UpdateP2P_Path(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            MyLib.MyLib.P2P_PathWidth = e.NewValue;
+        }
+        private void UpdateOuterPathWidth(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            MyLib.MyLib.OuterPathWidth = e.NewValue;
+        }
+
+        private void UpdateMainPathWidth(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            MyLib.MyLib.MainPathWidth = e.NewValue;
+        }
     }
 }

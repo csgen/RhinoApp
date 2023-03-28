@@ -63,8 +63,8 @@ namespace AutoPlan.AutoPlan
             for (int i = 0; i < getPath.ObjectCount; i++)
             {
                 Curve midCurve = getPath.Object(i).Curve();
-                P2P_Path path = new P2P_Path();
-                path.MidCurve = midCurve;
+                P2P_Path path = new P2P_Path(midCurve, planeObjectM);
+                //path.MidCurve = ;
 
                 paths.Add(path);
                 planeObjectM.Paths.Add(path);

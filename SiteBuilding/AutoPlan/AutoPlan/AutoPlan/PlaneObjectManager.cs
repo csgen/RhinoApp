@@ -85,8 +85,8 @@ namespace AutoPlan.AutoPlan
                 double[] p2p_pathFilletRadi = dictionary["p2p_pathFilletRadi"] as double[];
                 for (int i = 0; i < p2p_pathCurves.Length; i++)
                 {
-                    P2P_Path path = new P2P_Path();
-                    path.MidCurve = p2p_pathCurves[i];
+                    P2P_Path path = new P2P_Path(p2p_pathCurves[i], this);
+                    //path.MidCurve = p2p_pathCurves[i];
                     path.Width = p2p_pathWidths[i];
                     path.FilletRadi = p2p_pathFilletRadi[i];
                     P2P_Path.Add(path);

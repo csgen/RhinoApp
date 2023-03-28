@@ -69,7 +69,7 @@ namespace SiteBuilding.Sitebuilding
                         Rhino.RhinoDoc.ActiveDoc.Objects.Add(building.Shadow);
                         totalArea += building.GetArea();
                     }     
-                    MyArgs.MyArgs.area = totalArea;
+                    MyLib.MyLib.area = totalArea;
 
                 }
                 catch

@@ -283,6 +283,19 @@
           "bin/placeholder/MyArgs.dll": {}
         }
       },
+      "MyLib/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.8",
+        "dependencies": {
+          "RhinoCommon": "7.13.21348.13001"
+        },
+        "compile": {
+          "bin/placeholder/MyLib.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MyLib.dll": {}
+        }
+      },
       "PlanGenerator/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.8",
@@ -290,7 +303,7 @@
           "CommunityToolkit.Mvvm": "8.1.0",
           "FontAwesome.WPF": "4.7.0.9",
           "MaterialDesignThemes": "4.8.0",
-          "MyArgs": "1.0.0",
+          "MyLib": "1.0.0",
           "RhinoCommon": "7.13.21348.13001",
           "ShowMeTheXAML.MSBuild": "2.0.0"
         },
@@ -796,6 +809,11 @@
       "type": "project",
       "path": "../MyArgs/MyArgs.csproj",
       "msbuildProject": "../MyArgs/MyArgs.csproj"
+    },
+    "MyLib/1.0.0": {
+      "type": "project",
+      "path": "../MyLib/MyLib.csproj",
+      "msbuildProject": "../MyLib/MyLib.csproj"
     },
     "PlanGenerator/1.0.0": {
       "type": "project",

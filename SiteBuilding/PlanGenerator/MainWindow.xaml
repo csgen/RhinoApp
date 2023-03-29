@@ -226,7 +226,7 @@
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="15 0 0 5" Grid.ColumnSpan="2">
-                            <Button Style="{StaticResource fillButton}">
+                            <Button Style="{StaticResource fillButton}" Click="BindingTest">
                                 <fa:ImageAwesome Icon="ArrowUp"  Style="{StaticResource whiteIcon}" Width="10" Height="10" />
                             </Button>
 

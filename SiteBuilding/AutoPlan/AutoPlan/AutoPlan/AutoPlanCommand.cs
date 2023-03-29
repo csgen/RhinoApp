@@ -109,19 +109,37 @@ namespace AutoPlan.AutoPlan
             return Result.Success;
         }
     }
-    public class GenerateObjectCommand : Command
+    public class GeneratePathObjectCommand : Command
     {
-        public GenerateObjectCommand()
+        public GeneratePathObjectCommand()
         {
             Instance = this;
         }
-        public static GenerateObjectCommand Instance { get; private set; }
-        public override string EnglishName => "GenerateObjectCommand";
+        public static GeneratePathObjectCommand Instance { get; private set; }
+        public override string EnglishName => "GeneratePathObjectCommand";
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
             // TODO: start here modifying the behaviour of your command.
             // ---
-            Commands.GenerateObject(doc);
+            Commands.GeneratePathObject(doc);
+            doc.Views.Redraw();
+            // ---
+            return Result.Success;
+        }
+    }
+    public class GenerateLandscapeCommand : Command
+    {
+        public GenerateLandscapeCommand()
+        {
+            Instance = this;
+        }
+        public static GenerateLandscapeCommand Instance { get; private set; }
+        public override string EnglishName => "GenerateLandscapeCommand";
+        protected override Result RunCommand(RhinoDoc doc, RunMode mode)
+        {
+            // TODO: start here modifying the behaviour of your command.
+            // ---
+            Commands.GenerateLandscape(doc);
             doc.Views.Redraw();
             // ---
             return Result.Success;
@@ -164,6 +182,8 @@ namespace AutoPlan.AutoPlan
             HistoryRecord history = new HistoryRecord(this, HISTORY_VERSION);
             P2P_Path.WriteHistory(history, refBuildings, new List<Point3d> { pt0, pt1 }, path);
             Guid id = doc.Objects.AddCurve(path.MidCurve, null, history, false);
+            path.ID = id;
+            PlaneObjectM.SetP2P_PathData(AutoPlanPlugin.Instance.Dictionary);
 
             doc.Views.Redraw();
             // ---

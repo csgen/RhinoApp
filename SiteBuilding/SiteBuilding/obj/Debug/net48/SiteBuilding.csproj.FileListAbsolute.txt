@@ -35,3 +35,5 @@ D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\Sys
 D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\System.Threading.Tasks.Extensions.dll
 D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\MyArgs.dll
 D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\MyArgs.pdb
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\MyLib.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\SiteBuilding\bin\Debug\net48\MyLib.pdb

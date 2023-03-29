@@ -52,5 +52,17 @@ namespace PlanGenerator
         {
            this.Close();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+        public int i = 0;
+        private void BindingTest(object sender, RoutedEventArgs e)
+        {
+            myArgs m = new myArgs();
+            i++;
+            m.Area = i.ToString();
+        }
     }
 }

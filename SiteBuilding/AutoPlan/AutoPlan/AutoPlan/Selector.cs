@@ -35,7 +35,9 @@ namespace AutoPlan.AutoPlan
             getPath.SetCommandPrompt(prompt);
             getPath.GeometryFilter = ObjectType.Curve;
             getPath.GetMultiple(1, 0);
+            Guid id = getPath.Object(0).ObjectId;
             Curve midCurve = getPath.Object(0).Curve();
+            outerPath.ID = id;
             outerPath.MidCurve = midCurve;
 
         }
@@ -50,6 +52,7 @@ namespace AutoPlan.AutoPlan
                 Curve midCurve = getPath.Object(i).Curve();
                 MainPath path = new MainPath();
                 path.MidCurve = midCurve;
+                path.ID = getPath.Object(i).ObjectId;
                 paths.Add(path);
 
             }
@@ -64,8 +67,7 @@ namespace AutoPlan.AutoPlan
             {
                 Curve midCurve = getPath.Object(i).Curve();
                 P2P_Path path = new P2P_Path(midCurve, planeObjectM);
-                //path.MidCurve = ;
-
+                path.ID = getPath.Object(i).ObjectId;
                 paths.Add(path);
                 planeObjectM.Paths.Add(path);
             }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,6 +42,9 @@ namespace AutoPlan.AutoPlan
 
         private Brep[] PathBrep()
         {
+            #region 暂时弃用
+            ///先合并OuterPath和MainPath,会形成环路，是的Curve.CreateBooleanUnion失效
+            //---
             //Curve[] MainAndOuterPathEdge = new Curve[MainPathEdge.Length + OuterPathEdge.Length];
             //Array.Copy(MainPathEdge, MainAndOuterPathEdge, MainPathEdge.Length);
             //Array.Copy(OuterPathEdge, 0, MainAndOuterPathEdge, MainPathEdge.Length, OuterPathEdge.Length);
@@ -58,6 +62,8 @@ namespace AutoPlan.AutoPlan
             //    union3[i] = Curve.CreateFilletCornersCurve(union3[i], 2, 0.001, 0.001);
             //}
             //return Brep.CreatePlanarBreps(union3, 0.001);
+            //---
+            #endregion
 
             Curve[] P2PAndMainEdge = new Curve[MainPathEdge.Length + P2P_PathEdge.Length];
             Array.Copy(MainPathEdge, P2PAndMainEdge, MainPathEdge.Length);
@@ -79,7 +85,27 @@ namespace AutoPlan.AutoPlan
             {
                 edgeUnion2[i] = Curve.CreateFilletCornersCurve(edgeUnion2[i], 4, 0.001, 0.001);
             }
-            return Brep.CreatePlanarBreps(edgeUnion2, 0.01);
+            Brep[] rawBrep = Brep.CreatePlanarBreps(edgeUnion2, 0.01);
+            List<Brep> cuttingBreps = new List<Brep>();
+            foreach (Building building in planeObjectM.Buildings)
+            {
+                Curve curve = building.BuildingCurve;
+                Brep buildingSrf = Brep.CreatePlanarBreps(new Curve[] { curve }, DOC_TOLERANCE)[0];
+                if (buildingSrf.Transform(Transform.Translation(Vector3d.ZAxis * -10)))
+                {
+                    Brep cuttingBrep = buildingSrf.Faces[0].CreateExtrusion(new Line(Point3d.Origin, Vector3d.ZAxis, 20).ToNurbsCurve(), true);
+                    cuttingBreps.Add(cuttingBrep);
+                }
+            }
+            List<Brep> newBreps = new List<Brep>();
+            foreach (Brep brep in rawBrep)
+            {
+                List<Brep> newBrep = TreeManager.TrimSolid(brep, cuttingBreps.ToArray());
+                foreach (Brep nbrep in newBrep)
+                    newBreps.Add(nbrep);
+            }
+            return newBreps.ToArray();
+            //return Brep.CreatePlanarBreps(edgeUnion2, 0.01);
 
         }
         private Curve[] OuterPathBrep(double outerFilletRadi = 8, List<Point3d> entry=null)//默认外围道路只有一条，并有一个默认入口，入口也可以单独设置(之后增加)

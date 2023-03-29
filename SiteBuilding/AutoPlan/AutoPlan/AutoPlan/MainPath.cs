@@ -13,7 +13,7 @@ namespace AutoPlan.AutoPlan
         {
             FilletRadi = 6;
             Width = 6;
-
         }
+        public Guid ID { get; set; }
     }
 }

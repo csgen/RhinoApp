@@ -60,5 +60,10 @@ namespace PlanGenerator
             
             isUpdating = false;
         }
+
+        private void GenerateLandscape(object sender, RoutedEventArgs e)
+        {
+            Rhino.RhinoApp.RunScript("GenerateLandscapeCommand", true);
+        }
     }
 }

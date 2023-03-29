@@ -69,7 +69,7 @@ namespace PlanGenerator
         }
         private void Generate(object sender, RoutedEventArgs e)
         {
-            RhinoApp.RunScript("GenerateObjectCommand", true);
+            RhinoApp.RunScript("GeneratePathObjectCommand", true);
         }
         private void AutoDrawP2P(object sender, RoutedEventArgs e)
         {

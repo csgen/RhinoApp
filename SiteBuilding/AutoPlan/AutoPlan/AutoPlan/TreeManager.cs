@@ -15,7 +15,7 @@ namespace AutoPlan.AutoPlan
 {
     internal class TreeManager
     {
-        public double DocTolerance = RhinoDoc.ActiveDoc.ModelAbsoluteTolerance;
+        public double DOC_TOLERANCE = RhinoDoc.ActiveDoc.ModelAbsoluteTolerance;
         public double OuterWidth { get; set; }//外围景观宽度
         public double GlobalTreeRadius { get; set; }//树木基础半径
         public double TreeDensity { get; set; }//种植密度，0-1
@@ -24,11 +24,13 @@ namespace AutoPlan.AutoPlan
         public List<Tree> Trees { get; set; }
         public PlaneObjectManager PlaneObjectM { get; set; }
         private List<Brep> Plots { get; set; }
+        public double GreenArea { get; set; }
         public TreeManager(PlaneObjectManager planeObjectM)
         {
             PlaneObjectM = planeObjectM;
             Trees = new List<Tree>();
             PlantingOnPlot();
+            MyLib.MyLib.greenArea = GreenArea;
         }
         public void GetPlot()//得到空地
         {
@@ -47,15 +49,20 @@ namespace AutoPlan.AutoPlan
             foreach(Building building in buildings)
             {
                 Curve curve = building.BuildingCurve;
-                Brep buildingSrf = Brep.CreatePlanarBreps(new Curve[] {curve},DocTolerance)[0];
+                Brep buildingSrf = Brep.CreatePlanarBreps(new Curve[] {curve}, DOC_TOLERANCE)[0];
                 if (buildingSrf.Transform(Transform.Translation(Vector3d.ZAxis * -10)))
                 {
                     Brep cuttingBrep = buildingSrf.Faces[0].CreateExtrusion(new Line(Point3d.Origin, Vector3d.ZAxis, 20).ToNurbsCurve(), true);
                     cuttingBreps.Add(cuttingBrep);
                 }
             }
-            Brep originalPlot = Brep.CreatePlanarBreps(new Curve[] { PlaneObjectM.OuterPath.MidCurve }, DocTolerance)[0];//先以场地线为边缘建立PlanarSrf
+            Brep originalPlot = Brep.CreatePlanarBreps(new Curve[] { PlaneObjectM.OuterPath.MidCurve }, DOC_TOLERANCE)[0];//先以场地线为边缘建立PlanarSrf
             List<Brep> plotList = TrimSolid(originalPlot, cuttingBreps.ToArray());//用形成的道路extrusion去做布尔运算，得到空地
+            GreenArea = 0;
+            foreach(Brep brep in plotList)
+            {
+                GreenArea += AreaMassProperties.Compute(brep).Area;
+            }
             this.Plots = plotList;
         }
         public void PlantingAlongCurve()
@@ -81,7 +88,7 @@ namespace AutoPlan.AutoPlan
                 
             }
         }
-        public List<Brep> TrimSolid(Brep brepA, Brep[] brepArray)//BrepB来布尔切割brepA,类似GH中的TrimSolid电池
+        public static List<Brep> TrimSolid(Brep brepA, Brep[] brepArray)//BrepB来布尔切割brepA,类似GH中的TrimSolid电池
         {
             double rhinoTol = RhinoDoc.ActiveDoc.ModelAbsoluteTolerance;
             var trims = brepA.Split(brepArray, rhinoTol);
@@ -152,7 +159,7 @@ namespace AutoPlan.AutoPlan
             Vector3d v3 = v31 + v32;
             Line l3 = new Line(p3, v3, C);
 
-            var events = Intersection.CurveCurve(l1.ToNurbsCurve(), l2.ToNurbsCurve(), DocTolerance, DocTolerance);
+            var events = Intersection.CurveCurve(l1.ToNurbsCurve(), l2.ToNurbsCurve(), DOC_TOLERANCE, DOC_TOLERANCE);
             Point3d centerPt = events[0].PointA;
             return new Circle(centerPt, R);
         }
@@ -199,7 +206,7 @@ namespace AutoPlan.AutoPlan
             }
             return goodFaceEdges;
         }
-        public bool IsPointInsideBrep(Point3d point, Brep brep)
+        public static bool IsPointInsideBrep(Point3d point, Brep brep)
         {
             double C = 0;
             foreach(Curve edge in brep.Edges)
@@ -209,7 +216,7 @@ namespace AutoPlan.AutoPlan
             Line testLine = new Line(point, Vector3d.ZAxis, C * 10);
             Curve[] overlapCrv;
             Point3d[] xPoints;
-            Intersection.CurveBrep(testLine.ToNurbsCurve(), brep, DocTolerance, out overlapCrv, out xPoints);
+            Intersection.CurveBrep(testLine.ToNurbsCurve(), brep, RhinoDoc.ActiveDoc.ModelAbsoluteTolerance, out overlapCrv, out xPoints);
             if (xPoints.Length % 2 != 0)
             {
                 return true;
@@ -217,26 +224,41 @@ namespace AutoPlan.AutoPlan
             else
                 return false;
         }
-        public void AddTreeToDoc()
+        public void AddTreeToDoc(RhinoDoc doc)
         {
             var addedGeoIds = new List<Guid>();
-            var doc = Rhino.RhinoDoc.ActiveDoc;
-            var layer = new Rhino.DocObjects.Layer() { Name = "Trees" };
-            if (!doc.Layers.Any(x => x.Name == layer.Name))
+            //var doc = Rhino.RhinoDoc.ActiveDoc;
+            if (Trees != null)
             {
-                doc.Layers.Add(layer);
-            }
-            layer = doc.Layers.First(x => x.Name == "Trees");
-            layer.Color = Color.Green;
-            foreach(Tree tree in Trees)
-            {
-                var attribute = new Rhino.DocObjects.ObjectAttributes
+                if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("TreeIDs"))
                 {
-                    ColorSource = Rhino.DocObjects.ObjectColorSource.ColorFromLayer,
-                    LayerIndex = layer.Index
-                };
-                doc.Objects.Add(tree.TreeMesh, attribute);
+                    Guid[] oldIDs = AutoPlanPlugin.Instance.Dictionary["TreeIDs"] as Guid[];
+                    foreach (Guid id in oldIDs)
+                    {
+                        doc.Objects.Delete(id, true);
+                    }
+                }
+                var layer = new Rhino.DocObjects.Layer() { Name = "Trees" };
+                if (!doc.Layers.Any(x => x.Name == layer.Name))
+                {
+                    doc.Layers.Add(layer);
+                }
+                layer = doc.Layers.First(x => x.Name == "Trees");
+                layer.Color = Color.Green;
+                Guid[] treeIDs = new Guid[Trees.Count];
+                for (int i = 0; i < Trees.Count; i++)
+                {
+                    var attribute = new Rhino.DocObjects.ObjectAttributes
+                    {
+                        ColorSource = Rhino.DocObjects.ObjectColorSource.ColorFromLayer,
+                        LayerIndex = layer.Index
+                    };
+                    Guid id = doc.Objects.Add(Trees[i].TreeMesh, attribute);
+                    treeIDs[i] = id;
+                }
+                AutoPlanPlugin.Instance.Dictionary.Set("TreeIDs", treeIDs);
             }
+            
         }
     }
 }

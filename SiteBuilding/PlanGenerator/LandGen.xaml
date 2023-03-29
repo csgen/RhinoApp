@@ -35,10 +35,10 @@
                     
                 </Grid>
                 
-                <Button Style="{StaticResource sendButton}" Click="Button_Click" Margin="0,30,0,0">
+                <Button Style="{StaticResource sendButton}" Click="GenerateLandscape" Margin="0,30,0,0">
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="spinner" Style="{StaticResource whiteIcon}" Grid.Row="3" VerticalAlignment="Center" />
-                        <TextBlock Text="点击景观" Margin="10 0 0 0" FontWeight="SemiBold"/>
+                        <TextBlock Text="点击生成景观" Margin="10 0 0 0" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Button>
                 <Grid>

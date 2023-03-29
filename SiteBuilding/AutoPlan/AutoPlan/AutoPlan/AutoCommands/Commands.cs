@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace AutoPlan.AutoPlan.AutoCommands
 {
@@ -64,22 +65,67 @@ namespace AutoPlan.AutoPlan.AutoCommands
             planeObjectM.P2P_Path = p2p_Paths;
             planeObjectM.SetP2P_PathData(AutoPlanPlugin.Instance.Dictionary);
         }
-        public static void GenerateObject(RhinoDoc doc)
+        public static void GeneratePathObject(RhinoDoc doc)
         {
             PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
-            planeObjectM.GetData(AutoPlanPlugin.Instance.Dictionary);
+            
+            planeObjectM.GetData(AutoPlanPlugin.Instance.Dictionary,doc);
             PathObject pathObject = new PathObject(planeObjectM, doc);
             planeObjectM.PathObject = pathObject;
-            TreeManager treeM = new TreeManager(planeObjectM);
-
-            List<Guid> pathObjectIDs = new List<Guid>();
-            foreach (Brep brep in pathObject.PathBreps)
-                pathObjectIDs.Add(doc.Objects.AddBrep(brep));
-            treeM.AddTreeToDoc();
-
-            planeObjectM.SetData(AutoPlanPlugin.Instance.Dictionary);
-            AutoPlanPlugin.Instance.Dictionary.Set("GUID", pathObjectIDs);
+            if (pathObject != null)
+            {
+                if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("PathObjectGUID"))
+                {
+                    Guid[] oldGuids = AutoPlanPlugin.Instance.Dictionary["PathObjectGUID"] as Guid[];
+                    foreach (Guid id in oldGuids)
+                    {
+                        doc.Objects.Delete(id, true);
+                    }
+                }
+                //TreeManager treeM = new TreeManager(planeObjectM);
+                Guid[] pathObjectIDs = new Guid[pathObject.PathBreps.Length];
+                //List<Guid> pathObjectIDs = new List<Guid>();
+                for(int i = 0; i < pathObject.PathBreps.Length; i++)
+                {
+                    pathObjectIDs[i] = doc.Objects.AddBrep(pathObject.PathBreps[i]);
+                }
+                planeObjectM.SetData(AutoPlanPlugin.Instance.Dictionary);
+                AutoPlanPlugin.Instance.Dictionary.Set("PathObjectGUID", pathObjectIDs);
+            }
+            
+            //treeM.AddTreeToDoc();
             //planeObjectM.PathObject = pathObject;
+        }
+        public static void GenerateLandscape(RhinoDoc doc)
+        {
+            PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
+
+            planeObjectM.GetData(AutoPlanPlugin.Instance.Dictionary, doc);
+            PathObject pathObject = new PathObject(planeObjectM, doc);
+            planeObjectM.PathObject = pathObject;
+            if (pathObject != null)
+            {
+                List<Brep> pathObjs = new List<Brep>();
+                if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("PathObjectGUID"))
+                {
+                    Guid[] guids = AutoPlanPlugin.Instance.Dictionary["PathObjectGUID"] as Guid[];
+                    foreach(Guid id in guids)
+                    {
+                        if (doc.Objects.Find(id) != null)
+                            pathObjs.Add(new ObjRef(doc,id).Brep());
+                    }
+                }
+                if (pathObjs.Count != 0)
+                {
+                    TreeManager treeM = new TreeManager(planeObjectM);
+                    treeM.AddTreeToDoc(doc);
+                }
+                else
+                {
+                    MessageBox.Show("请先绘制道路物件");
+                }
+                
+            }
         }
         public static void GlobalGenerate(RhinoDoc doc)
         {
@@ -122,7 +168,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             List<Guid> pathObjectIDs = new List<Guid>();
             foreach (Brep brep in pathObject.PathBreps)
                 pathObjectIDs.Add(doc.Objects.AddBrep(brep));
-            treeM.AddTreeToDoc();
+            treeM.AddTreeToDoc(doc);
             RhinoApp.WriteLine(treeM.Trees.Count().ToString());
 
             planeObjectM.SetData(AutoPlanPlugin.Instance.Dictionary);
@@ -132,7 +178,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
         {
             RhinoApp.WriteLine("Start");
             PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
-            planeObjectM.GetData(AutoPlanPlugin.Instance.Dictionary);
+            planeObjectM.GetData(AutoPlanPlugin.Instance.Dictionary,doc);
             List<MainPath> mainPaths = new List<MainPath>();
             using (GetObject getPath = new GetObject())
             {
@@ -153,7 +199,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             }
             PathObject pathObject = new PathObject(planeObjectM, doc);
 
-            List<Guid> pathObjectIDs = AutoPlanPlugin.Instance.Dictionary["GUID"] as List<Guid>;
+            List<Guid> pathObjectIDs = AutoPlanPlugin.Instance.Dictionary["PathObjectGUID"] as List<Guid>;
             foreach (Guid id in pathObjectIDs)
             {
                 doc.Objects.Delete(id, true);
@@ -163,7 +209,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             pathObjNewIDs.Add(doc.Objects.AddBrep(brep));
             
             planeObjectM.SetData(AutoPlanPlugin.Instance.Dictionary);
-            AutoPlanPlugin.Instance.Dictionary.Set("GUID", pathObjNewIDs);
+            AutoPlanPlugin.Instance.Dictionary.Set("PathObjectGUID", pathObjNewIDs);
         }
         public static Result DrawP2P_Path(RhinoDoc doc,Command command,out PlaneObjectManager planeObjectManager, out P2P_Path path, out List<ObjRef> refBuildings, out Point3d pt0, out Point3d pt1)
         {
@@ -254,16 +300,18 @@ namespace AutoPlan.AutoPlan.AutoCommands
         }
         public static Result AutoDrawP2P_Path(RhinoDoc doc, Command command, out PlaneObjectManager planeObjectManager, out P2P_Path path, out List<ObjRef> refBuildings, out Point3d pt0, out Point3d pt1)
         {
-            PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
-            planeObjectM.GetData(AutoPlanPlugin.Instance.Dictionary);
-            refBuildings = planeObjectM.RefBuildings;
-            List<Point3d> points = DrawP2PPolyline(planeObjectM, out path);
+            planeObjectManager = new PlaneObjectManager();
+            //PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
+            planeObjectManager.GetData(AutoPlanPlugin.Instance.Dictionary, doc);
+            refBuildings = planeObjectManager.RefBuildings;
+            List<Point3d> points = DrawP2PPolyline(planeObjectManager, out path);
             pt0 = points[0];
             pt1 = points[1];
-            planeObjectM.P2P_Path.Add(path);
-            PathObject pathObject = new PathObject(planeObjectM, doc);
+            planeObjectManager.P2P_Path.Add(path);
+            
+            //PathObject pathObject = new PathObject(planeObjectM, doc);
 
-            planeObjectManager = planeObjectM;
+            //planeObjectManager = planeObjectM;
             return Result.Success;
         }
     }

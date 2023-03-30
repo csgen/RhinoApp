@@ -36,6 +36,8 @@ namespace AutoPlan.AutoPlan
             getPath.GeometryFilter = ObjectType.Curve;
             getPath.GetMultiple(1, 0);
             Guid id = getPath.Object(0).ObjectId;
+            var dict = getPath.Object(0).Object().UserDictionary;
+            dict.Set("AutoPlan", "OuterPath");
             Curve midCurve = getPath.Object(0).Curve();
             outerPath.ID = id;
             outerPath.MidCurve = midCurve;
@@ -99,11 +101,13 @@ namespace AutoPlan.AutoPlan
                 Curve buildingCurve = getBuildings.Object(i).Curve();
                 Guid id = getBuildings.Object(i).ObjectId;
                 //Rectangle3d buildingCrv = Rectangle3d.CreateFromPolyline(polyline);
-                Building building = new Building(buildingCurve);
+                Building building = new Building(buildingCurve,doc);
                 building.ID = id;
                 buildings.Add(building);
-
+                
                 getBuildings.Object(i).Curve().UserDictionary.AddContentsFrom(building.ClassData);//添加数据
+                var dict = getBuildings.Object(i).Object().UserDictionary;
+                dict.Set("AutoPlan", "BuildingClass");
                 refBuildings.Add(getBuildings.Object(i));
                 //Guid id = getBuildings.Object(i).ObjectId;
                 //var a = new ObjRef(doc, id);

@@ -61,15 +61,15 @@ namespace SiteBuilding.Sitebuilding
                     obj.GetMultiple(1, 0);
                     //var id = obj.Object(0).ObjectId;
                     //obj.Object(0).Object().Select(true);
-                    var totalArea = 0.0;
+                    //var totalArea = 0.0;
                     for (int i = 0; i < obj.ObjectCount; i++)
                     {
                         PolylineCurve curve = obj.Object(i).Curve().ToPolyline(0.01, 10, 0.01, 10000);
                         var building = new Building(curve);
                         Rhino.RhinoDoc.ActiveDoc.Objects.Add(building.Shadow);
-                        totalArea += building.GetArea();
+                        //totalArea += building.GetArea();
                     }     
-                    MyLib.MyLib.area = totalArea;
+                    //MyLib.MyLib.area = totalArea;
 
                 }
                 catch

@@ -163,6 +163,10 @@
               "target": "Package",
               "version": "[4.8.0, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
             "RhinoCommon": {
               "target": "Package",
               "version": "[7.13.21348.13001, )"
@@ -170,6 +174,10 @@
             "ShowMeTheXAML.MSBuild": {
               "target": "Package",
               "version": "[2.0.0, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[8.0.0-preview.2.23128.3, )"
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"

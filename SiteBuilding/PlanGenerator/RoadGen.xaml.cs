@@ -70,6 +70,7 @@ namespace PlanGenerator
         private void Generate(object sender, RoutedEventArgs e)
         {
             RhinoApp.RunScript("GeneratePathObjectCommand", true);
+            //MainWindow.myArgs.GreenArea
         }
         private void AutoDrawP2P(object sender, RoutedEventArgs e)
         {
@@ -83,7 +84,7 @@ namespace PlanGenerator
 
         private void EditPath(object sender, RoutedEventArgs e)
         {
-
+            RhinoApp.RunScript("EditPathCommand", true);
         }
 
         private void DrawOuterPath(object sender, RoutedEventArgs e)
@@ -119,5 +120,6 @@ namespace PlanGenerator
         {
             MyLib.MyLib.MainPathWidth = e.NewValue;
         }
+
     }
 }

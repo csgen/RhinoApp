@@ -1,4 +1,5 @@
-﻿using Rhino.Collections;
+﻿using Rhino;
+using Rhino.Collections;
 using Rhino.DocObjects;
 using Rhino.Geometry;
 using System;
@@ -9,11 +10,12 @@ using System.Threading.Tasks;
 
 namespace AutoPlan.AutoPlan
 {
-    internal class Building
+    internal partial class Building
     {
         public Curve BuildingCurve { get; set; }
         public double avoidDistance;
         public Guid id;
+        public RhinoDoc doc { get; set; }
         public double AvoidDistance 
         {
             get { return avoidDistance; }
@@ -29,12 +31,17 @@ namespace AutoPlan.AutoPlan
             set
             {
                 id = value;
+                BuildingCurve = new ObjRef(doc, id).Curve();
+                Profile = (PolylineCurve)BuildingCurve;
                 UpdateData();
             }
         }
         public ArchivableDictionary ClassData { get; private set; }
-        public Building(Curve buildingCurve, double avoidDistance = 3)
+        public Building(Curve buildingCurve, RhinoDoc doc, double avoidDistance = 3)
         {
+            this.doc = doc;
+            Profile = buildingCurve.ToPolyline(0.001,100,0.001,1000000);
+            Initialization();
             BuildingCurve = buildingCurve;
             AvoidDistance = avoidDistance;
             UpdateData();

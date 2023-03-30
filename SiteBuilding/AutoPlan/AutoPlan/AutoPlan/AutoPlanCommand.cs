@@ -1,4 +1,5 @@
 ﻿using AutoPlan.AutoPlan.AutoCommands;
+using PlanGenerator;
 using Rhino;
 using Rhino.ApplicationSettings;
 using Rhino.Collections;
@@ -33,8 +34,41 @@ namespace AutoPlan.AutoPlan
         {
             var dialog = new PlanGenerator.MainWindow();
             dialog.Show();
-
+            RhinoDoc.SelectObjects += OnSelect;
             return Result.Success;
+        }
+        void OnSelect(object sender, RhinoObjectSelectionEventArgs e)
+        {
+            var objs = e.RhinoObjects; //获得选择到的objects
+
+            RhinoObject obj0 = objs[0];//我们只选第1个
+            
+            foreach(RhinoObject obj in objs)
+            {
+                var data = obj.UserDictionary; //可以直接从RhinoObject获得userDictionary或者data
+                if (data.ContainsKey("AutoPlan"))
+                {
+                    if (data["AutoPlan"] as string == "OuterPath")
+                    {
+                        MainWindow.myArgs.LandArea = string.Format("{0:0.00}㎡", MyLib.MyLib.LandArea);
+                    }
+                    if (data["AutoPlan"] as string == "BuildingClass")
+                    {
+                        Commands.GetBuildingShadow(RhinoDoc.ActiveDoc);
+                        Commands.ShowBuildingArea(RhinoDoc.ActiveDoc);
+                        //MainWindow.myArgs.Area = string.Format("{0:0.00}㎡", MyLib.MyLib.area);
+                    }
+                }
+                if (MyLib.MyLib.LandArea != 0)
+                    MainWindow.myArgs.AreaRatio= string.Format("{0:0.00}", MyLib.MyLib.area / MyLib.MyLib.LandArea);
+            }
+            
+
+            //if (obj.ObjectType == ObjectType.Curve)
+            //{
+            //    var crv = (Curve)obj.Geometry; //cast
+            //    MainWindow.totalArea.Area = crv.GetLength().ToString();
+            //}
         }
     }
     public class GetBuildingsCommand : Command
@@ -50,6 +84,7 @@ namespace AutoPlan.AutoPlan
             // TODO: start here modifying the behaviour of your command.
             // ---
             Commands.GetBuildings(doc);
+            Commands.ShowBuildingArea(doc);
             doc.Views.Redraw();
             // ---
             return Result.Success;
@@ -194,6 +229,7 @@ namespace AutoPlan.AutoPlan
             return P2P_Path.ReplayHistory(HISTORY_VERSION, replayData, this, this.PlaneObjectM);
         }
     }
+    [Obsolete]
     public class AutoPlanCommand : Command
     {
         public AutoPlanCommand()
@@ -223,6 +259,25 @@ namespace AutoPlan.AutoPlan
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
             Commands.AddPath(doc);
+            doc.Views.Redraw();
+            // ---
+            return Result.Success;
+        }
+    }
+    public class ShowBuildingShadow : Command
+    {
+        public ShowBuildingShadow()
+        {
+            Instance = this;
+        }
+        public static ShowBuildingShadow Instance { get; private set; }
+        public override string EnglishName => "ShowBuildingShadowCommand";
+        protected override Result RunCommand(RhinoDoc doc, RunMode mode)
+        {
+            // TODO: start here modifying the behaviour of your command.
+            // ---
+            AutoPlanPlugin.Instance.Dictionary.Set("ShadowClass", "Empty");
+            Commands.GetBuildingShadow(doc);
             doc.Views.Redraw();
             // ---
             return Result.Success;
@@ -324,9 +379,9 @@ namespace AutoPlan.AutoPlan
         //    return string.Format("a={0},b={1}", a, b);
         //}
     }
-    public class siteCommand : Command
+    public class EditPath : Command
     {
-        public siteCommand()
+        public EditPath()
         {
             // Rhino only creates one instance of each command class defined in a
             // plug-in, so it is safe to store a refence in a static property.
@@ -334,10 +389,10 @@ namespace AutoPlan.AutoPlan
         }
 
         ///<summary>The only instance of this command.</summary>
-        public static siteCommand Instance { get; private set; }
+        public static EditPath Instance { get; private set; }
 
         ///<returns>The command name as it appears on the Rhino command line.</returns>
-        public override string EnglishName => "DragLine";
+        public override string EnglishName => "EditPathCommand";
 
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
@@ -550,6 +605,7 @@ namespace AutoPlan.AutoPlan
             return true;
         }
     }
+    [Obsolete]
     public class HistoryTestCommand : Command
     {
         public const int HISTORY_VERSION = 20230324;
@@ -570,7 +626,7 @@ namespace AutoPlan.AutoPlan
 
             PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
 
-            OuterPath outerPath = new OuterPath();
+            OuterPath outerPath = new OuterPath(doc);
             using (GetObject getPath = new GetObject())
             {
                 Selector.SelectOuterPathCurve(planeObjectM, outerPath, getPath, "选外围道路");

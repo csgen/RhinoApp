@@ -119,8 +119,8 @@ namespace AutoPlan.AutoPlan
                 if (baseCurve == null)
                     baseCurve = curves[i];
 
-                loftCurves[0] = baseCurve.Offset(Plane.WorldXY, outerFilletRadi / 2, DOC_TOLERANCE, CurveOffsetCornerStyle.Sharp)[0];
-                loftCurves[1] = baseCurve.Offset(Plane.WorldXY, -outerFilletRadi / 2, DOC_TOLERANCE, CurveOffsetCornerStyle.Sharp)[0];
+                loftCurves[0] = baseCurve.Offset(Plane.WorldXY, OuterPath.Width / 2, DOC_TOLERANCE, CurveOffsetCornerStyle.Sharp)[0];
+                loftCurves[1] = baseCurve.Offset(Plane.WorldXY, -OuterPath.Width / 2, DOC_TOLERANCE, CurveOffsetCornerStyle.Sharp)[0];
                 Brep pathSrf = Brep.CreateFromLoft(loftCurves, Point3d.Unset, Point3d.Unset, LoftType.Normal, false)[0];
                 Curve brepEdge = Curve.JoinCurves(pathSrf.Edges, 0.01)[0];
                 brepEdgeArray[i] = Curve.CreateFilletCornersCurve(brepEdge, outerFilletRadi / 2, 0.001, 0.001);

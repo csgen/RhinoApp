@@ -4,13 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
+      xmlns:local ="clr-namespace:PlanGenerator"
+      
+      
         mc:Ignorable="d"
         Background="Transparent" 
         d:DesignHeight="700" d:DesignWidth="480"
       Title="ClrPln">
     
     <Page.Resources>
-        <ResourceDictionary Source="Styles.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Page.Resources>
     
     <Grid>
@@ -19,7 +26,7 @@
             <StackPanel Margin="10 20 10 20">
                 <TextBlock Text="彩平生成" Foreground="#fcfcfc" TextAlignment="Center" FontSize="34" FontWeight="SemiBold"/>
 
-                <Button Style="{StaticResource sendButton}" Click="Button_Click" Margin="0,40,0,0">
+                <Button Style="{StaticResource sendButton}"  Margin="0,40,0,0" Click="CapnGen">
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="spinner" Style="{StaticResource whiteIcon}" Grid.Row="3" VerticalAlignment="Center" />
                         <TextBlock Text="点击生成彩色平面" Margin="10 0 0 0" FontWeight="SemiBold"/>
@@ -33,22 +40,31 @@
                             <GradientStop Color="#C77AFF" Offset="1" />
                         </LinearGradientBrush>
                     </Border.Background>
+                    <Image Name="capture" Margin="0,-10,0,-10">
+                        <Image.Source>
+                            <BitmapImage 
+                                UriSource=""
+                                >
+                            </BitmapImage>
+                        </Image.Source>
+                    </Image>
                 </Border>
+                
 
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    
-                    <Button Style="{StaticResource sendButton}" Margin="10,30,10,0">
+
+                    <Button Style="{StaticResource sendButton}" Margin="10,30,10,0" Click="ReGen">
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Refresh" Style="{StaticResource whiteIcon}" Grid.Row="3" VerticalAlignment="Center" />
                             <TextBlock Text="重新生成" Margin="10 0 0 0" FontWeight="SemiBold"/>
                         </StackPanel>
                     </Button>
 
-                    <Button Style="{StaticResource sendButton}" Margin="10,30,10,0" Grid.Column="1">
+                    <Button Style="{StaticResource sendButton}" Margin="10,30,10,0" Grid.Column="1" Click="Save">
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Download" Style="{StaticResource whiteIcon}" Grid.Row="3" VerticalAlignment="Center" />
                             <TextBlock Text="下载图片" Margin="10 0 0 0" FontWeight="SemiBold"/>

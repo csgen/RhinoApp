@@ -31,7 +31,7 @@ namespace AutoPlan.AutoPlan
         public PlaneObjectManager()
         {
             Buildings = new List<Building>();
-            OuterPath = new OuterPath();
+            OuterPath = new OuterPath(RhinoDoc.ActiveDoc);
             MainPath = new List<MainPath>();
             P2P_Path = new List<P2P_Path>();
             Paths = new List<Path>();
@@ -127,7 +127,7 @@ namespace AutoPlan.AutoPlan
                         if (doc.Objects.Find(buildingIDs[i]) != null)
                         {
                             Curve curve = new ObjRef(doc, buildingIDs[i]).Curve();
-                            Building building = new Building(curve, buildingAvoidDist[i]);
+                            Building building = new Building(curve, doc, buildingAvoidDist[i]);
                             building.ID = buildingIDs[i];
                             buildings.Add(building);
                         }
@@ -138,7 +138,7 @@ namespace AutoPlan.AutoPlan
         }
         public static OuterPath GetOuterPathData(ArchivableDictionary dictionary,RhinoDoc doc)
         {
-            OuterPath outerPath = new OuterPath();
+            OuterPath outerPath = new OuterPath(doc);
             if (null == dictionary) return outerPath;
             RhinoApp.WriteLine(dictionary.Name);
 
@@ -147,8 +147,8 @@ namespace AutoPlan.AutoPlan
             dictionary.TryGetGuid("OuterPathID", out Guid OuterPathGuid);
             if (doc.Objects.Find(OuterPathGuid) != null)
             {
-                outerPath.MidCurve = new ObjRef(doc, OuterPathGuid).Curve();
-                outerPath.Width = OuterPathWidth;
+                //outerPath.MidCurve = new ObjRef(doc, OuterPathGuid).Curve();
+                outerPath.Width = MyLib.MyLib.OuterPathWidth;
                 outerPath.FilletRadi = OuterPathFilletRadi;
                 outerPath.ID = OuterPathGuid;
             }
@@ -173,7 +173,8 @@ namespace AutoPlan.AutoPlan
                         {
                             mainPath.MidCurve = new ObjRef(doc, mainPathGuids[i]).Curve();
                             mainPath.ID = mainPathGuids[i];
-                            mainPath.Width = mainPathWidths[i];
+                            mainPath.Width = MyLib.MyLib.MainPathWidth;//目前统一用一个宽度，之后需要单独调整时再增加
+                            //mainPath.Width = mainPathWidths[i];
                             mainPath.FilletRadi = mainPathFilletRadi[i];
                             mainPaths.Add(mainPath);
                         }
@@ -205,7 +206,8 @@ namespace AutoPlan.AutoPlan
                         if (doc.Objects.Find(guids[i]) != null)
                         {
                             P2P_Path path = new P2P_Path(new ObjRef(doc, guids[i]).Curve(), planeObjectM);
-                            path.Width = p2p_pathWidths[i];
+                            path.Width = MyLib.MyLib.P2P_PathWidth;
+                            //path.Width = p2p_pathWidths[i];
                             path.FilletRadi = p2p_pathFilletRadi[i];
                             path.ID = guids[i];
                             p2p_Paths.Add(path);

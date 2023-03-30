@@ -30,19 +30,24 @@ namespace PlanGenerator
 
         private void Draw_Profile(object sender, RoutedEventArgs e)
         {
-            Rhino.RhinoApp.RunScript("AddShadow", true);
-            MainWindow.totalArea.Area = string.Format("{0:0.0}", Math.Round(MyLib.MyLib.area, 2).ToString());
+            Rhino.RhinoApp.RunScript("ShowBuildingShadowCommand", true);
+            //MainWindow.myArgs.Area = string.Format("{0:0.00}㎡", MyLib.MyLib.area);
         } 
 
         private void SelectOuterBoundary(object sender, RoutedEventArgs e)
         {
             Rhino.RhinoApp.RunScript("GetOuterPathCommand", true);
-            
+            MainWindow.myArgs.LandArea = string.Format("{0:0.00}㎡", MyLib.MyLib.LandArea);
+            if (MyLib.MyLib.LandArea != 0)
+                MainWindow.myArgs.AreaRatio = string.Format("{0:0.00}", MyLib.MyLib.area / MyLib.MyLib.LandArea);
         }
 
         private void SelectBuildingProfile(object sender, RoutedEventArgs e)
         {
             RhinoApp.RunScript("GetBuildingsCommand", true);
+            MainWindow.myArgs.Area = string.Format("{0:0.00}㎡", MyLib.MyLib.area);
+            if (MyLib.MyLib.LandArea != 0)
+                MainWindow.myArgs.AreaRatio = string.Format("{0:0.00}", MyLib.MyLib.area / MyLib.MyLib.LandArea);
         }
         private void SitePlan_Optimization(object sender, RoutedEventArgs e)
         {

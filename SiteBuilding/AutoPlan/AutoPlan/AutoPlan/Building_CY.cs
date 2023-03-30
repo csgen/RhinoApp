@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoPlan.BuildingShadow;
 
-namespace SiteBuilding.Sitebuilding
+namespace AutoPlan.AutoPlan
 {
-    internal class Building
+    internal partial class Building
     {
         public Plane basePlane;
         public double Height { get; set; }
@@ -15,11 +16,11 @@ namespace SiteBuilding.Sitebuilding
         public List<Point3d> Corners { get; set; }
         public PolylineCurve Shadow { get; set; }
 
-        public Building(PolylineCurve profile)
-        {
-            Profile = profile;
-            Initialization();
-        }
+        //public Building(PolylineCurve profile)
+        //{
+        //    Profile = profile;
+        //    Initialization();
+        //}
         public Building(Plane pl, double width, double length)
         {
             basePlane = pl;
@@ -29,6 +30,7 @@ namespace SiteBuilding.Sitebuilding
                 .ToPolyline()
                 .ToPolylineCurve();
             Initialization();
+
         }
 
         void Initialization()
@@ -45,16 +47,16 @@ namespace SiteBuilding.Sitebuilding
             var corner1 = Corners
                 .OrderBy(x => -1 * Toolkit.Intersept(x, v1))
                 .First();
-            var corner1_height = corner1 + new Vector3d(0, 0, 10);
+            var corner1_height = corner1 + new Vector3d(0, 0, 1000);
             var p1 = Toolkit.GetPoint(corner1_height, v1);
 
             var corner2 = Corners
                 .OrderBy(x => -1 * Toolkit.Intersept(x, v2))
                 .First();
-            var corner2_height = corner1 + new Vector3d(0, 0, 10);
+            var corner2_height = corner1 + new Vector3d(0, 0, 1000);
             var p2 = Toolkit.GetPoint(corner2_height, v2);
 
-             
+
             var result = Toolkit.TestIntersection(corner1_height, p1, corner2_height, p2);
 
             if (!result)
@@ -86,7 +88,7 @@ namespace SiteBuilding.Sitebuilding
 
         public double GetArea()
         {
-            var area = AreaMassProperties.Compute(this.Profile, 0.001).Area;
+            var area = AreaMassProperties.Compute(Profile, 0.001).Area;
             return area;
         }
 

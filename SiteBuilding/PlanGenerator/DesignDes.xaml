@@ -20,18 +20,18 @@
                 <TextBlock Text="设计说明生成" Foreground="#fcfcfc" TextAlignment="Center" FontSize="34" FontWeight="SemiBold"/>
 
                 <TextBlock Text="设计概念简单输入" Foreground="#e0e0e0" Margin="10,20,0,0"/>
-                <TextBox Margin="10,10,10,0" Height="100" TextWrapping="WrapWithOverflow"/>
-                
-                <Button Style="{StaticResource sendButton}" Margin="10,20,10,0">
+                <TextBox Name ="prompt" Margin="10,10,10,0" Height="100" TextWrapping="WrapWithOverflow"/>
+
+                <Button Style="{StaticResource sendButton}" Margin="10,20,10,0" Click="GenerateGPT">
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="Send" Style="{StaticResource whiteIcon}" Grid.Row="3" VerticalAlignment="Center" />
                         <TextBlock Text="概念生成" Margin="10 0 0 0" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Button>
  
-                <TextBox Margin="10,20,10,0" Height="150" TextWrapping="WrapWithOverflow"/>
+                <TextBox Name="output" Margin="10,20,10,0" Height="150" TextWrapping="WrapWithOverflow"/>
 
-                <Button Style="{StaticResource fillButton}" Margin="150,20,150,0" >
+                <Button Style="{StaticResource fillButton}" Margin="150,20,150,0" Click="Copy" >
                     <fa:ImageAwesome Icon="Copy"  Style="{StaticResource whiteIcon}" Width="10" Height="10" />
                 </Button>
 

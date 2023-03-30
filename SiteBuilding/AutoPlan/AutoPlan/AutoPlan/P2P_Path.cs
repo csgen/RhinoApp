@@ -32,6 +32,7 @@ namespace AutoPlan.AutoPlan
         {
             FilletRadi = 1;
             Width = 4;//宽度太小创建Object时有问题，可能是boolean/fillet其中之一的bug，目前经验值最小是4
+            
             MidCurve = midCurve;
             Point3d p1 = MidCurve.PointAtStart;
             Point3d p2 = MidCurve.PointAtEnd;
@@ -43,6 +44,7 @@ namespace AutoPlan.AutoPlan
         {
             FilletRadi = 1;
             Width = 4;
+            
             StartPoint = PairPoint(points, planeObjectM.Buildings)[0];
             EndPoint = PairPoint(points, planeObjectM.Buildings)[1];
             List<Path> pathList = new List<Path>();
@@ -233,7 +235,7 @@ namespace AutoPlan.AutoPlan
                 var y = userDict["GUID"];
                 double avoidDist = (double)x;
                 Guid id = (Guid)y;
-                Building building = new Building(refBuilidngs[i].Curve(), avoidDist);
+                Building building = new Building(refBuilidngs[i].Curve(), RhinoDoc.ActiveDoc, avoidDist);
                 building.ID = id;
                 planeObjectM.Buildings.Add(building);//更新Buildings
                 if(id == baseBuildingID)

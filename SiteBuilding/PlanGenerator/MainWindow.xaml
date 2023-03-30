@@ -16,7 +16,11 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <local:myArgs x:Key="totalArea" Area="0"/>
+            <local:myArgs x:Key="MyArgs" Area="0" LandArea="0"/>
+            <!--<local:myArgs x:Key="LandArea" Area="0"/>
+            <local:myArgs x:Key="GreenArea" Area="0"/>
+            <local:myArgs x:Key="ConcentrationGreenArea" Area="0"/>
+            <local:myArgs x:Key="GreenAreaRatio" Area="0"/>-->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
@@ -173,7 +177,7 @@
                         </LinearGradientBrush>
                     </Border.Background>
 
-                    <Grid DataContext="{StaticResource totalArea}">
+                    <Grid DataContext="{StaticResource MyArgs}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="86*"/>
                             <ColumnDefinition Width="40*"/>
@@ -191,11 +195,18 @@
 
 
                         </StackPanel>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 8 10 0" Grid.Column="2">
+                            <TextBlock Text="{Binding LandArea}" Style="{StaticResource textLabel}" Margin="0 0 0 0" FontWeight="SemiBold" Width="92"/>
+                            <TextBlock Text="{Binding GreenArea}" Style="{StaticResource textLabel}" Margin="0 5 0 0" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding ConcentrationGreenArea}" Style="{StaticResource textLabel}" Margin="0 5 0 0" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding GreenAreaRatio}" Style="{StaticResource textLabel}" Margin="0 5 0 0" FontWeight="SemiBold" VerticalAlignment="Center"/>
+
+                        </StackPanel>
 
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="15 0 0 5" Grid.ColumnSpan="2">
 
                             <TextBlock Text="容积率 =" Style="{StaticResource textLabel}" Margin="0 0 0 0" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                            <TextBlock Text="2.0" Style="{StaticResource textLabel}" Margin="0 0 20 0" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding AreaRatio}" Style="{StaticResource textLabel}" Margin="0 0 20 0" FontWeight="SemiBold" VerticalAlignment="Center" Width="60"/>
 
 
                         </StackPanel>

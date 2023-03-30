@@ -35,3 +35,7 @@ D:\华东院\平面生成\RhinoApp\SiteBuilding\AutoPlan\AutoPlan\bin\Debug\net4
 D:\华东院\平面生成\RhinoApp\SiteBuilding\AutoPlan\AutoPlan\bin\Debug\net48\System.Threading.Tasks.Extensions.dll
 D:\华东院\平面生成\RhinoApp\SiteBuilding\AutoPlan\AutoPlan\bin\Debug\net48\MyLib.dll
 D:\华东院\平面生成\RhinoApp\SiteBuilding\AutoPlan\AutoPlan\bin\Debug\net48\MyLib.pdb
+D:\华东院\平面生成\RhinoApp\SiteBuilding\AutoPlan\AutoPlan\bin\Debug\net48\Newtonsoft.Json.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\AutoPlan\AutoPlan\bin\Debug\net48\System.Text.Encodings.Web.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\AutoPlan\AutoPlan\bin\Debug\net48\System.Text.Json.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\AutoPlan\AutoPlan\bin\Debug\net48\System.ValueTuple.dll

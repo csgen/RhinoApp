@@ -1,6 +1,8 @@
-﻿using Rhino;
+﻿using PlanGenerator;
+using Rhino;
 using Rhino.Collections;
 using Rhino.Commands;
+using Rhino.Display;
 using Rhino.DocObjects;
 using Rhino.DocObjects.Custom;
 using Rhino.Geometry;
@@ -8,6 +10,7 @@ using Rhino.Input;
 using Rhino.Input.Custom;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,13 +38,16 @@ namespace AutoPlan.AutoPlan.AutoCommands
         public static void GetOuterPath(RhinoDoc doc)
         {
             PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
-            OuterPath outerPath = new OuterPath();
+            OuterPath outerPath = new OuterPath(doc);
             using (GetObject getPath = new GetObject())
             {
                 Selector.SelectOuterPathCurve(planeObjectM, outerPath, getPath, "选外围道路");
             }
             planeObjectM.OuterPath = outerPath;
             planeObjectM.SetOuterPathData(AutoPlanPlugin.Instance.Dictionary);
+            MyLib.MyLib.LandID = outerPath.ID;
+            MyLib.MyLib.doc = doc;
+            //MyLib.MyLib.LandArea = outerPath.Area;
         }
         public static void GetMainPath(RhinoDoc doc)
         {
@@ -65,6 +71,85 @@ namespace AutoPlan.AutoPlan.AutoCommands
             planeObjectM.P2P_Path = p2p_Paths;
             planeObjectM.SetP2P_PathData(AutoPlanPlugin.Instance.Dictionary);
         }
+        public static void GetBuildingShadow(RhinoDoc doc)
+        {
+            if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("ShadowClass"))
+            {
+                var layer = new Rhino.DocObjects.Layer() { Name = "Buildings" }; //新建buildingLayer
+                if (!doc.Layers.Any(x => x.Name == layer.Name))
+                {
+                    doc.Layers.Add(layer);
+                }
+                layer = doc.Layers.First(x => x.Name == "Buildings");
+                layer.Color = Color.White;
+
+                if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("shadowIDs"))
+                {
+                    List<Guid> shadowGuids = AutoPlanPlugin.Instance.Dictionary["shadowIDs"] as List<Guid>;
+                    foreach(Guid id in shadowGuids)
+                    {
+                        doc.Objects.Unlock(id,true);
+                        bool b = doc.Objects.Delete(id, true);
+                    }
+                }
+                if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("shadowBuildingIDs"))
+                {
+                    List<Guid> shadowBuildingGuids = AutoPlanPlugin.Instance.Dictionary["shadowBuildingIDs"] as List<Guid>;
+                    foreach (Guid id in shadowBuildingGuids)
+                    {
+                        doc.Objects.Unlock(id, true);
+                        bool b = doc.Objects.Delete(id, true);
+                    }
+                }
+                List<Building> buildings = PlaneObjectManager.GetBuildingData(AutoPlanPlugin.Instance.Dictionary, doc);
+                List<Guid> shadowIDs = new List<Guid>();
+                List<Guid> shadowBuildingIDs = new List<Guid>();
+                foreach (Building building in buildings)
+                {
+                    var shadowAttribute = new Rhino.DocObjects.ObjectAttributes
+                    {
+                        Mode = ObjectMode.Locked,
+                        ObjectColor = Color.DarkOrange,
+                        ColorSource = ObjectColorSource.ColorFromObject
+                    };
+
+                    Guid shadowID = doc.Objects.AddCurve(building.Shadow, shadowAttribute);
+                    shadowIDs.Add(shadowID);
+
+
+                    var buildingAttribute = new Rhino.DocObjects.ObjectAttributes
+                    {
+                        Mode = ObjectMode.Locked,
+                        LayerIndex = layer.Index,
+                        ColorSource = ObjectColorSource.ColorFromLayer
+                    };
+
+                    Guid buildingID = doc.Objects.AddBrep(Brep.CreatePlanarBreps(building.BuildingCurve,RhinoDoc.ActiveDoc.ModelAbsoluteTolerance)[0],buildingAttribute);
+                    shadowBuildingIDs.Add(buildingID);
+                    //shadowBuildingIDs.Add(building.ID);
+                }
+                AutoPlanPlugin.Instance.Dictionary.Set("shadowIDs", shadowIDs);
+                AutoPlanPlugin.Instance.Dictionary.Set("shadowBuildingIDs", shadowBuildingIDs);
+                //AutoPlanPlugin.Instance.Dictionary.Set("shadowBuildingIDs", shadowBuildingIDs);
+            }
+            
+        }
+        public static void ShowBuildingArea(RhinoDoc doc)
+        {
+            var dictionary = AutoPlanPlugin.Instance.Dictionary;
+            Guid[] ids = dictionary["BuildingIDs"] as Guid[];
+            double totalArea = 0;
+            foreach(Guid id in ids)
+            {
+                if (doc.Objects.FindId(id)!=null)
+                {
+                    Curve c = new ObjRef(doc, id).Curve();
+                    totalArea += AreaMassProperties.Compute(c).Area*3;
+                }
+            }
+            MyLib.MyLib.area = totalArea;
+            MainWindow.myArgs.Area = string.Format("{0:0.00}㎡", MyLib.MyLib.area);
+        }
         public static void GeneratePathObject(RhinoDoc doc)
         {
             PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
@@ -85,9 +170,21 @@ namespace AutoPlan.AutoPlan.AutoCommands
                 //TreeManager treeM = new TreeManager(planeObjectM);
                 Guid[] pathObjectIDs = new Guid[pathObject.PathBreps.Length];
                 //List<Guid> pathObjectIDs = new List<Guid>();
-                for(int i = 0; i < pathObject.PathBreps.Length; i++)
+                var layer = new Rhino.DocObjects.Layer() { Name = "Path" };
+                if (!doc.Layers.Any(x => x.Name == layer.Name))
                 {
-                    pathObjectIDs[i] = doc.Objects.AddBrep(pathObject.PathBreps[i]);
+                    doc.Layers.Add(layer);
+                }
+                layer = doc.Layers.First(x => x.Name == "Path");
+                layer.Color = Color.Gray;
+                for (int i = 0; i < pathObject.PathBreps.Length; i++)
+                {
+                    var attribute = new Rhino.DocObjects.ObjectAttributes
+                    {
+                        ColorSource = Rhino.DocObjects.ObjectColorSource.ColorFromLayer,
+                        LayerIndex = layer.Index
+                    };
+                    pathObjectIDs[i] = doc.Objects.AddBrep(pathObject.PathBreps[i],attribute);
                 }
                 planeObjectM.SetData(AutoPlanPlugin.Instance.Dictionary);
                 AutoPlanPlugin.Instance.Dictionary.Set("PathObjectGUID", pathObjectIDs);
@@ -127,13 +224,14 @@ namespace AutoPlan.AutoPlan.AutoCommands
                 
             }
         }
+        [Obsolete]
         public static void GlobalGenerate(RhinoDoc doc)
         {
             RhinoApp.WriteLine("Start");
 
             PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
 
-            OuterPath outerPath = new OuterPath();
+            OuterPath outerPath = new OuterPath(doc);
             using (GetObject getPath = new GetObject())
             {
                 Selector.SelectOuterPathCurve(planeObjectM, outerPath, getPath, "选外围道路");
@@ -217,7 +315,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
 
             PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
 
-            OuterPath outerPath = new OuterPath();
+            OuterPath outerPath = new OuterPath(doc);
             using (GetObject getPath = new GetObject())
             {
                 Selector.SelectOuterPathCurve(planeObjectM, outerPath, getPath, "选外围道路");

@@ -28,7 +28,7 @@ namespace siteUI.Functions
                 
                 obj.GeometryFilter = ObjectType.Curve;
                 obj.SubObjectSelect = true;
-                obj.SetCommandPrompt("select pLine");
+                obj.SetCommandPrompt("选择要编辑的道路中线");
                 obj.EnableClearObjectsOnEntry(false); 
                 obj.EnablePreSelect(true, true);
                 obj.EnableUnselectObjectsOnExit(true);

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)system.text.json\8.0.0-preview.2.23128.3\buildTransitive\net462\System.Text.Json.targets" Condition="Exists('$(NuGetPackageRoot)system.text.json\8.0.0-preview.2.23128.3\buildTransitive\net462\System.Text.Json.targets')" />
     <Import Project="$(NuGetPackageRoot)rhinocommon\7.13.21348.13001\build\RhinoCommon.targets" Condition="Exists('$(NuGetPackageRoot)rhinocommon\7.13.21348.13001\build\RhinoCommon.targets')" />
     <Import Project="$(NuGetPackageRoot)communitytoolkit.mvvm\8.1.0\buildTransitive\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('$(NuGetPackageRoot)communitytoolkit.mvvm\8.1.0\buildTransitive\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
   </ImportGroup>

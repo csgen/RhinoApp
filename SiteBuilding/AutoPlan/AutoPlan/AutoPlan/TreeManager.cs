@@ -18,19 +18,31 @@ namespace AutoPlan.AutoPlan
         public double DOC_TOLERANCE = RhinoDoc.ActiveDoc.ModelAbsoluteTolerance;
         public double OuterWidth { get; set; }//外围景观宽度
         public double GlobalTreeRadius { get; set; }//树木基础半径
-        public double TreeDensity { get; set; }//种植密度，0-1
+        private double treeDensity;
+        public double TreeDensity //种植密度，0-1
+        {
+            get => treeDensity;
+            set
+            {
+                treeDensity = 0.3;
+                if (value > treeDensity) treeDensity = value;
+            }
+        }
         public double Rendomness { get; set; }//大小变化程度，0-1
         public int RandomSeed { get; set; }//随机种子
         public List<Tree> Trees { get; set; }
         public PlaneObjectManager PlaneObjectM { get; set; }
         private List<Brep> Plots { get; set; }
         public double GreenArea { get; set; }
+        public double ConcentrationGreenArea { get; set; }
+        //public double GreenAreaRatio { get; set; }
         public TreeManager(PlaneObjectManager planeObjectM)
         {
             PlaneObjectM = planeObjectM;
             Trees = new List<Tree>();
+            TreeDensity = MyLib.MyLib.TreeDensity;//用treedensity来控制网格密度，以此控制疏密
             PlantingOnPlot();
-            MyLib.MyLib.greenArea = GreenArea;
+            
         }
         public void GetPlot()//得到空地
         {
@@ -71,6 +83,9 @@ namespace AutoPlan.AutoPlan
         }
         public void PlantingOnPlot()//空地处种植
         {
+            double baseRadius = 30;//暂定一个基础半径
+            double treeScale = MyLib.MyLib.TreeScale;
+            
             GetPlot();
             List<Curve> meshFaceEdges = new List<Curve>();
             foreach(Brep plot in Plots)
@@ -80,9 +95,9 @@ namespace AutoPlan.AutoPlan
             foreach(Curve faceEdge in meshFaceEdges)
             {
                 Circle circle = InCircle(faceEdge);
-                if (circle.Radius > 3 && circle.Radius < 30)
+                if (circle.Radius > 2 && circle.Radius < baseRadius)//规定树木半径
                 {
-                    Tree tree = new Tree(circle.Radius, circle.Center);
+                    Tree tree = new Tree(circle.Radius * treeScale, circle.Center);
                     Trees.Add(tree);
                 }
                 
@@ -165,7 +180,7 @@ namespace AutoPlan.AutoPlan
         }
         public List<Curve> MeshTriangle(Brep brep)//取得mesh的faceedge
         {
-            var meshSetting = new MeshingParameters(0.5);
+            var meshSetting = new MeshingParameters(TreeDensity);
             Mesh[] brepMesh = Mesh.CreateFromBrep(brep, meshSetting);
             List<Curve> faceEdges = new List<Curve>();
             foreach(Mesh mesh in brepMesh)
@@ -257,6 +272,8 @@ namespace AutoPlan.AutoPlan
                     treeIDs[i] = id;
                 }
                 AutoPlanPlugin.Instance.Dictionary.Set("TreeIDs", treeIDs);
+                MyLib.MyLib.GreenArea = GreenArea;
+                MyLib.MyLib.ConcentrationGreenArea = GreenArea * 0.4;
             }
             
         }

@@ -2,7 +2,10 @@
 using Rhino.DocObjects;
 using Rhino.Geometry;
 using System;
+using System.Windows;
 using System.Collections.Generic;
+using System.Windows.Forms;
+//using Eto.Forms;
 
 namespace MyLib
 {
@@ -74,5 +77,9 @@ namespace MyLib
         public static double GreenAreaRatio { get; set; }
         public static double TreeScale { get; set; }//控制树木大小
         public static double TreeDensity { get; set; }//控制树木疏密
+        public static void WIP_Message()
+        {
+            MessageBox.Show("努力开发中");
+        }
     }
 }

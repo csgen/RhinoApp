@@ -79,22 +79,23 @@ namespace PlanGenerator
 
         private void AddPath(object sender, RoutedEventArgs e)
         {
-
+            RhinoApp.RunScript("AddPath", true);
         }
 
         private void EditPath(object sender, RoutedEventArgs e)
         {
-            RhinoApp.RunScript("EditPathCommand", true);
+            MyLib.MyLib.WIP_Message();
+            //RhinoApp.RunScript("EditPathCommand", true);
         }
 
         private void DrawOuterPath(object sender, RoutedEventArgs e)
         {
-
+            MyLib.MyLib.WIP_Message();
         }
 
         private void DrawMainPath(object sender, RoutedEventArgs e)
         {
-
+            MyLib.MyLib.WIP_Message();
         }
 
         private void stRd_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -121,5 +122,9 @@ namespace PlanGenerator
             MyLib.MyLib.MainPathWidth = e.NewValue;
         }
 
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            MyLib.MyLib.WIP_Message();
+        }
     }
 }

@@ -69,7 +69,7 @@ namespace AutoPlan.AutoPlan
                 }
             }
             Brep originalPlot = Brep.CreatePlanarBreps(new Curve[] { PlaneObjectM.OuterPath.MidCurve }, DOC_TOLERANCE)[0];//先以场地线为边缘建立PlanarSrf
-            List<Brep> plotList = TrimSolid(originalPlot, cuttingBreps.ToArray());//用形成的道路extrusion去做布尔运算，得到空地
+            List<Brep> plotList = TrimSolid(originalPlot, cuttingBreps.ToArray(),false);//用形成的道路extrusion去做布尔运算，得到空地
             GreenArea = 0;
             foreach(Brep brep in plotList)
             {
@@ -103,14 +103,14 @@ namespace AutoPlan.AutoPlan
                 
             }
         }
-        public static List<Brep> TrimSolid(Brep brepA, Brep[] brepArray)//BrepB来布尔切割brepA,类似GH中的TrimSolid电池
+        public static List<Brep> TrimSolid(Brep brepA, Brep[] brepArray, bool inner)//BrepB来布尔切割brepA,类似GH中的TrimSolid电池,inner为true，保留B内部的，为false，保留外部
         {
             double rhinoTol = RhinoDoc.ActiveDoc.ModelAbsoluteTolerance;
             var trims = brepA.Split(brepArray, rhinoTol);
             List<Brep> bList = new List<Brep>();
             for (int i = 0; i < trims.Length; i++)
             {
-                bool keep = true;//是否保留此物件
+                bool outside = true;//此物件是否在切割物之外
                 BoundingBox bbObj = trims[i].GetBoundingBox(true);
                 Point3d p1, p2, p3, p4;
                 if (bbObj.IsDegenerate(rhinoTol) == 0)
@@ -137,11 +137,18 @@ namespace AutoPlan.AutoPlan
                     foreach (Brep brep in brepArray)
                     {
                         if (IsPointInsideBrep(testPoint,brep))
-                            keep = false;
+                            outside = false;
                     }
                 }
-                if (keep)
-                    bList.Add(trims[i]);
+                if (inner)
+                {
+                    if(!outside) bList.Add(trims[i]);
+                }
+                if (!inner)
+                {
+                    if (outside) bList.Add(trims[i]);
+                }
+                
             }
             return bList;
         }

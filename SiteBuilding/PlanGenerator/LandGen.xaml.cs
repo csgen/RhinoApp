@@ -39,7 +39,8 @@ namespace PlanGenerator
 
         private void TestDraw(object sender, RoutedEventArgs e)
         {
-            Rhino.RhinoApp.RunScript("TestDrawCommand", true);
+            //Rhino.RhinoApp.RunScript("TestDrawCommand", true);
+            MyLib.MyLib.WIP_Message();
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -75,7 +76,7 @@ namespace PlanGenerator
             double nMin = 0.3; double nMax = 1;
             double radiusScale = (nMax - nMin) / (oMax - oMin) * (rSetting - oMin) + nMin;
             MyLib.MyLib.TreeScale = radiusScale;
-            RhinoApp.RunScript("GenerateLandscapeCommand", true);
+            //RhinoApp.RunScript("GenerateLandscapeCommand", true);
             UpdateLandscapeData();
         }
 
@@ -86,7 +87,7 @@ namespace PlanGenerator
             double nMin = 0.3; double nMax = 1;
             double radiusScale = (nMax - nMin) / (oMax - oMin) * (densitySetting - oMin) + nMin;
             MyLib.MyLib.TreeDensity = e.NewValue;
-            RhinoApp.RunScript("GenerateLandscapeCommand", true);
+            //RhinoApp.RunScript("GenerateLandscapeCommand", true);
             UpdateLandscapeData();
         }
         private void UpdateLandscapeData()
@@ -95,6 +96,11 @@ namespace PlanGenerator
             MainWindow.myArgs.ConcentrationGreenArea = string.Format("{0:0.00}㎡", MyLib.MyLib.ConcentrationGreenArea);
             double r = MyLib.MyLib.GreenArea / MyLib.MyLib.LandArea;
             MainWindow.myArgs.GreenAreaRatio = string.Format("{0:P}", r);
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            MyLib.MyLib.WIP_Message();
         }
     }
 }

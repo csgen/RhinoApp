@@ -297,17 +297,32 @@ namespace AutoPlan.AutoPlan.AutoCommands
             }
             PathObject pathObject = new PathObject(planeObjectM, doc);
 
-            List<Guid> pathObjectIDs = AutoPlanPlugin.Instance.Dictionary["PathObjectGUID"] as List<Guid>;
+            Guid[] pathObjectIDs = AutoPlanPlugin.Instance.Dictionary["PathObjectGUID"] as Guid[];
             foreach (Guid id in pathObjectIDs)
             {
                 doc.Objects.Delete(id, true);
             }
             List<Guid> pathObjNewIDs = new List<Guid>();
+            var layer = new Rhino.DocObjects.Layer() { Name = "Path" };
+            if (!doc.Layers.Any(x => x.Name == layer.Name))
+            {
+                doc.Layers.Add(layer);
+            }
+            layer = doc.Layers.First(x => x.Name == "Path");
+            layer.Color = Color.Gray;
             foreach (Brep brep in pathObject.PathBreps)
-            pathObjNewIDs.Add(doc.Objects.AddBrep(brep));
+            {
+                var attribute = new Rhino.DocObjects.ObjectAttributes
+                {
+                    ColorSource = Rhino.DocObjects.ObjectColorSource.ColorFromLayer,
+                    LayerIndex = layer.Index
+                };
+                pathObjNewIDs.Add(doc.Objects.AddBrep(brep,attribute));
+            }
+            
             
             planeObjectM.SetData(AutoPlanPlugin.Instance.Dictionary);
-            AutoPlanPlugin.Instance.Dictionary.Set("PathObjectGUID", pathObjNewIDs);
+            AutoPlanPlugin.Instance.Dictionary.Set("PathObjectGUID", pathObjNewIDs.ToArray());
         }
         public static Result DrawP2P_Path(RhinoDoc doc,Command command,out PlaneObjectManager planeObjectManager, out P2P_Path path, out List<ObjRef> refBuildings, out Point3d pt0, out Point3d pt1)
         {
@@ -412,5 +427,6 @@ namespace AutoPlan.AutoPlan.AutoCommands
             //planeObjectManager = planeObjectM;
             return Result.Success;
         }
+        
     }
 }

@@ -98,11 +98,23 @@ namespace AutoPlan.AutoPlan
                 }
             }
             List<Brep> newBreps = new List<Brep>();
+            Curve outerCurveC = OuterPath.MidCurve.Offset(Plane.WorldXY, OuterPath.Width*1.2, DOC_TOLERANCE, CurveOffsetCornerStyle.Sharp)[0];
+            Brep outerSrf = Brep.CreatePlanarBreps(new Curve[] {outerCurveC}, DOC_TOLERANCE)[0];
+            Brep[] cuttingBrep2 = new Brep[1];
+            if (outerSrf.Transform(Transform.Translation(Vector3d.ZAxis * -10)))
+            {
+                cuttingBrep2[0] = outerSrf.Faces[0].CreateExtrusion(new Line(Point3d.Origin, Vector3d.ZAxis, 20).ToNurbsCurve(), true);
+            }
             foreach (Brep brep in rawBrep)
             {
-                List<Brep> newBrep = TreeManager.TrimSolid(brep, cuttingBreps.ToArray());
+                List<Brep> newBrep = TreeManager.TrimSolid(brep, cuttingBreps.ToArray(),false);//第一次把building的部分切掉
+                
                 foreach (Brep nbrep in newBrep)
-                    newBreps.Add(nbrep);
+                {
+                    List<Brep> newBrep2 = TreeManager.TrimSolid(nbrep, cuttingBrep2, true);//第二次把道路外围的部分切掉
+                    foreach(Brep b in newBrep2) 
+                        newBreps.Add(nbrep);
+                }
             }
             return newBreps.ToArray();
             //return Brep.CreatePlanarBreps(edgeUnion2, 0.01);
@@ -218,12 +230,12 @@ namespace AutoPlan.AutoPlan
                         double d2 = p2.DistanceTo(e.PointA);
                         if (d1 > d2)
                         {
-                            Curve c1 = c.Extend(CurveEnd.Start, OuterPath.Width, CurveExtensionStyle.Line);
+                            Curve c1 = c.Extend(CurveEnd.End, OuterPath.Width*2, CurveExtensionStyle.Line);
                             c = c1;
                         }
                         if (d1 < d2)
                         {
-                            Curve c1 = c.Extend(CurveEnd.End, OuterPath.Width, CurveExtensionStyle.Line);
+                            Curve c1 = c.Extend(CurveEnd.Start, OuterPath.Width*2, CurveExtensionStyle.Line);
                             c = c1;
                         }
                     }

@@ -51,7 +51,12 @@ namespace PlanGenerator
         }
         private void SitePlan_Optimization(object sender, RoutedEventArgs e)
         {
+            MyLib.MyLib.WIP_Message();
+        }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MyLib.MyLib.WIP_Message();
         }
     }
 }

@@ -27,7 +27,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Style="{StaticResource tabButton}" Content="选择水体轮廓" FontSize="10"/>
+                        <Button Style="{StaticResource tabButton}" Content="选择水体轮廓" FontSize="10" Click="Button_Click_2"/>
                         <Button Style="{StaticResource tabButton}" Content="选择其他景观轮廓" Grid.Column="1" FontSize="10"/>
                         
                        

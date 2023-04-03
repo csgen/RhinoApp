@@ -83,13 +83,22 @@ namespace AutoPlan.AutoPlan.AutoCommands
                 layer = doc.Layers.First(x => x.Name == "Buildings");
                 layer.Color = Color.White;
 
-                if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("shadowIDs"))
+                if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("shadowCrvIDs"))
                 {
-                    List<Guid> shadowGuids = AutoPlanPlugin.Instance.Dictionary["shadowIDs"] as List<Guid>;
-                    foreach(Guid id in shadowGuids)
+                    List<Guid> shadowCrvGuids = AutoPlanPlugin.Instance.Dictionary["shadowCrvIDs"] as List<Guid>;
+                    foreach(Guid id in shadowCrvGuids)
                     {
                         doc.Objects.Unlock(id,true);
                         bool b = doc.Objects.Delete(id, true);
+                    }
+                }
+                if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("shadowHatchIDs"))
+                {
+                    List<Guid> shadowHatchGuids = AutoPlanPlugin.Instance.Dictionary["shadowHatchIDs"] as List<Guid>;
+                    foreach(Guid id in shadowHatchGuids)
+                    {
+                        doc.Objects.Unlock(id,true);
+                        doc.Objects.Delete(id, true);
                     }
                 }
                 if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("shadowBuildingIDs"))
@@ -102,7 +111,8 @@ namespace AutoPlan.AutoPlan.AutoCommands
                     }
                 }
                 List<Building> buildings = PlaneObjectManager.GetBuildingData(AutoPlanPlugin.Instance.Dictionary, doc);
-                List<Guid> shadowIDs = new List<Guid>();
+                List<Guid> shadowCrvIDs = new List<Guid>();//阴影边缘线
+                List<Guid> shadowHatchIDs = new List<Guid>();//阴影hatch
                 List<Guid> shadowBuildingIDs = new List<Guid>();
                 foreach (Building building in buildings)
                 {
@@ -113,8 +123,10 @@ namespace AutoPlan.AutoPlan.AutoCommands
                         ColorSource = ObjectColorSource.ColorFromObject
                     };
 
-                    Guid shadowID = doc.Objects.AddCurve(building.Shadow, shadowAttribute);
-                    shadowIDs.Add(shadowID);
+                    Guid shadowCrvID = doc.Objects.AddCurve(building.buildingShadow.boundary, shadowAttribute);
+                    shadowCrvIDs.Add(shadowCrvID);
+                    Guid shadowHatchID = doc.Objects.AddHatch(building.buildingShadow.Hatch, shadowAttribute);
+                    shadowHatchIDs.Add(shadowHatchID);
 
 
                     var buildingAttribute = new Rhino.DocObjects.ObjectAttributes
@@ -128,7 +140,8 @@ namespace AutoPlan.AutoPlan.AutoCommands
                     shadowBuildingIDs.Add(buildingID);
                     //shadowBuildingIDs.Add(building.ID);
                 }
-                AutoPlanPlugin.Instance.Dictionary.Set("shadowIDs", shadowIDs);
+                AutoPlanPlugin.Instance.Dictionary.Set("shadowCrvIDs", shadowCrvIDs);
+                AutoPlanPlugin.Instance.Dictionary.Set("shadowHatchIDs", shadowHatchIDs);
                 AutoPlanPlugin.Instance.Dictionary.Set("shadowBuildingIDs", shadowBuildingIDs);
                 //AutoPlanPlugin.Instance.Dictionary.Set("shadowBuildingIDs", shadowBuildingIDs);
             }

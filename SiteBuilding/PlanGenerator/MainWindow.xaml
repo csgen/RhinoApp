@@ -184,7 +184,7 @@
                             <ColumnDefinition Width="50*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="计容面积" Style="{StaticResource textLabel}" VerticalAlignment="Top" Margin="15 8 0 0" FontSize="14" FontWeight="SemiBold" Grid.ColumnSpan="2"/>
-                        <TextBlock Text="{Binding Area}" Style="{StaticResource textLabel}" FontSize="24" FontWeight="SemiBold" VerticalAlignment="Top" Margin="15,45,0,0" Grid.ColumnSpan="2" />
+                        <TextBlock Text="{Binding Area}" Style="{StaticResource textLabel}" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Top" Margin="15,45,0,0" Grid.ColumnSpan="2" />
 
                         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 8 10 0" Grid.Column="1">
 

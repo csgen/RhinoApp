@@ -24,8 +24,10 @@ namespace AutoPlan.AutoPlan
             get => treeDensity;
             set
             {
-                treeDensity = 0.3;
-                if (value > treeDensity) treeDensity = value;
+                treeDensity = 0.5;
+                if (value >= 0.3 && value <= 0.8) treeDensity = value;
+                if (value < 0.3) treeDensity = 0.3;
+                if (value > 0.8) treeDensity = 0.8;
             }
         }
         public double Rendomness { get; set; }//大小变化程度，0-1
@@ -90,12 +92,12 @@ namespace AutoPlan.AutoPlan
             List<Curve> meshFaceEdges = new List<Curve>();
             foreach(Brep plot in Plots)
             {
-                meshFaceEdges.AddRange(GetGoodFaceEdge(plot,7));
+                meshFaceEdges.AddRange(GetGoodFaceEdge(plot,3));
             }
             foreach(Curve faceEdge in meshFaceEdges)
             {
                 Circle circle = InCircle(faceEdge);
-                if (circle.Radius > 2 && circle.Radius < baseRadius)//规定树木半径
+                if (circle.Radius > 3*(1-TreeDensity) && circle.Radius < baseRadius)//规定树木半径
                 {
                     Tree tree = new Tree(circle.Radius * treeScale, circle.Center);
                     Trees.Add(tree);
@@ -187,7 +189,7 @@ namespace AutoPlan.AutoPlan
         }
         public List<Curve> MeshTriangle(Brep brep)//取得mesh的faceedge
         {
-            var meshSetting = new MeshingParameters(TreeDensity);
+            var meshSetting = new MeshingParameters(0.5);
             Mesh[] brepMesh = Mesh.CreateFromBrep(brep, meshSetting);
             List<Curve> faceEdges = new List<Curve>();
             foreach(Mesh mesh in brepMesh)

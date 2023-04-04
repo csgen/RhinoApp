@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoPlan.BuildingShadow;
 using Rhino;
+using Rhino.DocObjects;
+using Rhino.DocObjects.Tables;
 
 namespace AutoPlan.AutoPlan
 {
@@ -37,6 +39,7 @@ namespace AutoPlan.AutoPlan
 
         void Initialization()
         {
+            this.buildingShadow = new BuildingShadow();
             GetCorners();
             GetShadow();
         }
@@ -83,11 +86,51 @@ namespace AutoPlan.AutoPlan
             }
         }
 
-        public void CheckDistance(Building building)
+        public LinearDimension GetLinearAnnotation(Building building)
         {
             var p1 = Profile;
             var p2 = building.Profile;
             var line = Toolkit.CheckDistance(p1, p2);
+            LinearDimension dimension = null;
+            if (line.Length <= 13)
+            {
+                dimension = AddLinearDimension(line);
+            }
+            return dimension;
+        }
+
+        public LinearDimension AddLinearDimension(Line line)
+        {
+            Point3d ptS = line.From;
+            Point3d ptE = line.To;
+            Curve lineOffset = line.ToNurbsCurve().Offset(Plane.WorldXY, 10, RhinoDoc.ActiveDoc.ModelAbsoluteTolerance, CurveOffsetCornerStyle.Sharp)[0];
+            Point3d ptAnnotation = (lineOffset.PointAtEnd + lineOffset.PointAtStart) / 2;
+            Vector3d vx = ptS - ptE;
+            Vector3d vy = lineOffset.PointAtStart - ptS;
+            vx.Unitize();
+            vy.Unitize();
+            Plane plane = Plane.WorldXY;
+            plane.Origin = ptS;
+            plane.XAxis = vx;
+            plane.YAxis = vy;
+            plane.ZAxis = Vector3d.ZAxis;
+            double u, v;
+            plane.ClosestParameter(ptS, out u, out v);
+            Point2d ext1 = new Point2d(u, v);
+
+            plane.ClosestParameter(ptE, out u, out v);
+            Point2d ext2 = new Point2d(u, v);
+
+            plane.ClosestParameter(ptAnnotation, out u, out v);
+            Point2d linePt = new Point2d(u, v);
+
+            LinearDimension dimension = new LinearDimension(plane, ext1, ext2, linePt);
+            dimension.SetBold(true);
+            dimension.TextHeight = 100;
+            dimension.DimensionStyle.ArrowType1 = DimensionStyle.ArrowType.Tick;
+            dimension.DimensionStyle.ArrowType2 = DimensionStyle.ArrowType.Tick;
+            
+            return dimension;
         }
 
         public double GetArea()
@@ -104,7 +147,10 @@ namespace AutoPlan.AutoPlan
                 get => boundary;
                 set
                 {
-                    this.Hatch = Hatch.Create(new Curve[] { boundary }, 1, Math.PI / 4, 25, RhinoDoc.ActiveDoc.ModelAbsoluteTolerance)[0];
+                    boundary = value;
+                    var t = RhinoDoc.ActiveDoc.HatchPatterns;
+                    //int index = t.Find("Hatch1",true);
+                    this.Hatch = Hatch.Create(new Curve[] { boundary }, 0, Math.PI / 4, 25, RhinoDoc.ActiveDoc.ModelAbsoluteTolerance)[0];
                 }
             }
             public Hatch Hatch { get; private set; }

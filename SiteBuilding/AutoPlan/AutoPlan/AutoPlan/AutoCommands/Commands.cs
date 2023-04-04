@@ -119,13 +119,21 @@ namespace AutoPlan.AutoPlan.AutoCommands
                     var shadowAttribute = new Rhino.DocObjects.ObjectAttributes
                     {
                         Mode = ObjectMode.Locked,
-                        ObjectColor = Color.DarkOrange,
-                        ColorSource = ObjectColorSource.ColorFromObject
+                        ObjectColor = Color.DarkBlue,
+                        ColorSource = ObjectColorSource.ColorFromObject,
+                        DisplayOrder = 1
+                    };
+                    var hatchAttribute = new Rhino.DocObjects.ObjectAttributes
+                    {
+                        Mode = ObjectMode.Locked,
+                        ObjectColor = Color.SteelBlue,
+                        ColorSource = ObjectColorSource.ColorFromObject,
+                        DisplayOrder = 0
                     };
 
                     Guid shadowCrvID = doc.Objects.AddCurve(building.buildingShadow.boundary, shadowAttribute);
                     shadowCrvIDs.Add(shadowCrvID);
-                    Guid shadowHatchID = doc.Objects.AddHatch(building.buildingShadow.Hatch, shadowAttribute);
+                    Guid shadowHatchID = doc.Objects.AddHatch(building.buildingShadow.Hatch, hatchAttribute);
                     shadowHatchIDs.Add(shadowHatchID);
 
 
@@ -146,6 +154,47 @@ namespace AutoPlan.AutoPlan.AutoCommands
                 //AutoPlanPlugin.Instance.Dictionary.Set("shadowBuildingIDs", shadowBuildingIDs);
             }
             
+        }
+        public static void ShowIllegalDimension(RhinoDoc doc)
+        {
+            if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("dimensionIDs"))
+            {
+                List<Guid> dimensionGuids = AutoPlanPlugin.Instance.Dictionary["dimensionIDs"] as List<Guid>;
+                foreach (Guid id in dimensionGuids)
+                {
+                    doc.Objects.Unlock(id, true);
+                    bool b = doc.Objects.Delete(id, true);
+                }
+            }
+            List<Building> buildings = PlaneObjectManager.GetBuildingData(AutoPlanPlugin.Instance.Dictionary, doc);
+            List<LinearDimension> dims = new List<LinearDimension>();
+            List<Guid> dimIDs = new List<Guid>();
+            for (int i = 0; i < buildings.Count - 1; i++)
+            {
+                for (int j = i + 1; j < buildings.Count; j++)
+                {
+                    LinearDimension dim = buildings[i].GetLinearAnnotation(buildings[j]);
+                    if (dim != null)
+                    {
+                        dims.Add(dim);
+                    }
+                }
+            }
+            var dimAttribute = new ObjectAttributes
+            {
+                Mode = ObjectMode.Locked,
+                ObjectColor = Color.Red,
+                ColorSource = ObjectColorSource.ColorFromObject
+            };
+            foreach (LinearDimension dim in dims)
+            {
+                Guid dimID = doc.Objects.AddLinearDimension(dim, dimAttribute);
+                if (dimID != Guid.Empty)
+                {
+                    dimIDs.Add(dimID);
+                }
+            }
+            AutoPlanPlugin.Instance.Dictionary.Set("dimensionIDs", dimIDs);
         }
         public static void ShowBuildingArea(RhinoDoc doc)
         {

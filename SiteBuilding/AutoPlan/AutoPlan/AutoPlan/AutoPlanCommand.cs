@@ -56,6 +56,7 @@ namespace AutoPlan.AutoPlan
                     {
                         Commands.GetBuildingShadow(RhinoDoc.ActiveDoc);
                         Commands.ShowBuildingArea(RhinoDoc.ActiveDoc);
+                        Commands.ShowIllegalDimension(RhinoDoc.ActiveDoc);
                         //MainWindow.myArgs.Area = string.Format("{0:0.00}㎡", MyLib.MyLib.area);
                     }
                 }
@@ -85,6 +86,7 @@ namespace AutoPlan.AutoPlan
             // ---
             Commands.GetBuildings(doc);
             Commands.ShowBuildingArea(doc);
+            Commands.ShowIllegalDimension(doc);
             doc.Views.Redraw();
             // ---
             return Result.Success;

@@ -150,7 +150,7 @@ namespace AutoPlan.AutoPlan
                     boundary = value;
                     var t = RhinoDoc.ActiveDoc.HatchPatterns;
                     //int index = t.Find("Hatch1",true);
-                    this.Hatch = Hatch.Create(new Curve[] { boundary }, 0, Math.PI / 4, 25, RhinoDoc.ActiveDoc.ModelAbsoluteTolerance)[0];
+                    this.Hatch = Hatch.Create(new Curve[] { boundary }, 1, Math.PI / 4, 25, RhinoDoc.ActiveDoc.ModelAbsoluteTolerance)[0];
                 }
             }
             public Hatch Hatch { get; private set; }

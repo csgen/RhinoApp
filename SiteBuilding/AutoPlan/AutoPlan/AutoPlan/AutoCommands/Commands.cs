@@ -128,7 +128,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
                         Mode = ObjectMode.Locked,
                         ObjectColor = Color.SteelBlue,
                         ColorSource = ObjectColorSource.ColorFromObject,
-                        DisplayOrder = 0
+                        DisplayOrder = -10
                     };
 
                     Guid shadowCrvID = doc.Objects.AddCurve(building.buildingShadow.boundary, shadowAttribute);
@@ -244,7 +244,8 @@ namespace AutoPlan.AutoPlan.AutoCommands
                     var attribute = new Rhino.DocObjects.ObjectAttributes
                     {
                         ColorSource = Rhino.DocObjects.ObjectColorSource.ColorFromLayer,
-                        LayerIndex = layer.Index
+                        LayerIndex = layer.Index,
+                        DisplayOrder = 100
                     };
                     pathObjectIDs[i] = doc.Objects.AddBrep(pathObject.PathBreps[i],attribute);
                 }

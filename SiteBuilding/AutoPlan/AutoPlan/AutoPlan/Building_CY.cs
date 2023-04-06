@@ -156,7 +156,6 @@ namespace AutoPlan.AutoPlan
             public Hatch Hatch { get; private set; }
             public void AddShadow()
             {
-
             }
         }
     }

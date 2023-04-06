@@ -110,10 +110,20 @@ namespace AutoPlan.AutoPlan.AutoCommands
                         bool b = doc.Objects.Delete(id, true);
                     }
                 }
+                if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("buildingTextIDs"))
+                {
+                    List<Guid> textGuids = AutoPlanPlugin.Instance.Dictionary["buildingTextIDs"] as List<Guid>;
+                    foreach (Guid id in textGuids)
+                    {
+                        doc.Objects.Unlock(id, true);
+                        doc.Objects.Delete(id, true);
+                    }
+                }
                 List<Building> buildings = PlaneObjectManager.GetBuildingData(AutoPlanPlugin.Instance.Dictionary, doc);
                 List<Guid> shadowCrvIDs = new List<Guid>();//阴影边缘线
                 List<Guid> shadowHatchIDs = new List<Guid>();//阴影hatch
                 List<Guid> shadowBuildingIDs = new List<Guid>();
+                List<Guid> textIDs = new List<Guid>();//楼层标注文字
                 foreach (Building building in buildings)
                 {
                     var shadowAttribute = new Rhino.DocObjects.ObjectAttributes
@@ -126,7 +136,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
                     var hatchAttribute = new Rhino.DocObjects.ObjectAttributes
                     {
                         Mode = ObjectMode.Locked,
-                        ObjectColor = Color.SteelBlue,
+                        ObjectColor = Color.DarkBlue,
                         ColorSource = ObjectColorSource.ColorFromObject,
                         DisplayOrder = -10
                     };
@@ -143,15 +153,23 @@ namespace AutoPlan.AutoPlan.AutoCommands
                         LayerIndex = layer.Index,
                         ColorSource = ObjectColorSource.ColorFromLayer
                     };
-
                     Guid buildingID = doc.Objects.AddBrep(Brep.CreatePlanarBreps(building.BuildingCurve,RhinoDoc.ActiveDoc.ModelAbsoluteTolerance)[0],buildingAttribute);
                     shadowBuildingIDs.Add(buildingID);
-                    //shadowBuildingIDs.Add(building.ID);
+
+                    var textAttribute = new ObjectAttributes
+                    {
+                        Mode = ObjectMode.Locked,
+                        ObjectColor = Color.Black,
+                        ColorSource = ObjectColorSource.ColorFromObject
+                    };
+                    Guid textID = doc.Objects.AddText(building.Text_Annotation, textAttribute);
+                    textIDs.Add(textID);
+                    
                 }
                 AutoPlanPlugin.Instance.Dictionary.Set("shadowCrvIDs", shadowCrvIDs);
                 AutoPlanPlugin.Instance.Dictionary.Set("shadowHatchIDs", shadowHatchIDs);
                 AutoPlanPlugin.Instance.Dictionary.Set("shadowBuildingIDs", shadowBuildingIDs);
-                //AutoPlanPlugin.Instance.Dictionary.Set("shadowBuildingIDs", shadowBuildingIDs);
+                AutoPlanPlugin.Instance.Dictionary.Set("buildingTextIDs", textIDs);
             }
             
         }

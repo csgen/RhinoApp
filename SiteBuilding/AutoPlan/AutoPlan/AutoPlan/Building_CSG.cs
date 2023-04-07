@@ -29,22 +29,22 @@ namespace AutoPlan.AutoPlan
         public Guid ID
         {
             get { return id; }
-            set
+            set//building的所有几何信息和ID挂钩
             {
                 id = value;
                 BuildingCurve = new ObjRef(doc, id).Curve();
-                Profile = (PolylineCurve)BuildingCurve;
+                Profile = BuildingCurve.ToPolyline(0.001, 1000, 0.001, double.MaxValue);
                 UpdateData();
             }
         }
         public ArchivableDictionary ClassData { get; private set; }
-        public Building(Curve buildingCurve, RhinoDoc doc, double avoidDistance = 3)
+        public Building(Guid buildingID, RhinoDoc doc, double avoidDistance = 3)
         {
             this.doc = doc;
-            Profile = buildingCurve.ToPolyline(0.001,100,0.001,1000000);
+            ID = buildingID;
             Initialization();
             TextAnnotation();
-            BuildingCurve = buildingCurve;
+            //BuildingCurve = buildingCurve;
             AvoidDistance = avoidDistance;
             UpdateData();
         }

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace AutoPlan.AutoPlan
 {
@@ -20,20 +21,36 @@ namespace AutoPlan.AutoPlan
         //public double Width { get; set; }
         //public Curve MidCurve { get; set; }
         //public double FilletRadi { get; set; }
-        public Guid ID { get; set; }
+        public RhinoDoc doc { private get; set; }
+        public Guid id;
+        public Guid ID
+        {
+            get => id;
+            set
+            {
+                id = value;
+                MidCurve = new ObjRef(doc,id).Curve();//指定ID时关联midcurve
+            }
+        }
         public Point3d StartPoint { get; set; }
         public Point3d EndPoint { get; set; }
-        public Building BaseBuilding { get; set; }
+        public List<BaseBuilding> BaseBuildings { get; set; }
+        //public Building BaseBuilding { get; set; }
         public double BaseBuildingtValue { get; set; }
         public Guid BaseBuildingID { get; set; }
         public Path BasePath { get; set; }
         public ArchivableDictionary ClassData { get; set; }
-        public P2P_Path(Curve midCurve, PlaneObjectManager planeObjectM)//用于选择已有P2P
+        public class BaseBuilding
         {
+            public Building Building { get; set; }
+            public double tValue { get; set; }
+        }
+        public P2P_Path(Curve curve, PlaneObjectManager planeObjectM)//用于选择已有P2P,将P2P_Path所有几何信息与guid挂钩
+        {
+            ID = id;
             FilletRadi = 1;
             Width = 4;//宽度太小创建Object时有问题，可能是boolean/fillet其中之一的bug，目前经验值最小是4
-            
-            MidCurve = midCurve;
+            MidCurve = curve;
             Point3d p1 = MidCurve.PointAtStart;
             Point3d p2 = MidCurve.PointAtEnd;
             List<Point3d> points = new List<Point3d> { p1, p2 };
@@ -48,56 +65,80 @@ namespace AutoPlan.AutoPlan
             StartPoint = PairPoint(points, planeObjectM.Buildings)[0];
             EndPoint = PairPoint(points, planeObjectM.Buildings)[1];
             List<Path> pathList = new List<Path>();
-            pathList.AddRange(planeObjectM.MainPath);
-            pathList.AddRange(planeObjectM.P2P_Path);
-            pathList.Add(planeObjectM.OuterPath);
-            MidCurve = CreatePath(planeObjectM.Buildings, pathList);
-            SetData();
+            //pathList.AddRange(planeObjectM.MainPath);
+            //pathList.AddRange(planeObjectM.P2P_Path);
+            //pathList.Add(planeObjectM.OuterPath);
+            MidCurve = CreatePath(planeObjectM);
+            //SetData();
         }
-        public void SetData()
+        //public void SetData()
+        //{
+        //    ClassData = new ArchivableDictionary();
+        //    ClassData.Set("BaseBuilding", BaseBuilding.BuildingCurve);
+        //    ClassData.Set("BasePath", BasePath.MidCurve);
+        //    ClassData.Set("Width", Width);
+        //    //ArchivableDictionary dictionary = new ArchivableDictionary();
+        //    //dictionary.Set("BaseBuilding", );
+        //    //UserData userData = new UserData();
+        //}
+        public Curve CreatePath(PlaneObjectManager planeObjectM)//画出完整路径，包括起点针对楼栋和道路各自的偏移(之后可以加上倒角)
         {
-            ClassData = new ArchivableDictionary();
-            ClassData.Set("BaseBuilding", BaseBuilding.BuildingCurve);
-            ClassData.Set("BasePath", BasePath.MidCurve);
-            ClassData.Set("Width", Width);
-            //ArchivableDictionary dictionary = new ArchivableDictionary();
-            //dictionary.Set("BaseBuilding", );
-            //UserData userData = new UserData();
-        }
-        public Curve CreatePath(List<Building> buildings, List<Path> paths)//画出完整路径，包括起点针对楼栋和道路各自的偏移
-        {
-            Point3d secondPoint = Get2ndPoint(buildings);
+            //Point3d secondPoint = Get2ndPoint(buildings);
 
-            Point3d secondLastPoint = Get2ndLastPoint(paths);
-
+            //Point3d secondLastPoint = Get2ndLastPoint(paths);
+            List<Point3d> points = GetSolverPoints(planeObjectM);
+            
             List<Curve> obstacles = new List<Curve>();
-            foreach (Building building in buildings)
+            foreach (Building building in planeObjectM.Buildings)
             {
                 Curve obstacle = PaddingBox(building.BuildingCurve, building.AvoidDistance);
                 obstacles.Add(obstacle);
             }
-            PathSolver pathS = new PathSolver(secondPoint, secondLastPoint, obstacles, 40, true);
+            PathSolver pathS;
+            if (points[1] != Point3d.Unset)
+            {
+                pathS = new PathSolver(points[0], points[1], obstacles, 40, true);
+                List<Point3d> ptList = pathS.PathRhinoSolver();
+                ptList.Insert(0, StartPoint);
+                ptList.Add(EndPoint);
+                Polyline c = new Polyline(ptList);
+                if (c == null)
+                {
+                    System.Windows.MessageBox.Show("error");
+                }
+                List<Point3d> simplifiedPts = GetDiscontinuityPoints(new Polyline(ptList).ToNurbsCurve());
+                Polyline path = new Polyline(simplifiedPts);
+                return path.ToNurbsCurve();
+            }
+            else
+            {
+                pathS = new PathSolver(points[0], EndPoint, obstacles, 40, true);
+                List<Point3d> ptList = pathS.PathRhinoSolver();
+                ptList.Insert(0, StartPoint);
+                if (ptList.Count == 1)
+                {
+                    ptList.Add(EndPoint);
+                }
+                Curve c = new Polyline(ptList).ToNurbsCurve();
+                if (c == null)
+                {
+                    System.Windows.MessageBox.Show("error");
+                }
+                List<Point3d> simplifiedPts = GetDiscontinuityPoints(c);
+                Polyline path = new Polyline(simplifiedPts);
+                return path.ToNurbsCurve();
+            }
+            //PathSolver pathS = new PathSolver(secondPoint, secondLastPoint, obstacles, 40, true);
             //Polyline pathCreate = pathS.PathRhinoSolver();
             //List<Point3d> ptList = GetDiscontinuityPoints(pathCreate.ToNurbsCurve());
-            List<Point3d> ptList = pathS.PathRhinoSolver();
-            ptList.Insert(0, StartPoint);
-            ptList.Add(EndPoint);
-            List<Point3d> simplifiedPts = GetDiscontinuityPoints(new Polyline(ptList).ToNurbsCurve());
-            Polyline path = new Polyline(simplifiedPts);
-            return path.ToNurbsCurve();
-
         }
-        public Curve PaddingBox(Curve inputCrv, double padding)
+        private Curve PaddingBox(Curve inputCrv, double padding)
         {
             Curve paddingCurve = inputCrv.Offset(Plane.WorldXY, padding, RhinoDoc.ActiveDoc.ModelAbsoluteTolerance, CurveOffsetCornerStyle.Sharp)[0];
-            //Plane basePlane = inputCrv.Plane;
-            //Interval domainX = new Interval(inputCrv.X.T0 - padding, inputCrv.X.T1 + padding);
-            //Interval domainY = new Interval(inputCrv.Y.T0 - padding, inputCrv.Y.T1 + padding);
-            //Rectangle3d paddingBox = new Rectangle3d(basePlane, domainX, domainY);
-            //return paddingBox.ToNurbsCurve();
+            
             return paddingCurve;
         }
-        public List<Point3d> PairPoint(List<Point3d> points, List<Building> buildings)
+        private static List<Point3d> PairPoint(List<Point3d> points, List<Building> buildings)//分出起始点（连接building的点）和终点
         {
             List<Point3d> pairedPt = new List<Point3d>();
             if (points.Count == 2)
@@ -123,7 +164,6 @@ namespace AutoPlan.AutoPlan
                         {
                             startPt = points[1];
                             endPt = points[0];
-
                         }
                     }
                 }
@@ -134,7 +174,8 @@ namespace AutoPlan.AutoPlan
         }
         private void GetBaseBuilding(List<Building> buildings)
         {
-            Building basebuilding = buildings[0];
+            BaseBuildings = new List<BaseBuilding>();
+            //Building basebuilding = buildings[0];
             double t = 0;
             foreach (Building building in buildings)
             {
@@ -142,19 +183,37 @@ namespace AutoPlan.AutoPlan
                 bool findbase = basePlan.ClosestPoint(StartPoint, out t, 1);
                 if (findbase)
                 {
-                    basebuilding = building;
+                    BaseBuilding bb = new BaseBuilding();
+                    bb.Building = building;
+                    bb.tValue = t;
+                    //basebuilding = building;
+                    BaseBuildings.Add(bb);
                     break;
                 }
             }
-            BaseBuilding = basebuilding;
-            BaseBuildingID = basebuilding.ID;
+            foreach (Building building in buildings)
+            {
+                Curve basePlan = building.BuildingCurve;
+                bool findbase = basePlan.ClosestPoint(EndPoint, out t, 1);
+                if (findbase)
+                {
+                    BaseBuilding bb = new BaseBuilding();
+                    bb.Building = building;
+                    bb.tValue = t;
+                    //basebuilding = building;
+                    BaseBuildings.Add(bb);
+                    break;
+                }
+            }
+            //BaseBuilding = basebuilding;
+            //BaseBuildingID = basebuilding.ID;
             BaseBuildingtValue = t;
             //return basebuilding;
         }
-        private void GetBasePath(List<Path> paths)//找到点的附着路径
+        private void GetBasePath(PlaneObjectManager planeObjectM)//找到点的附着路径(如果有的话)
         {
-            Path basePath = paths[0];
-            foreach (Path path in paths)
+            Path basePath = null;
+            foreach (Path path in planeObjectM.Paths)
             {
                 bool findbase = path.MidCurve.ClosestPoint(EndPoint, out double t, 1);
                 if (findbase)
@@ -166,17 +225,17 @@ namespace AutoPlan.AutoPlan
             BasePath = basePath;
             //return basePath;
         }
-        private Point3d Get2ndPoint(List<Building> buildings)
+        private Point3d GetBuildingOffsetPoint(Building baseBuilding)
         {
-            GetBaseBuilding(buildings);
-            Curve paddingCrv = PaddingBox(BaseBuilding.BuildingCurve, BaseBuilding.AvoidDistance + 0.5);
+            //GetBaseBuilding(buildings);
+            Curve paddingCrv = PaddingBox(baseBuilding.BuildingCurve, baseBuilding.AvoidDistance + 0.5);
             bool findScondPt = paddingCrv.ClosestPoint(StartPoint, out double secondPoint_t);
             Point3d secondPoint = paddingCrv.PointAt(secondPoint_t);//找到路径上处于paddingbox上的点,即路径上的第二个点
             return secondPoint;
         }
-        private Point3d Get2ndLastPoint(List<Path> paths)
+        private Point3d GetPathOffsetPoint()
         {
-            GetBasePath(paths);
+            //GetBasePath(paths);
             //Path basePath = GetBasePath(paths);
             double pathAvoid = BasePath.Width / 2 + 2;
             Curve offsetCrv1 = BasePath.MidCurve.Offset(Plane.WorldXY, pathAvoid, 0.001, CurveOffsetCornerStyle.Sharp)[0];
@@ -191,6 +250,31 @@ namespace AutoPlan.AutoPlan
                 last2ndPoint = last2ndPoint2;
             }
             return last2ndPoint;
+        }
+        private List<Point3d> GetSolverPoints(PlaneObjectManager planeObjectM)//第一个点附着于building，第二个点有三种可能（1.附于building，2.附于Path，3.为空）
+        {
+            Point3d point1 = Point3d.Unset;
+            Point3d point2 = Point3d.Unset;
+            GetBaseBuilding(planeObjectM.Buildings);
+            if (BaseBuildings.Count == 1)
+            {
+                Building baseBuilding = BaseBuildings[0].Building;
+                point1 = GetBuildingOffsetPoint(baseBuilding);
+                GetBasePath(planeObjectM);
+                if (BasePath != null)
+                {
+                    point2 = GetPathOffsetPoint();
+                }
+            }
+            if (BaseBuildings.Count == 2)
+            {
+                Building baseBuilding1 = BaseBuildings[0].Building;
+                Building baseBuilding2 = BaseBuildings[1].Building;
+                point1 = GetBuildingOffsetPoint(baseBuilding1);
+                point2 = GetBuildingOffsetPoint(baseBuilding2);
+            }
+            List<Point3d> points = new List<Point3d> { point1, point2 };
+            return points;
         }
         public static List<Point3d> GetDiscontinuityPoints(Curve curve)
         {
@@ -235,7 +319,7 @@ namespace AutoPlan.AutoPlan
                 var y = userDict["GUID"];
                 double avoidDist = (double)x;
                 Guid id = (Guid)y;
-                Building building = new Building(refBuilidngs[i].Curve(), RhinoDoc.ActiveDoc, avoidDist);
+                Building building = new Building(id, RhinoDoc.ActiveDoc, avoidDist);
                 building.ID = id;
                 planeObjectM.Buildings.Add(building);//更新Buildings
                 if(id == baseBuildingID)

@@ -101,7 +101,7 @@ namespace AutoPlan.AutoPlan
                 Curve buildingCurve = getBuildings.Object(i).Curve();
                 Guid id = getBuildings.Object(i).ObjectId;
                 //Rectangle3d buildingCrv = Rectangle3d.CreateFromPolyline(polyline);
-                Building building = new Building(buildingCurve,doc);
+                Building building = new Building(id,doc);
                 building.ID = id;
                 buildings.Add(building);
                 

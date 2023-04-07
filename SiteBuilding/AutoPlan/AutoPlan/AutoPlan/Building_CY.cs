@@ -17,8 +17,7 @@ namespace AutoPlan.AutoPlan
         public double Height { get; set; }
         public PolylineCurve Profile { get; set; }
         public List<Point3d> Corners { get; set; }
-        public PolylineCurve Shadow { get; set; }
-        public BuildingShadow buildingShadow { get; set; }
+        public Shadow buildingShadow { get; set; }
 
         //public Building(PolylineCurve profile)
         //{
@@ -39,7 +38,7 @@ namespace AutoPlan.AutoPlan
 
         void Initialization()
         {
-            this.buildingShadow = new BuildingShadow();
+            this.buildingShadow = new Shadow();
             GetCorners();
             GetShadow();
         }
@@ -66,13 +65,13 @@ namespace AutoPlan.AutoPlan
 
             if (!result)
             {
-                Shadow = new PolylineCurve(new List<Point3d>() { corner1, p1, p2, corner2, corner1 });
+                //Shadow = new PolylineCurve(new List<Point3d>() { corner1, p1, p2, corner2, corner1 });
                 this.buildingShadow.Boundary = new PolylineCurve(new List<Point3d>() { corner1, p1, p2, corner2, corner1 });
             }
             else
             {
                 var intersectPt = Toolkit.GetIntersectPoint(p1, corner1, p2, corner2);
-                Shadow = new PolylineCurve(new List<Point3d>() { corner1, intersectPt, corner2, corner1 });
+                //Shadow = new PolylineCurve(new List<Point3d>() { corner1, intersectPt, corner2, corner1 });
                 this.buildingShadow.Boundary = new PolylineCurve(new List<Point3d>() { corner1, intersectPt, corner2, corner1 });
             }
         }
@@ -139,7 +138,7 @@ namespace AutoPlan.AutoPlan
             return area;
         }
 
-        public class BuildingShadow
+        public class Shadow
         {
             public PolylineCurve boundary;
             public PolylineCurve Boundary 

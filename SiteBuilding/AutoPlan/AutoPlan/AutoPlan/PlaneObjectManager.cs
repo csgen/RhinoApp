@@ -36,9 +36,9 @@ namespace AutoPlan.AutoPlan
             P2P_Path = new List<P2P_Path>();
             Paths = new List<Path>();
             RefBuildings = new List<ObjRef>();
-            Paths.AddRange(MainPath);
-            Paths.AddRange(P2P_Path);
-            Paths.Add(OuterPath);
+            //Paths.AddRange(MainPath);
+            //Paths.AddRange(P2P_Path);
+            //Paths.Add(OuterPath);
             //TreeM = new TreeManager(this);
         }
         public void GetData(ArchivableDictionary dictionary, RhinoDoc doc)
@@ -55,7 +55,9 @@ namespace AutoPlan.AutoPlan
             OuterPath = GetOuterPathData(dictionary, doc);
             MainPath = GetMainPathData(dictionary, doc);
             P2P_Path = GetP2P_PathData(dictionary, doc, this);
-            
+            Paths.AddRange(MainPath);
+            Paths.AddRange(P2P_Path);
+            Paths.Add(OuterPath);
         }
         public void SetData(ArchivableDictionary dictionary)
         {
@@ -127,7 +129,7 @@ namespace AutoPlan.AutoPlan
                         if (doc.Objects.Find(buildingIDs[i]) != null)
                         {
                             Curve curve = new ObjRef(doc, buildingIDs[i]).Curve();
-                            Building building = new Building(curve, doc, buildingAvoidDist[i]);
+                            Building building = new Building(buildingIDs[i], doc, buildingAvoidDist[i]);
                             building.ID = buildingIDs[i];
                             buildings.Add(building);
                         }

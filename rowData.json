@@ -1,0 +1,3754 @@
+{
+    "data": [
+        {
+            "province": "安徽省",
+            "city": "合肥",
+            "longitude": "117.17",
+            "latitude": "31.52"
+        },
+        {
+            "province": "安徽省",
+            "city": "安庆",
+            "longitude": "117.02",
+            "latitude": "30.31"
+        },
+        {
+            "province": "安徽省",
+            "city": "蚌埠",
+            "longitude": "117.21",
+            "latitude": "32.56"
+        },
+        {
+            "province": "安徽省",
+            "city": "亳州",
+            "longitude": "115.47",
+            "latitude": "33.52"
+        },
+        {
+            "province": "安徽省",
+            "city": "巢湖",
+            "longitude": "117.52",
+            "latitude": "31.36"
+        },
+        {
+            "province": "安徽省",
+            "city": "滁州",
+            "longitude": "118.18",
+            "latitude": "32.18"
+        },
+        {
+            "province": "安徽省",
+            "city": "阜阳",
+            "longitude": "115.48",
+            "latitude": "32.54"
+        },
+        {
+            "province": "安徽省",
+            "city": "贵池",
+            "longitude": "117.28",
+            "latitude": "30.39"
+        },
+        {
+            "province": "安徽省",
+            "city": "淮北",
+            "longitude": "116.47",
+            "latitude": "33.57"
+        },
+        {
+            "province": "安徽省",
+            "city": "淮南",
+            "longitude": "116.58",
+            "latitude": "32.37"
+        },
+        {
+            "province": "安徽省",
+            "city": "黄山",
+            "longitude": "118.18",
+            "latitude": "29.43"
+        },
+        {
+            "province": "安徽省",
+            "city": "界首",
+            "longitude": "115.21",
+            "latitude": "33.15"
+        },
+        {
+            "province": "安徽省",
+            "city": "六安",
+            "longitude": "116.28",
+            "latitude": "31.44"
+        },
+        {
+            "province": "安徽省",
+            "city": "马鞍山",
+            "longitude": "118.28",
+            "latitude": "31.43"
+        },
+        {
+            "province": "安徽省",
+            "city": "明光",
+            "longitude": "117.58",
+            "latitude": "32.47"
+        },
+        {
+            "province": "安徽省",
+            "city": "宿州",
+            "longitude": "116.58",
+            "latitude": "33.38"
+        },
+        {
+            "province": "安徽省",
+            "city": "天长",
+            "longitude": "118.59",
+            "latitude": "32.41"
+        },
+        {
+            "province": "安徽省",
+            "city": "铜陵",
+            "longitude": "117.48",
+            "latitude": "30.56"
+        },
+        {
+            "province": "安徽省",
+            "city": "芜湖",
+            "longitude": "118.22",
+            "latitude": "31.19"
+        },
+        {
+            "province": "安徽省",
+            "city": "宣州",
+            "longitude": "118.44",
+            "latitude": "30.57"
+        },
+        {
+            "province": "澳门&nbsp;&nbsp;",
+            "city": "澳门市",
+            "longitude": "115.07",
+            "latitude": "21.33"
+        },
+        {
+            "province": "北京市",
+            "city": "北京市",
+            "longitude": "116.24",
+            "latitude": "39.55"
+        },
+        {
+            "province": "福建省",
+            "city": "福州",
+            "longitude": "119.18",
+            "latitude": "26.05"
+        },
+        {
+            "province": "福建省",
+            "city": "长乐",
+            "longitude": "119.31",
+            "latitude": "25.58"
+        },
+        {
+            "province": "福建省",
+            "city": "福安",
+            "longitude": "119.39",
+            "latitude": "27.06"
+        },
+        {
+            "province": "福建省",
+            "city": "福清",
+            "longitude": "119.23",
+            "latitude": "25.42"
+        },
+        {
+            "province": "福建省",
+            "city": "建瓯",
+            "longitude": "118.20",
+            "latitude": "27.03"
+        },
+        {
+            "province": "福建省",
+            "city": "建阳",
+            "longitude": "118.07",
+            "latitude": "27.21"
+        },
+        {
+            "province": "福建省",
+            "city": "晋江",
+            "longitude": "118.35",
+            "latitude": "24.49"
+        },
+        {
+            "province": "福建省",
+            "city": "龙海",
+            "longitude": "117.48",
+            "latitude": "24.26"
+        },
+        {
+            "province": "福建省",
+            "city": "龙岩",
+            "longitude": "117.01",
+            "latitude": "25.06"
+        },
+        {
+            "province": "福建省",
+            "city": "南安",
+            "longitude": "118.23",
+            "latitude": "24.57"
+        },
+        {
+            "province": "福建省",
+            "city": "南平",
+            "longitude": "118.10",
+            "latitude": "26.38"
+        },
+        {
+            "province": "福建省",
+            "city": "宁德",
+            "longitude": "119.31",
+            "latitude": "26.39"
+        },
+        {
+            "province": "福建省",
+            "city": "莆田",
+            "longitude": "119.01",
+            "latitude": "24.26"
+        },
+        {
+            "province": "福建省",
+            "city": "泉州",
+            "longitude": "118.36",
+            "latitude": "24.56"
+        },
+        {
+            "province": "福建省",
+            "city": "三明",
+            "longitude": "117.36",
+            "latitude": "26.13"
+        },
+        {
+            "province": "福建省",
+            "city": "邵武",
+            "longitude": "117.29",
+            "latitude": "27.20"
+        },
+        {
+            "province": "福建省",
+            "city": "石狮",
+            "longitude": "118.38",
+            "latitude": "24.44"
+        },
+        {
+            "province": "福建省",
+            "city": "武夷山",
+            "longitude": "118.02",
+            "latitude": "27.46"
+        },
+        {
+            "province": "福建省",
+            "city": "厦门",
+            "longitude": "118.06",
+            "latitude": "24.27"
+        },
+        {
+            "province": "福建省",
+            "city": "永安",
+            "longitude": "117.23",
+            "latitude": "25.58"
+        },
+        {
+            "province": "福建省",
+            "city": "漳平",
+            "longitude": "117.24",
+            "latitude": "25.17"
+        },
+        {
+            "province": "福建省",
+            "city": "漳州",
+            "longitude": "117.39",
+            "latitude": "24.31"
+        },
+        {
+            "province": "甘肃省",
+            "city": "兰州",
+            "longitude": "103.51",
+            "latitude": "36.04"
+        },
+        {
+            "province": "甘肃省",
+            "city": "白银",
+            "longitude": "104.12",
+            "latitude": "36.33"
+        },
+        {
+            "province": "甘肃省",
+            "city": "敦煌",
+            "longitude": "94.41",
+            "latitude": "40.08"
+        },
+        {
+            "province": "甘肃省",
+            "city": "嘉峪关",
+            "longitude": "98.14",
+            "latitude": "39.48"
+        },
+        {
+            "province": "甘肃省",
+            "city": "金昌",
+            "longitude": "102.10",
+            "latitude": "38.28"
+        },
+        {
+            "province": "甘肃省",
+            "city": "酒泉",
+            "longitude": "98.31",
+            "latitude": "39.44"
+        },
+        {
+            "province": "甘肃省",
+            "city": "临夏",
+            "longitude": "103.12",
+            "latitude": "35.37"
+        },
+        {
+            "province": "甘肃省",
+            "city": "平凉",
+            "longitude": "106.40",
+            "latitude": "35.32"
+        },
+        {
+            "province": "甘肃省",
+            "city": "天水",
+            "longitude": "105.42",
+            "latitude": "34.37"
+        },
+        {
+            "province": "甘肃省",
+            "city": "武威",
+            "longitude": "102.39",
+            "latitude": "37.56"
+        },
+        {
+            "province": "甘肃省",
+            "city": "西峰",
+            "longitude": "107.40",
+            "latitude": "35.45"
+        },
+        {
+            "province": "甘肃省",
+            "city": "玉门",
+            "longitude": "97.35",
+            "latitude": "39.49"
+        },
+        {
+            "province": "甘肃省",
+            "city": "张掖",
+            "longitude": "100.26",
+            "latitude": "38.56"
+        },
+        {
+            "province": "广东省",
+            "city": "广州",
+            "longitude": "113.14",
+            "latitude": "23.08"
+        },
+        {
+            "province": "广东省",
+            "city": "潮阳",
+            "longitude": "116.36",
+            "latitude": "23.16"
+        },
+        {
+            "province": "广东省",
+            "city": "潮州",
+            "longitude": "116.38",
+            "latitude": "23.40"
+        },
+        {
+            "province": "广东省",
+            "city": "澄海",
+            "longitude": "116.46",
+            "latitude": "23.28"
+        },
+        {
+            "province": "广东省",
+            "city": "从化",
+            "longitude": "113.33",
+            "latitude": "23.33"
+        },
+        {
+            "province": "广东省",
+            "city": "东莞",
+            "longitude": "113.45",
+            "latitude": "23.02"
+        },
+        {
+            "province": "广东省",
+            "city": "恩平",
+            "longitude": "112.19",
+            "latitude": "22.12"
+        },
+        {
+            "province": "广东省",
+            "city": "佛山",
+            "longitude": "113.06",
+            "latitude": "23.02"
+        },
+        {
+            "province": "广东省",
+            "city": "高明",
+            "longitude": "112.50",
+            "latitude": "22.53"
+        },
+        {
+            "province": "广东省",
+            "city": "高要",
+            "longitude": "112.26",
+            "latitude": "23.02"
+        },
+        {
+            "province": "广东省",
+            "city": "高州",
+            "longitude": "110.50",
+            "latitude": "21.54"
+        },
+        {
+            "province": "广东省",
+            "city": "鹤山",
+            "longitude": "112.57",
+            "latitude": "22.46"
+        },
+        {
+            "province": "广东省",
+            "city": "河源",
+            "longitude": "114.41",
+            "latitude": "23.43"
+        },
+        {
+            "province": "广东省",
+            "city": "花都",
+            "longitude": "113.12",
+            "latitude": "23.23"
+        },
+        {
+            "province": "广东省",
+            "city": "化州",
+            "longitude": "110.37",
+            "latitude": "21.39"
+        },
+        {
+            "province": "广东省",
+            "city": "惠阳",
+            "longitude": "114.28",
+            "latitude": "22.48"
+        },
+        {
+            "province": "广东省",
+            "city": "惠州",
+            "longitude": "114.22",
+            "latitude": "23.05"
+        },
+        {
+            "province": "广东省",
+            "city": "江门",
+            "longitude": "113.04",
+            "latitude": "22.35"
+        },
+        {
+            "province": "广东省",
+            "city": "揭阳",
+            "longitude": "116.21",
+            "latitude": "22.32"
+        },
+        {
+            "province": "广东省",
+            "city": "开平",
+            "longitude": "112.40",
+            "latitude": "22.22"
+        },
+        {
+            "province": "广东省",
+            "city": "乐昌",
+            "longitude": "113.21",
+            "latitude": "25.09"
+        },
+        {
+            "province": "广东省",
+            "city": "雷州",
+            "longitude": "110.04",
+            "latitude": "20.54"
+        },
+        {
+            "province": "广东省",
+            "city": "廉江",
+            "longitude": "110.17",
+            "latitude": "21.37"
+        },
+        {
+            "province": "广东省",
+            "city": "连州",
+            "longitude": "112.23",
+            "latitude": "24.48"
+        },
+        {
+            "province": "广东省",
+            "city": "罗定",
+            "longitude": "111.33",
+            "latitude": "22.46"
+        },
+        {
+            "province": "广东省",
+            "city": "茂名",
+            "longitude": "110.53",
+            "latitude": "21.40"
+        },
+        {
+            "province": "广东省",
+            "city": "梅州",
+            "longitude": "116.07",
+            "latitude": "24.19"
+        },
+        {
+            "province": "广东省",
+            "city": "南海",
+            "longitude": "113.09",
+            "latitude": "23.01"
+        },
+        {
+            "province": "广东省",
+            "city": "番禺",
+            "longitude": "113.22",
+            "latitude": "22.57"
+        },
+        {
+            "province": "广东省",
+            "city": "普宁",
+            "longitude": "116.10",
+            "latitude": "23.18"
+        },
+        {
+            "province": "广东省",
+            "city": "清远",
+            "longitude": "113.01",
+            "latitude": "23.42"
+        },
+        {
+            "province": "广东省",
+            "city": "三水",
+            "longitude": "112.52",
+            "latitude": "23.10"
+        },
+        {
+            "province": "广东省",
+            "city": "汕头",
+            "longitude": "116.41",
+            "latitude": "23.22"
+        },
+        {
+            "province": "广东省",
+            "city": "汕尾",
+            "longitude": "115.21",
+            "latitude": "22.47"
+        },
+        {
+            "province": "广东省",
+            "city": "韶关",
+            "longitude": "113.37",
+            "latitude": "24.48"
+        },
+        {
+            "province": "广东省",
+            "city": "深圳",
+            "longitude": "114.07",
+            "latitude": "22.33"
+        },
+        {
+            "province": "广东省",
+            "city": "顺德",
+            "longitude": "113.15",
+            "latitude": "22.50"
+        },
+        {
+            "province": "广东省",
+            "city": "四会",
+            "longitude": "112.41",
+            "latitude": "23.21"
+        },
+        {
+            "province": "广东省",
+            "city": "台山",
+            "longitude": "112.48",
+            "latitude": "22.15"
+        },
+        {
+            "province": "广东省",
+            "city": "吴川",
+            "longitude": "110.47",
+            "latitude": "21.26"
+        },
+        {
+            "province": "广东省",
+            "city": "新会",
+            "longitude": "113.01",
+            "latitude": "22.32"
+        },
+        {
+            "province": "广东省",
+            "city": "兴宁",
+            "longitude": "115.43",
+            "latitude": "24.09"
+        },
+        {
+            "province": "广东省",
+            "city": "阳春",
+            "longitude": "111.48",
+            "latitude": "22.10"
+        },
+        {
+            "province": "广东省",
+            "city": "阳江",
+            "longitude": "111.58",
+            "latitude": "21.50"
+        },
+        {
+            "province": "广东省",
+            "city": "英德",
+            "longitude": "113.22",
+            "latitude": "24.10"
+        },
+        {
+            "province": "广东省",
+            "city": "云浮",
+            "longitude": "112.02",
+            "latitude": "22.57"
+        },
+        {
+            "province": "广东省",
+            "city": "增城",
+            "longitude": "113.49",
+            "latitude": "23.18"
+        },
+        {
+            "province": "广东省",
+            "city": "湛江",
+            "longitude": "110.24",
+            "latitude": "21.11"
+        },
+        {
+            "province": "广东省",
+            "city": "肇庆",
+            "longitude": "112.27",
+            "latitude": "23.03"
+        },
+        {
+            "province": "广东省",
+            "city": "中山",
+            "longitude": "113.22",
+            "latitude": "22.31"
+        },
+        {
+            "province": "广东省",
+            "city": "珠海",
+            "longitude": "113.34",
+            "latitude": "22.17"
+        },
+        {
+            "province": "广西自治区",
+            "city": "南宁",
+            "longitude": "108.19",
+            "latitude": "22.48"
+        },
+        {
+            "province": "广西自治区",
+            "city": "北海",
+            "longitude": "109.07",
+            "latitude": "21.28"
+        },
+        {
+            "province": "广西自治区",
+            "city": "北流",
+            "longitude": "110.21",
+            "latitude": "22.42"
+        },
+        {
+            "province": "广西自治区",
+            "city": "百色",
+            "longitude": "106.36",
+            "latitude": "23.54"
+        },
+        {
+            "province": "广西自治区",
+            "city": "防城港",
+            "longitude": "108.20",
+            "latitude": "21.37"
+        },
+        {
+            "province": "广西自治区",
+            "city": "贵港",
+            "longitude": "109.36",
+            "latitude": "23.06"
+        },
+        {
+            "province": "广西自治区",
+            "city": "桂林",
+            "longitude": "110.17",
+            "latitude": "25.17"
+        },
+        {
+            "province": "广西自治区",
+            "city": "桂平",
+            "longitude": "110.04",
+            "latitude": "23.22"
+        },
+        {
+            "province": "广西自治区",
+            "city": "河池",
+            "longitude": "108.03",
+            "latitude": "24.42"
+        },
+        {
+            "province": "广西自治区",
+            "city": "合山",
+            "longitude": "108.52",
+            "latitude": "23.47"
+        },
+        {
+            "province": "广西自治区",
+            "city": "柳州",
+            "longitude": "109.24",
+            "latitude": "23.19"
+        },
+        {
+            "province": "广西自治区",
+            "city": "赁祥",
+            "longitude": "106.44",
+            "latitude": "22.07"
+        },
+        {
+            "province": "广西自治区",
+            "city": "钦州",
+            "longitude": "108.37",
+            "latitude": "21.57"
+        },
+        {
+            "province": "广西自治区",
+            "city": "梧州",
+            "longitude": "111.20",
+            "latitude": "23.29"
+        },
+        {
+            "province": "广西自治区",
+            "city": "玉林",
+            "longitude": "110.09",
+            "latitude": "22.38"
+        },
+        {
+            "province": "广西自治区",
+            "city": "宜州",
+            "longitude": "108.40",
+            "latitude": "24.28"
+        },
+        {
+            "province": "贵州省",
+            "city": "贵阳",
+            "longitude": "106.42",
+            "latitude": "26.35"
+        },
+        {
+            "province": "贵州省",
+            "city": "安顺",
+            "longitude": "105.55",
+            "latitude": "26.14"
+        },
+        {
+            "province": "贵州省",
+            "city": "毕节",
+            "longitude": "105.18",
+            "latitude": "27.18"
+        },
+        {
+            "province": "贵州省",
+            "city": "赤水",
+            "longitude": "105.42",
+            "latitude": "28.34"
+        },
+        {
+            "province": "贵州省",
+            "city": "都匀",
+            "longitude": "107.31",
+            "latitude": "26.15"
+        },
+        {
+            "province": "贵州省",
+            "city": "凯里",
+            "longitude": "107.58",
+            "latitude": "26.35"
+        },
+        {
+            "province": "贵州省",
+            "city": "六盘水",
+            "longitude": "104.50",
+            "latitude": "26.35"
+        },
+        {
+            "province": "贵州省",
+            "city": "清镇",
+            "longitude": "106.27",
+            "latitude": "26.33"
+        },
+        {
+            "province": "贵州省",
+            "city": "铜仁",
+            "longitude": "109.12",
+            "latitude": "27.43"
+        },
+        {
+            "province": "贵州省",
+            "city": "兴义",
+            "longitude": "104.53",
+            "latitude": "25.05"
+        },
+        {
+            "province": "贵州省",
+            "city": "遵义",
+            "longitude": "106.55",
+            "latitude": "27.42"
+        },
+        {
+            "province": "海南省",
+            "city": "海口",
+            "longitude": "110.20",
+            "latitude": "20.02"
+        },
+        {
+            "province": "海南省",
+            "city": "儋州",
+            "longitude": "109.34",
+            "latitude": "19.31"
+        },
+        {
+            "province": "海南省",
+            "city": "琼海",
+            "longitude": "110.28",
+            "latitude": "19.14"
+        },
+        {
+            "province": "海南省",
+            "city": "琼山",
+            "longitude": "110.21",
+            "latitude": "19.59"
+        },
+        {
+            "province": "海南省",
+            "city": "三亚",
+            "longitude": "109.31",
+            "latitude": "18.14"
+        },
+        {
+            "province": "海南省",
+            "city": "通什",
+            "longitude": "109.31",
+            "latitude": "18.46"
+        },
+        {
+            "province": "河北省",
+            "city": "石家庄",
+            "longitude": "114.30",
+            "latitude": "38.02"
+        },
+        {
+            "province": "河北省",
+            "city": "安国",
+            "longitude": "115.20",
+            "latitude": "38.24"
+        },
+        {
+            "province": "河北省",
+            "city": "保定",
+            "longitude": "115.30",
+            "latitude": "38.51"
+        },
+        {
+            "province": "河北省",
+            "city": "霸州",
+            "longitude": "116.24",
+            "latitude": "39.06"
+        },
+        {
+            "province": "河北省",
+            "city": "泊头",
+            "longitude": "116.34",
+            "latitude": "38.04"
+        },
+        {
+            "province": "河北省",
+            "city": "沧州",
+            "longitude": "116.52",
+            "latitude": "38.18"
+        },
+        {
+            "province": "河北省",
+            "city": "承德",
+            "longitude": "117.57",
+            "latitude": "40.59"
+        },
+        {
+            "province": "河北省",
+            "city": "定州",
+            "longitude": "115.00",
+            "latitude": "38.30"
+        },
+        {
+            "province": "河北省",
+            "city": "丰南",
+            "longitude": "118.06",
+            "latitude": "39.34"
+        },
+        {
+            "province": "河北省",
+            "city": "高碑店",
+            "longitude": "115.51",
+            "latitude": "39.20"
+        },
+        {
+            "province": "河北省",
+            "city": "蒿城",
+            "longitude": "114.50",
+            "latitude": "38.02"
+        },
+        {
+            "province": "河北省",
+            "city": "邯郸",
+            "longitude": "114.28",
+            "latitude": "36.36"
+        },
+        {
+            "province": "河北省",
+            "city": "河间",
+            "longitude": "116.05",
+            "latitude": "38.26"
+        },
+        {
+            "province": "河北省",
+            "city": "衡水",
+            "longitude": "115.42",
+            "latitude": "37.44"
+        },
+        {
+            "province": "河北省",
+            "city": "黄骅",
+            "longitude": "117.21",
+            "latitude": "38.21"
+        },
+        {
+            "province": "河北省",
+            "city": "晋州",
+            "longitude": "115.02",
+            "latitude": "38.02"
+        },
+        {
+            "province": "河北省",
+            "city": "冀州",
+            "longitude": "115.33",
+            "latitude": "37.34"
+        },
+        {
+            "province": "河北省",
+            "city": "廓坊",
+            "longitude": "116.42",
+            "latitude": "39.31"
+        },
+        {
+            "province": "河北省",
+            "city": "鹿泉",
+            "longitude": "114.19",
+            "latitude": "38.04"
+        },
+        {
+            "province": "河北省",
+            "city": "南宫",
+            "longitude": "115.23",
+            "latitude": "37.22"
+        },
+        {
+            "province": "河北省",
+            "city": "秦皇岛",
+            "longitude": "119.35",
+            "latitude": "39.55"
+        },
+        {
+            "province": "河北省",
+            "city": "任丘",
+            "longitude": "116.07",
+            "latitude": "38.42"
+        },
+        {
+            "province": "河北省",
+            "city": "三河",
+            "longitude": "117.04",
+            "latitude": "39.58"
+        },
+        {
+            "province": "河北省",
+            "city": "沙河",
+            "longitude": "114.30",
+            "latitude": "36.51"
+        },
+        {
+            "province": "河北省",
+            "city": "深州",
+            "longitude": "115.32",
+            "latitude": "38.01"
+        },
+        {
+            "province": "河北省",
+            "city": "唐山",
+            "longitude": "118.11",
+            "latitude": "39.36"
+        },
+        {
+            "province": "河北省",
+            "city": "武安",
+            "longitude": "114.11",
+            "latitude": "36.42"
+        },
+        {
+            "province": "河北省",
+            "city": "邢台",
+            "longitude": "114.30",
+            "latitude": "37.04"
+        },
+        {
+            "province": "河北省",
+            "city": "辛集",
+            "longitude": "115.12",
+            "latitude": "37.54"
+        },
+        {
+            "province": "河北省",
+            "city": "新乐",
+            "longitude": "114.41",
+            "latitude": "38.20"
+        },
+        {
+            "province": "河北省",
+            "city": "张家口",
+            "longitude": "114.53",
+            "latitude": "40.48"
+        },
+        {
+            "province": "河北省",
+            "city": "涿州",
+            "longitude": "115.59",
+            "latitude": "39.29"
+        },
+        {
+            "province": "河北省",
+            "city": "遵化",
+            "longitude": "117.58",
+            "latitude": "40.11"
+        },
+        {
+            "province": "河南省",
+            "city": "郑州",
+            "longitude": "11340",
+            "latitude": "34.46"
+        },
+        {
+            "province": "河南省",
+            "city": "安阳",
+            "longitude": "114.21",
+            "latitude": "36.06"
+        },
+        {
+            "province": "河南省",
+            "city": "长葛",
+            "longitude": "113.47",
+            "latitude": "34.12"
+        },
+        {
+            "province": "河南省",
+            "city": "登封",
+            "longitude": "113.02",
+            "latitude": "34.27"
+        },
+        {
+            "province": "河南省",
+            "city": "邓州",
+            "longitude": "112.05",
+            "latitude": "32.42"
+        },
+        {
+            "province": "河南省",
+            "city": "巩义",
+            "longitude": "112.58",
+            "latitude": "34.46"
+        },
+        {
+            "province": "河南省",
+            "city": "鹤壁",
+            "longitude": "114.11",
+            "latitude": "35.54"
+        },
+        {
+            "province": "河南省",
+            "city": "辉县",
+            "longitude": "113.47",
+            "latitude": "35.27"
+        },
+        {
+            "province": "河南省",
+            "city": "焦作",
+            "longitude": "113.12",
+            "latitude": "35.14"
+        },
+        {
+            "province": "河南省",
+            "city": "济源",
+            "longitude": "112.35",
+            "latitude": "35.04"
+        },
+        {
+            "province": "河南省",
+            "city": "开封",
+            "longitude": "114.21",
+            "latitude": "34.47"
+        },
+        {
+            "province": "河南省",
+            "city": "灵宝",
+            "longitude": "110.52",
+            "latitude": "34.31"
+        },
+        {
+            "province": "河南省",
+            "city": "林州",
+            "longitude": "113.49",
+            "latitude": "36.03"
+        },
+        {
+            "province": "河南省",
+            "city": "漯河",
+            "longitude": "114.02",
+            "latitude": "33.33"
+        },
+        {
+            "province": "河南省",
+            "city": "洛阳",
+            "longitude": "112.27",
+            "latitude": "34.41"
+        },
+        {
+            "province": "河南省",
+            "city": "南阳",
+            "longitude": "112.32",
+            "latitude": "33.00"
+        },
+        {
+            "province": "河南省",
+            "city": "平顶山",
+            "longitude": "113.17",
+            "latitude": "33.44"
+        },
+        {
+            "province": "河南省",
+            "city": "濮阳",
+            "longitude": "115.01",
+            "latitude": "35.44"
+        },
+        {
+            "province": "河南省",
+            "city": "沁阳",
+            "longitude": "112.57",
+            "latitude": "35.05"
+        },
+        {
+            "province": "河南省",
+            "city": "汝州",
+            "longitude": "112.50",
+            "latitude": "34.09"
+        },
+        {
+            "province": "河南省",
+            "city": "三门峡",
+            "longitude": "111.12",
+            "latitude": "34.47"
+        },
+        {
+            "province": "河南省",
+            "city": "商丘",
+            "longitude": "115.38",
+            "latitude": "34.26"
+        },
+        {
+            "province": "河南省",
+            "city": "卫辉",
+            "longitude": "114.03",
+            "latitude": "35.24"
+        },
+        {
+            "province": "河南省",
+            "city": "舞钢",
+            "longitude": "113.30",
+            "latitude": "33.17"
+        },
+        {
+            "province": "河南省",
+            "city": "项城",
+            "longitude": "114.54",
+            "latitude": "33.26"
+        },
+        {
+            "province": "河南省",
+            "city": "荥阳",
+            "longitude": "113.21",
+            "latitude": "34.46"
+        },
+        {
+            "province": "河南省",
+            "city": "新密",
+            "longitude": "113.22",
+            "latitude": "34.31"
+        },
+        {
+            "province": "河南省",
+            "city": "新乡",
+            "longitude": "113.52",
+            "latitude": "35.18"
+        },
+        {
+            "province": "河南省",
+            "city": "信阳",
+            "longitude": "114.04",
+            "latitude": "32.07"
+        },
+        {
+            "province": "河南省",
+            "city": "新郑",
+            "longitude": "113.43",
+            "latitude": "34.24"
+        },
+        {
+            "province": "河南省",
+            "city": "许昌",
+            "longitude": "113.49",
+            "latitude": "34.01"
+        },
+        {
+            "province": "河南省",
+            "city": "偃师",
+            "longitude": "112.47",
+            "latitude": "34.43"
+        },
+        {
+            "province": "河南省",
+            "city": "义马",
+            "longitude": "111.55",
+            "latitude": "34.43"
+        },
+        {
+            "province": "河南省",
+            "city": "禹州",
+            "longitude": "113.28",
+            "latitude": "34.09"
+        },
+        {
+            "province": "河南省",
+            "city": "周口",
+            "longitude": "114.38",
+            "latitude": "33.37"
+        },
+        {
+            "province": "河南省",
+            "city": "驻马店",
+            "longitude": "114.01",
+            "latitude": "32.58"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "哈尔滨",
+            "longitude": "126.36",
+            "latitude": "45.44"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "阿城",
+            "longitude": "126.58",
+            "latitude": "45.32"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "安达",
+            "longitude": "125.18",
+            "latitude": "46.24"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "北安",
+            "longitude": "126.31",
+            "latitude": "48.15"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "大庆",
+            "longitude": "125.01",
+            "latitude": "46.36"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "富锦",
+            "longitude": "132.02",
+            "latitude": "47.15"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "海林",
+            "longitude": "129.21",
+            "latitude": "44.35"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "海伦",
+            "longitude": "126.57",
+            "latitude": "47.28"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "鹤岗",
+            "longitude": "130.16",
+            "latitude": "47.20"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "黑河",
+            "longitude": "127.29",
+            "latitude": "50.14"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "佳木斯",
+            "longitude": "130.22",
+            "latitude": "46.47"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "鸡西",
+            "longitude": "130.57",
+            "latitude": "45.17"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "密山",
+            "longitude": "131.50",
+            "latitude": "45.32"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "牡丹江",
+            "longitude": "129.36",
+            "latitude": "44.35"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "讷河",
+            "longitude": "124.51",
+            "latitude": "48.29"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "宁安",
+            "longitude": "129.28",
+            "latitude": "44.21"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "齐齐哈尔",
+            "longitude": "123.57",
+            "latitude": "47.20"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "七台河",
+            "longitude": "130.49",
+            "latitude": "45.48"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "双城",
+            "longitude": "126.15",
+            "latitude": "45.22"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "尚志",
+            "longitude": "127.55",
+            "latitude": "45.14"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "双鸭山",
+            "longitude": "131.11",
+            "latitude": "46.38"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "绥芬河",
+            "longitude": "131.11",
+            "latitude": "44.25"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "绥化",
+            "longitude": "126.59",
+            "latitude": "46.38"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "铁力",
+            "longitude": "128.01",
+            "latitude": "46.59"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "同江",
+            "longitude": "132.30",
+            "latitude": "47.39"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "五常",
+            "longitude": "127.11",
+            "latitude": "44.55"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "五大连池",
+            "longitude": "126.07",
+            "latitude": "48.38"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "伊春",
+            "longitude": "128.56",
+            "latitude": "47.42"
+        },
+        {
+            "province": "黑龙江省",
+            "city": "肇东",
+            "longitude": "125.58",
+            "latitude": "46.04"
+        },
+        {
+            "province": "湖北省",
+            "city": "武汉",
+            "longitude": "114.17",
+            "latitude": "30.35"
+        },
+        {
+            "province": "湖北省",
+            "city": "安陆",
+            "longitude": "113.41",
+            "latitude": "31.15"
+        },
+        {
+            "province": "湖北省",
+            "city": "当阳",
+            "longitude": "111.47",
+            "latitude": "30.50"
+        },
+        {
+            "province": "湖北省",
+            "city": "丹江口",
+            "longitude": "108.30",
+            "latitude": "32.33"
+        },
+        {
+            "province": "湖北省",
+            "city": "大冶",
+            "longitude": "114.58",
+            "latitude": "30.06"
+        },
+        {
+            "province": "湖北省",
+            "city": "恩施",
+            "longitude": "109.29",
+            "latitude": "30.16"
+        },
+        {
+            "province": "湖北省",
+            "city": "鄂州",
+            "longitude": "114.52",
+            "latitude": "30.23"
+        },
+        {
+            "province": "湖北省",
+            "city": "广水",
+            "longitude": "113.48",
+            "latitude": "31.37"
+        },
+        {
+            "province": "湖北省",
+            "city": "洪湖",
+            "longitude": "113.27",
+            "latitude": "29.48"
+        },
+        {
+            "province": "湖北省",
+            "city": "黄石",
+            "longitude": "115.06",
+            "latitude": "30.12"
+        },
+        {
+            "province": "湖北省",
+            "city": "黄州",
+            "longitude": "114.52",
+            "latitude": "30.27"
+        },
+        {
+            "province": "湖北省",
+            "city": "荆门",
+            "longitude": "112.12",
+            "latitude": "31.02"
+        },
+        {
+            "province": "湖北省",
+            "city": "荆沙",
+            "longitude": "112.16",
+            "latitude": "30.18"
+        },
+        {
+            "province": "湖北省",
+            "city": "老河口",
+            "longitude": "111.40",
+            "latitude": "32.23"
+        },
+        {
+            "province": "湖北省",
+            "city": "利川",
+            "longitude": "108.56",
+            "latitude": "30.18"
+        },
+        {
+            "province": "湖北省",
+            "city": "麻城",
+            "longitude": "115.01",
+            "latitude": "31.10"
+        },
+        {
+            "province": "湖北省",
+            "city": "浦圻",
+            "longitude": "113.51",
+            "latitude": "29.42"
+        },
+        {
+            "province": "湖北省",
+            "city": "潜江",
+            "longitude": "112.53",
+            "latitude": "30.26"
+        },
+        {
+            "province": "湖北省",
+            "city": "石首",
+            "longitude": "112.24",
+            "latitude": "29.43"
+        },
+        {
+            "province": "湖北省",
+            "city": "十堰",
+            "longitude": "110.47",
+            "latitude": "32.40"
+        },
+        {
+            "province": "湖北省",
+            "city": "随州",
+            "longitude": "113.22",
+            "latitude": "31.42"
+        },
+        {
+            "province": "湖北省",
+            "city": "天门",
+            "longitude": "113.10",
+            "latitude": "60.39"
+        },
+        {
+            "province": "湖北省",
+            "city": "武穴",
+            "longitude": "115.33",
+            "latitude": "29.51"
+        },
+        {
+            "province": "湖北省",
+            "city": "襄樊",
+            "longitude": "112.08",
+            "latitude": "32.02"
+        },
+        {
+            "province": "湖北省",
+            "city": "咸宁",
+            "longitude": "114.17",
+            "latitude": "29.53"
+        },
+        {
+            "province": "湖北省",
+            "city": "仙桃",
+            "longitude": "113.27",
+            "latitude": "30.22"
+        },
+        {
+            "province": "湖北省",
+            "city": "孝感",
+            "longitude": "113.54",
+            "latitude": "30.56"
+        },
+        {
+            "province": "湖北省",
+            "city": "宜昌",
+            "longitude": "111.17",
+            "latitude": "30.42"
+        },
+        {
+            "province": "湖北省",
+            "city": "宜城",
+            "longitude": "112.15",
+            "latitude": "31.42"
+        },
+        {
+            "province": "湖北省",
+            "city": "应城",
+            "longitude": "113.33",
+            "latitude": "30.57"
+        },
+        {
+            "province": "湖北省",
+            "city": "枣阳",
+            "longitude": "112.44",
+            "latitude": "32.07"
+        },
+        {
+            "province": "湖北省",
+            "city": "枝城",
+            "longitude": "111.27",
+            "latitude": "30.23"
+        },
+        {
+            "province": "湖北省",
+            "city": "钟祥",
+            "longitude": "112.34",
+            "latitude": "31.10"
+        },
+        {
+            "province": "湖南省",
+            "city": "长沙",
+            "longitude": "112.59",
+            "latitude": "28.12"
+        },
+        {
+            "province": "湖南省",
+            "city": "常德",
+            "longitude": "111.51",
+            "latitude": "29.02"
+        },
+        {
+            "province": "湖南省",
+            "city": "郴州",
+            "longitude": "113.02",
+            "latitude": "25.46"
+        },
+        {
+            "province": "湖南省",
+            "city": "衡阳",
+            "longitude": "112.37",
+            "latitude": "26.53"
+        },
+        {
+            "province": "湖南省",
+            "city": "洪江",
+            "longitude": "109.59",
+            "latitude": "27.07"
+        },
+        {
+            "province": "湖南省",
+            "city": "怀化",
+            "longitude": "109.58",
+            "latitude": "27.33"
+        },
+        {
+            "province": "湖南省",
+            "city": "津市",
+            "longitude": "111.52",
+            "latitude": "29.38"
+        },
+        {
+            "province": "湖南省",
+            "city": "吉首",
+            "longitude": "109.43",
+            "latitude": "28.18"
+        },
+        {
+            "province": "湖南省",
+            "city": "耒阳",
+            "longitude": "112.51",
+            "latitude": "26.24"
+        },
+        {
+            "province": "湖南省",
+            "city": "冷水江",
+            "longitude": "111.26",
+            "latitude": "27.42"
+        },
+        {
+            "province": "湖南省",
+            "city": "冷水滩",
+            "longitude": "111.35",
+            "latitude": "26.26"
+        },
+        {
+            "province": "湖南省",
+            "city": "涟源",
+            "longitude": "111.41",
+            "latitude": "27.41"
+        },
+        {
+            "province": "湖南省",
+            "city": "醴陵",
+            "longitude": "113.30",
+            "latitude": "27.40"
+        },
+        {
+            "province": "湖南省",
+            "city": "临湘",
+            "longitude": "113.27",
+            "latitude": "29.29"
+        },
+        {
+            "province": "湖南省",
+            "city": "浏阳",
+            "longitude": "113.37",
+            "latitude": "28.09"
+        },
+        {
+            "province": "湖南省",
+            "city": "娄底",
+            "longitude": "111.59",
+            "latitude": "27.44"
+        },
+        {
+            "province": "湖南省",
+            "city": "汨罗",
+            "longitude": "113.03",
+            "latitude": "28.49"
+        },
+        {
+            "province": "湖南省",
+            "city": "韶山",
+            "longitude": "112.29",
+            "latitude": "27.54"
+        },
+        {
+            "province": "湖南省",
+            "city": "邵阳",
+            "longitude": "111.28",
+            "latitude": "27.14"
+        },
+        {
+            "province": "湖南省",
+            "city": "武冈",
+            "longitude": "110.37",
+            "latitude": "26.43"
+        },
+        {
+            "province": "湖南省",
+            "city": "湘潭",
+            "longitude": "112.53",
+            "latitude": "27.52"
+        },
+        {
+            "province": "湖南省",
+            "city": "湘乡",
+            "longitude": "112.31",
+            "latitude": "27.44"
+        },
+        {
+            "province": "湖南省",
+            "city": "益阳",
+            "longitude": "112.20",
+            "latitude": "28.36"
+        },
+        {
+            "province": "湖南省",
+            "city": "永州",
+            "longitude": "111.37",
+            "latitude": "26.13"
+        },
+        {
+            "province": "湖南省",
+            "city": "沅江",
+            "longitude": "112.22",
+            "latitude": "28.50"
+        },
+        {
+            "province": "湖南省",
+            "city": "岳阳",
+            "longitude": "113.06",
+            "latitude": "29.22"
+        },
+        {
+            "province": "湖南省",
+            "city": "张家界",
+            "longitude": "110.29",
+            "latitude": "29.08"
+        },
+        {
+            "province": "湖南省",
+            "city": "株洲",
+            "longitude": "113.09",
+            "latitude": "27.51"
+        },
+        {
+            "province": "湖南省",
+            "city": "资兴",
+            "longitude": "113.13",
+            "latitude": "25.58"
+        },
+        {
+            "province": "吉林省",
+            "city": "长春",
+            "longitude": "125.19",
+            "latitude": "43.54"
+        },
+        {
+            "province": "吉林省",
+            "city": "白城",
+            "longitude": "122.50",
+            "latitude": "45.38"
+        },
+        {
+            "province": "吉林省",
+            "city": "白山",
+            "longitude": "126.26",
+            "latitude": "41.56"
+        },
+        {
+            "province": "吉林省",
+            "city": "大安",
+            "longitude": "124.18",
+            "latitude": "45.30"
+        },
+        {
+            "province": "吉林省",
+            "city": "德惠",
+            "longitude": "125.42",
+            "latitude": "44.32"
+        },
+        {
+            "province": "吉林省",
+            "city": "敦化",
+            "longitude": "128.13",
+            "latitude": "43.22"
+        },
+        {
+            "province": "吉林省",
+            "city": "公主岭",
+            "longitude": "124.49",
+            "latitude": "43.31"
+        },
+        {
+            "province": "吉林省",
+            "city": "和龙",
+            "longitude": "129.00",
+            "latitude": "42.32"
+        },
+        {
+            "province": "吉林省",
+            "city": "桦甸",
+            "longitude": "126.44",
+            "latitude": "42.58"
+        },
+        {
+            "province": "吉林省",
+            "city": "珲春",
+            "longitude": "130.22",
+            "latitude": "42.52"
+        },
+        {
+            "province": "吉林省",
+            "city": "集安",
+            "longitude": "126.11",
+            "latitude": "41.08"
+        },
+        {
+            "province": "吉林省",
+            "city": "蛟河",
+            "longitude": "127.21",
+            "latitude": "43.42"
+        },
+        {
+            "province": "吉林省",
+            "city": "吉林",
+            "longitude": "126.33",
+            "latitude": "43.52"
+        },
+        {
+            "province": "吉林省",
+            "city": "九台",
+            "longitude": "125.51",
+            "latitude": "44.09"
+        },
+        {
+            "province": "吉林省",
+            "city": "辽源",
+            "longitude": "125.09",
+            "latitude": "42.54"
+        },
+        {
+            "province": "吉林省",
+            "city": "临江",
+            "longitude": "126.53",
+            "latitude": "41.49"
+        },
+        {
+            "province": "吉林省",
+            "city": "龙井",
+            "longitude": "129.26",
+            "latitude": "42.46"
+        },
+        {
+            "province": "吉林省",
+            "city": "梅河口",
+            "longitude": "125.40",
+            "latitude": "42.32"
+        },
+        {
+            "province": "吉林省",
+            "city": "舒兰",
+            "longitude": "126.57",
+            "latitude": "44.24"
+        },
+        {
+            "province": "吉林省",
+            "city": "四平",
+            "longitude": "124.22",
+            "latitude": "43.10"
+        },
+        {
+            "province": "吉林省",
+            "city": "松原",
+            "longitude": "124.49",
+            "latitude": "45.11"
+        },
+        {
+            "province": "吉林省",
+            "city": "洮南",
+            "longitude": "122.47",
+            "latitude": "45.20"
+        },
+        {
+            "province": "吉林省",
+            "city": "通化",
+            "longitude": "125.56",
+            "latitude": "41.43"
+        },
+        {
+            "province": "吉林省",
+            "city": "图们",
+            "longitude": "129.51",
+            "latitude": "42.57"
+        },
+        {
+            "province": "吉林省",
+            "city": "延吉",
+            "longitude": "129.30",
+            "latitude": "42.54"
+        },
+        {
+            "province": "吉林省",
+            "city": "愉树",
+            "longitude": "126.32",
+            "latitude": "44.49"
+        },
+        {
+            "province": "江苏省",
+            "city": "南京",
+            "longitude": "118.46",
+            "latitude": "32.03"
+        },
+        {
+            "province": "江苏省",
+            "city": "常熟",
+            "longitude": "120.43",
+            "latitude": "31.39"
+        },
+        {
+            "province": "江苏省",
+            "city": "常州",
+            "longitude": "119.58",
+            "latitude": "31.47"
+        },
+        {
+            "province": "江苏省",
+            "city": "丹阳",
+            "longitude": "119.32",
+            "latitude": "32.00"
+        },
+        {
+            "province": "江苏省",
+            "city": "东台",
+            "longitude": "120.19",
+            "latitude": "32.51"
+        },
+        {
+            "province": "江苏省",
+            "city": "高邮",
+            "longitude": "119.27",
+            "latitude": "32.47"
+        },
+        {
+            "province": "江苏省",
+            "city": "海门",
+            "longitude": "121.09",
+            "latitude": "31.53"
+        },
+        {
+            "province": "江苏省",
+            "city": "淮安",
+            "longitude": "119.09",
+            "latitude": "33.30"
+        },
+        {
+            "province": "江苏省",
+            "city": "淮阴",
+            "longitude": "119.02",
+            "latitude": "33.36"
+        },
+        {
+            "province": "江苏省",
+            "city": "江都",
+            "longitude": "119.32",
+            "latitude": "32.26"
+        },
+        {
+            "province": "江苏省",
+            "city": "姜堰",
+            "longitude": "120.08",
+            "latitude": "32.34"
+        },
+        {
+            "province": "江苏省",
+            "city": "江阴",
+            "longitude": "120.17",
+            "latitude": "31.54"
+        },
+        {
+            "province": "江苏省",
+            "city": "靖江",
+            "longitude": "120.17",
+            "latitude": "32.02"
+        },
+        {
+            "province": "江苏省",
+            "city": "金坛",
+            "longitude": "119.33",
+            "latitude": "31.46"
+        },
+        {
+            "province": "江苏省",
+            "city": "昆山",
+            "longitude": "120.57",
+            "latitude": "31.23"
+        },
+        {
+            "province": "江苏省",
+            "city": "连去港",
+            "longitude": "119.10",
+            "latitude": "34.36"
+        },
+        {
+            "province": "江苏省",
+            "city": "溧阳",
+            "longitude": "119.29",
+            "latitude": "31.26"
+        },
+        {
+            "province": "江苏省",
+            "city": "南通",
+            "longitude": "120.51",
+            "latitude": "32.01"
+        },
+        {
+            "province": "江苏省",
+            "city": "邳州",
+            "longitude": "117.59",
+            "latitude": "34.19"
+        },
+        {
+            "province": "江苏省",
+            "city": "启乐",
+            "longitude": "121.39",
+            "latitude": "31.48"
+        },
+        {
+            "province": "江苏省",
+            "city": "如皋",
+            "longitude": "120.33",
+            "latitude": "32.23"
+        },
+        {
+            "province": "江苏省",
+            "city": "宿迁",
+            "longitude": "118.18",
+            "latitude": "33.58"
+        },
+        {
+            "province": "江苏省",
+            "city": "苏州",
+            "longitude": "120.37",
+            "latitude": "31.19"
+        },
+        {
+            "province": "江苏省",
+            "city": "太仓",
+            "longitude": "121.06",
+            "latitude": "31.27"
+        },
+        {
+            "province": "江苏省",
+            "city": "泰兴",
+            "longitude": "120.01",
+            "latitude": "32.10"
+        },
+        {
+            "province": "江苏省",
+            "city": "泰州",
+            "longitude": "119.54",
+            "latitude": "32.30"
+        },
+        {
+            "province": "江苏省",
+            "city": "通州",
+            "longitude": "121.03",
+            "latitude": "32.05"
+        },
+        {
+            "province": "江苏省",
+            "city": "吴江",
+            "longitude": "120.39",
+            "latitude": "31.10"
+        },
+        {
+            "province": "江苏省",
+            "city": "无锡",
+            "longitude": "120.18",
+            "latitude": "31.34"
+        },
+        {
+            "province": "江苏省",
+            "city": "兴化",
+            "longitude": "119.50",
+            "latitude": "32.56"
+        },
+        {
+            "province": "江苏省",
+            "city": "新沂",
+            "longitude": "118.20",
+            "latitude": "34.22"
+        },
+        {
+            "province": "江苏省",
+            "city": "徐州",
+            "longitude": "117.11",
+            "latitude": "34.15"
+        },
+        {
+            "province": "江苏省",
+            "city": "盐在",
+            "longitude": "120.08",
+            "latitude": "33.22"
+        },
+        {
+            "province": "江苏省",
+            "city": "扬中",
+            "longitude": "119.49",
+            "latitude": "32.14"
+        },
+        {
+            "province": "江苏省",
+            "city": "扬州",
+            "longitude": "119.26",
+            "latitude": "32.23"
+        },
+        {
+            "province": "江苏省",
+            "city": "宜兴",
+            "longitude": "119.49",
+            "latitude": "31.21"
+        },
+        {
+            "province": "江苏省",
+            "city": "仪征",
+            "longitude": "119.10",
+            "latitude": "32.16"
+        },
+        {
+            "province": "江苏省",
+            "city": "张家港",
+            "longitude": "120.32",
+            "latitude": "31.52"
+        },
+        {
+            "province": "江苏省",
+            "city": "镇江",
+            "longitude": "119.27",
+            "latitude": "32.11"
+        },
+        {
+            "province": "江西省",
+            "city": "南昌",
+            "longitude": "115.55",
+            "latitude": "28.40"
+        },
+        {
+            "province": "江西省",
+            "city": "德兴",
+            "longitude": "117.35",
+            "latitude": "28.57"
+        },
+        {
+            "province": "江西省",
+            "city": "丰城",
+            "longitude": "115.48",
+            "latitude": "28.12"
+        },
+        {
+            "province": "江西省",
+            "city": "赣州",
+            "longitude": "114.56",
+            "latitude": "28.52"
+        },
+        {
+            "province": "江西省",
+            "city": "高安",
+            "longitude": "115.22",
+            "latitude": "28.25"
+        },
+        {
+            "province": "江西省",
+            "city": "吉安",
+            "longitude": "114.58",
+            "latitude": "27.07"
+        },
+        {
+            "province": "江西省",
+            "city": "景德镇",
+            "longitude": "117.13",
+            "latitude": "29.17"
+        },
+        {
+            "province": "江西省",
+            "city": "井冈山",
+            "longitude": "114.10",
+            "latitude": "26.34"
+        },
+        {
+            "province": "江西省",
+            "city": "九江",
+            "longitude": "115.58",
+            "latitude": "29.43"
+        },
+        {
+            "province": "江西省",
+            "city": "乐平",
+            "longitude": "117.08",
+            "latitude": "28.58"
+        },
+        {
+            "province": "江西省",
+            "city": "临川",
+            "longitude": "116.21",
+            "latitude": "27.59"
+        },
+        {
+            "province": "江西省",
+            "city": "萍乡",
+            "longitude": "113.50",
+            "latitude": "27.37"
+        },
+        {
+            "province": "江西省",
+            "city": "瑞昌",
+            "longitude": "115.38",
+            "latitude": "29.40"
+        },
+        {
+            "province": "江西省",
+            "city": "瑞金",
+            "longitude": "116.01",
+            "latitude": "25.53"
+        },
+        {
+            "province": "江西省",
+            "city": "上饶",
+            "longitude": "117.58",
+            "latitude": "25.27"
+        },
+        {
+            "province": "江西省",
+            "city": "新余",
+            "longitude": "114.56",
+            "latitude": "27.48"
+        },
+        {
+            "province": "江西省",
+            "city": "宜春",
+            "longitude": "114.23",
+            "latitude": "27.47"
+        },
+        {
+            "province": "江西省",
+            "city": "鹰潭",
+            "longitude": "117.03",
+            "latitude": "28.14"
+        },
+        {
+            "province": "江西省",
+            "city": "樟树",
+            "longitude": "115.32",
+            "latitude": "28.03"
+        },
+        {
+            "province": "辽宁省",
+            "city": "沈阳",
+            "longitude": "123.25",
+            "latitude": "41.48"
+        },
+        {
+            "province": "辽宁省",
+            "city": "鞍山",
+            "longitude": "123.00",
+            "latitude": "41.07"
+        },
+        {
+            "province": "辽宁省",
+            "city": "北票",
+            "longitude": "120.47",
+            "latitude": "41.48"
+        },
+        {
+            "province": "辽宁省",
+            "city": "本溪",
+            "longitude": "123.46",
+            "latitude": "41.18"
+        },
+        {
+            "province": "辽宁省",
+            "city": "朝阳",
+            "longitude": "120.27",
+            "latitude": "41.34"
+        },
+        {
+            "province": "辽宁省",
+            "city": "大连",
+            "longitude": "121.36",
+            "latitude": "38.55"
+        },
+        {
+            "province": "辽宁省",
+            "city": "丹东",
+            "longitude": "124.22",
+            "latitude": "40.08"
+        },
+        {
+            "province": "辽宁省",
+            "city": "大石桥",
+            "longitude": "122.31",
+            "latitude": "40.37"
+        },
+        {
+            "province": "辽宁省",
+            "city": "东港",
+            "longitude": "124.08",
+            "latitude": "39.53"
+        },
+        {
+            "province": "辽宁省",
+            "city": "凤城",
+            "longitude": "124.02",
+            "latitude": "40.28"
+        },
+        {
+            "province": "辽宁省",
+            "city": "抚顺",
+            "longitude": "123.54",
+            "latitude": "41.51"
+        },
+        {
+            "province": "辽宁省",
+            "city": "阜新",
+            "longitude": "121.39",
+            "latitude": "42.01"
+        },
+        {
+            "province": "辽宁省",
+            "city": "盖州",
+            "longitude": "122.21",
+            "latitude": "40.24"
+        },
+        {
+            "province": "辽宁省",
+            "city": "海城",
+            "longitude": "122.43",
+            "latitude": "40.51"
+        },
+        {
+            "province": "辽宁省",
+            "city": "葫芦岛",
+            "longitude": "120.51",
+            "latitude": "40.45"
+        },
+        {
+            "province": "辽宁省",
+            "city": "锦州",
+            "longitude": "121.09",
+            "latitude": "41.07"
+        },
+        {
+            "province": "辽宁省",
+            "city": "开原",
+            "longitude": "124.02",
+            "latitude": "42.32"
+        },
+        {
+            "province": "辽宁省",
+            "city": "辽阳",
+            "longitude": "123.12",
+            "latitude": "41.16"
+        },
+        {
+            "province": "辽宁省",
+            "city": "凌海",
+            "longitude": "121.21",
+            "latitude": "41.10"
+        },
+        {
+            "province": "辽宁省",
+            "city": "凌源",
+            "longitude": "119.22",
+            "latitude": "41.14"
+        },
+        {
+            "province": "辽宁省",
+            "city": "盘锦",
+            "longitude": "122.03",
+            "latitude": "41.07"
+        },
+        {
+            "province": "辽宁省",
+            "city": "普兰店",
+            "longitude": "121.58",
+            "latitude": "39.23"
+        },
+        {
+            "province": "辽宁省",
+            "city": "铁法",
+            "longitude": "123.32",
+            "latitude": "42.28"
+        },
+        {
+            "province": "辽宁省",
+            "city": "铁岭",
+            "longitude": "123.51",
+            "latitude": "42.18"
+        },
+        {
+            "province": "辽宁省",
+            "city": "瓦房店",
+            "longitude": "122.00",
+            "latitude": "39.37"
+        },
+        {
+            "province": "辽宁省",
+            "city": "兴城",
+            "longitude": "120.41",
+            "latitude": "40.37"
+        },
+        {
+            "province": "辽宁省",
+            "city": "新民",
+            "longitude": "122.49",
+            "latitude": "41.59"
+        },
+        {
+            "province": "辽宁省",
+            "city": "营口",
+            "longitude": "122.13",
+            "latitude": "40.39"
+        },
+        {
+            "province": "辽宁省",
+            "city": "庄河",
+            "longitude": "122.58",
+            "latitude": "39.41"
+        },
+        {
+            "province": "内自治区",
+            "city": "呼和浩特",
+            "longitude": "111.41",
+            "latitude": "40.48"
+        },
+        {
+            "province": "内自治区",
+            "city": "包头",
+            "longitude": "109.49",
+            "latitude": "40.39"
+        },
+        {
+            "province": "内自治区",
+            "city": "赤峰",
+            "longitude": "118.58",
+            "latitude": "42.17"
+        },
+        {
+            "province": "内自治区",
+            "city": "东胜",
+            "longitude": "109.59",
+            "latitude": "39.48"
+        },
+        {
+            "province": "内自治区",
+            "city": "二连浩特",
+            "longitude": "111.58",
+            "latitude": "43.38"
+        },
+        {
+            "province": "内自治区",
+            "city": "额尔古纳",
+            "longitude": "120.11",
+            "latitude": "50.13"
+        },
+        {
+            "province": "内自治区",
+            "city": "丰镇",
+            "longitude": "113.09",
+            "latitude": "40.27"
+        },
+        {
+            "province": "内自治区",
+            "city": "根河",
+            "longitude": "121.29",
+            "latitude": "50.48"
+        },
+        {
+            "province": "内自治区",
+            "city": "海拉尔",
+            "longitude": "119.39",
+            "latitude": "49.12"
+        },
+        {
+            "province": "内自治区",
+            "city": "霍林郭勒",
+            "longitude": "119.38",
+            "latitude": "45.32"
+        },
+        {
+            "province": "内自治区",
+            "city": "集宁",
+            "longitude": "113.06",
+            "latitude": "41.02"
+        },
+        {
+            "province": "内自治区",
+            "city": "临河",
+            "longitude": "107.22",
+            "latitude": "40.46"
+        },
+        {
+            "province": "内自治区",
+            "city": "满洲里",
+            "longitude": "117.23",
+            "latitude": "49.35"
+        },
+        {
+            "province": "内自治区",
+            "city": "通辽",
+            "longitude": "122.16",
+            "latitude": "43.37"
+        },
+        {
+            "province": "内自治区",
+            "city": "乌兰浩特",
+            "longitude": "122.03",
+            "latitude": "46.03"
+        },
+        {
+            "province": "内自治区",
+            "city": "乌海",
+            "longitude": "106.48",
+            "latitude": "39.40"
+        },
+        {
+            "province": "内自治区",
+            "city": "锡林浩特",
+            "longitude": "116.03",
+            "latitude": "43.57"
+        },
+        {
+            "province": "内自治区",
+            "city": "牙克石",
+            "longitude": "120.40",
+            "latitude": "49.17"
+        },
+        {
+            "province": "内自治区",
+            "city": "扎兰屯",
+            "longitude": "122.47",
+            "latitude": "48.00"
+        },
+        {
+            "province": "宁夏自治区",
+            "city": "银川",
+            "longitude": "106.16",
+            "latitude": "38.27"
+        },
+        {
+            "province": "宁夏自治区",
+            "city": "青铜峡",
+            "longitude": "105.59",
+            "latitude": "37.56"
+        },
+        {
+            "province": "宁夏自治区",
+            "city": "石嘴山",
+            "longitude": "106.22",
+            "latitude": "39.02"
+        },
+        {
+            "province": "宁夏自治区",
+            "city": "吴忠",
+            "longitude": "106.11",
+            "latitude": "37.59"
+        },
+        {
+            "province": "青海省",
+            "city": "西宁",
+            "longitude": "101.48",
+            "latitude": "36.38"
+        },
+        {
+            "province": "青海省",
+            "city": "德令哈",
+            "longitude": "97.23",
+            "latitude": "37.22"
+        },
+        {
+            "province": "青海省",
+            "city": "格尔木",
+            "longitude": "94.55",
+            "latitude": "36.26"
+        },
+        {
+            "province": "山东省",
+            "city": "济南",
+            "longitude": "117.00",
+            "latitude": "36.40"
+        },
+        {
+            "province": "山东省",
+            "city": "安丘",
+            "longitude": "119.12",
+            "latitude": "36.25"
+        },
+        {
+            "province": "山东省",
+            "city": "滨州",
+            "longitude": "118.02",
+            "latitude": "37.22"
+        },
+        {
+            "province": "山东省",
+            "city": "昌邑",
+            "longitude": "119.24",
+            "latitude": "39.52"
+        },
+        {
+            "province": "山东省",
+            "city": "德州",
+            "longitude": "116.17",
+            "latitude": "37.26"
+        },
+        {
+            "province": "山东省",
+            "city": "东营",
+            "longitude": "118.30",
+            "latitude": "37.27"
+        },
+        {
+            "province": "山东省",
+            "city": "肥城",
+            "longitude": "116.46",
+            "latitude": "36.14"
+        },
+        {
+            "province": "山东省",
+            "city": "高密",
+            "longitude": "119.44",
+            "latitude": "36.22"
+        },
+        {
+            "province": "山东省",
+            "city": "菏泽",
+            "longitude": "115.26",
+            "latitude": "35.14"
+        },
+        {
+            "province": "山东省",
+            "city": "胶南",
+            "longitude": "119.58",
+            "latitude": "35.53"
+        },
+        {
+            "province": "山东省",
+            "city": "胶州",
+            "longitude": "120.00",
+            "latitude": "36.17"
+        },
+        {
+            "province": "山东省",
+            "city": "即墨",
+            "longitude": "120.28",
+            "latitude": "36.22"
+        },
+        {
+            "province": "山东省",
+            "city": "济宁",
+            "longitude": "116.33",
+            "latitude": "35.23"
+        },
+        {
+            "province": "山东省",
+            "city": "莱芜",
+            "longitude": "117.40",
+            "latitude": "36.12"
+        },
+        {
+            "province": "山东省",
+            "city": "莱西",
+            "longitude": "120.31",
+            "latitude": "36.52"
+        },
+        {
+            "province": "山东省",
+            "city": "莱阳",
+            "longitude": "120.42",
+            "latitude": "36.58"
+        },
+        {
+            "province": "山东省",
+            "city": "莱州",
+            "longitude": "119.57",
+            "latitude": "37.10"
+        },
+        {
+            "province": "山东省",
+            "city": "乐陵",
+            "longitude": "117.12",
+            "latitude": "37.44"
+        },
+        {
+            "province": "山东省",
+            "city": "聊城",
+            "longitude": "115.57",
+            "latitude": "36.26"
+        },
+        {
+            "province": "山东省",
+            "city": "临清",
+            "longitude": "115.42",
+            "latitude": "36.51"
+        },
+        {
+            "province": "山东省",
+            "city": "临沂",
+            "longitude": "118.20",
+            "latitude": "35.03"
+        },
+        {
+            "province": "山东省",
+            "city": "龙口",
+            "longitude": "120.21",
+            "latitude": "37.39"
+        },
+        {
+            "province": "山东省",
+            "city": "蓬莱",
+            "longitude": "120.45",
+            "latitude": "37.48"
+        },
+        {
+            "province": "山东省",
+            "city": "平度",
+            "longitude": "119.58",
+            "latitude": "36.47"
+        },
+        {
+            "province": "山东省",
+            "city": "青岛",
+            "longitude": "120.18",
+            "latitude": "36.03"
+        },
+        {
+            "province": "山东省",
+            "city": "青州",
+            "longitude": "118.28",
+            "latitude": "36.42"
+        },
+        {
+            "province": "山东省",
+            "city": "曲阜",
+            "longitude": "116.58",
+            "latitude": "35.36"
+        },
+        {
+            "province": "山东省",
+            "city": "日照",
+            "longitude": "119.32",
+            "latitude": "35.23"
+        },
+        {
+            "province": "山东省",
+            "city": "荣成",
+            "longitude": "122.25",
+            "latitude": "37.10"
+        },
+        {
+            "province": "山东省",
+            "city": "乳山",
+            "longitude": "121.31",
+            "latitude": "36.54"
+        },
+        {
+            "province": "山东省",
+            "city": "寿光",
+            "longitude": "118.44",
+            "latitude": "36.53"
+        },
+        {
+            "province": "山东省",
+            "city": "泰安",
+            "longitude": "117.08",
+            "latitude": "36.11"
+        },
+        {
+            "province": "山东省",
+            "city": "滕州",
+            "longitude": "117.09",
+            "latitude": "35.06"
+        },
+        {
+            "province": "山东省",
+            "city": "潍坊",
+            "longitude": "119.06",
+            "latitude": "36.43"
+        },
+        {
+            "province": "山东省",
+            "city": "威海",
+            "longitude": "122.07",
+            "latitude": "37.31"
+        },
+        {
+            "province": "山东省",
+            "city": "文登",
+            "longitude": "122.03",
+            "latitude": "37.12"
+        },
+        {
+            "province": "山东省",
+            "city": "新泰",
+            "longitude": "117.45",
+            "latitude": "35.54"
+        },
+        {
+            "province": "山东省",
+            "city": "烟台",
+            "longitude": "121.24",
+            "latitude": "37.32"
+        },
+        {
+            "province": "山东省",
+            "city": "兖州",
+            "longitude": "116.49",
+            "latitude": "35.32"
+        },
+        {
+            "province": "山东省",
+            "city": "禹城",
+            "longitude": "116.39",
+            "latitude": "36.56"
+        },
+        {
+            "province": "山东省",
+            "city": "枣庄",
+            "longitude": "117.33",
+            "latitude": "34.52"
+        },
+        {
+            "province": "山东省",
+            "city": "章丘",
+            "longitude": "117.32",
+            "latitude": "36.43"
+        },
+        {
+            "province": "山东省",
+            "city": "招远",
+            "longitude": "120.23",
+            "latitude": "37.21"
+        },
+        {
+            "province": "山东省",
+            "city": "诸城",
+            "longitude": "119.24",
+            "latitude": "35.59"
+        },
+        {
+            "province": "山东省",
+            "city": "淄博",
+            "longitude": "118.03",
+            "latitude": "36.48"
+        },
+        {
+            "province": "山东省",
+            "city": "邹城",
+            "longitude": "116.58",
+            "latitude": "35.24"
+        },
+        {
+            "province": "山西省",
+            "city": "太原",
+            "longitude": "112.33",
+            "latitude": "37.54"
+        },
+        {
+            "province": "山西省",
+            "city": "长治",
+            "longitude": "113.06",
+            "latitude": "36.11"
+        },
+        {
+            "province": "山西省",
+            "city": "大同",
+            "longitude": "113.17",
+            "latitude": "40.06"
+        },
+        {
+            "province": "山西省",
+            "city": "高平",
+            "longitude": "112.55",
+            "latitude": "35.48"
+        },
+        {
+            "province": "山西省",
+            "city": "古交",
+            "longitude": "112.09",
+            "latitude": "37.54"
+        },
+        {
+            "province": "山西省",
+            "city": "河津",
+            "longitude": "110.41",
+            "latitude": "35.35"
+        },
+        {
+            "province": "山西省",
+            "city": "侯马",
+            "longitude": "111.21",
+            "latitude": "35.37"
+        },
+        {
+            "province": "山西省",
+            "city": "霍州",
+            "longitude": "111.42",
+            "latitude": "36.34"
+        },
+        {
+            "province": "山西省",
+            "city": "介休",
+            "longitude": "111.55",
+            "latitude": "37.02"
+        },
+        {
+            "province": "山西省",
+            "city": "晋城",
+            "longitude": "112.51",
+            "latitude": "35.30"
+        },
+        {
+            "province": "山西省",
+            "city": "临汾",
+            "longitude": "111.31",
+            "latitude": "36.05"
+        },
+        {
+            "province": "山西省",
+            "city": "潞城",
+            "longitude": "113.14",
+            "latitude": "36.21"
+        },
+        {
+            "province": "山西省",
+            "city": "朔州",
+            "longitude": "112.26",
+            "latitude": "39.19"
+        },
+        {
+            "province": "山西省",
+            "city": "孝义",
+            "longitude": "111.48",
+            "latitude": "37.08"
+        },
+        {
+            "province": "山西省",
+            "city": "忻州",
+            "longitude": "112.43",
+            "latitude": "38.24"
+        },
+        {
+            "province": "山西省",
+            "city": "阳泉",
+            "longitude": "113.34",
+            "latitude": "37.51"
+        },
+        {
+            "province": "山西省",
+            "city": "永济",
+            "longitude": "110.27",
+            "latitude": "34.52"
+        },
+        {
+            "province": "山西省",
+            "city": "原平",
+            "longitude": "112.42",
+            "latitude": "38.43"
+        },
+        {
+            "province": "山西省",
+            "city": "榆次",
+            "longitude": "112.43",
+            "latitude": "37.41"
+        },
+        {
+            "province": "山西省",
+            "city": "运城",
+            "longitude": "110.59",
+            "latitude": "35.02"
+        },
+        {
+            "province": "陕西省",
+            "city": "西安",
+            "longitude": "108.57",
+            "latitude": "34.17"
+        },
+        {
+            "province": "陕西省",
+            "city": "安康",
+            "longitude": "109.01",
+            "latitude": "32.41"
+        },
+        {
+            "province": "陕西省",
+            "city": "宝鸡",
+            "longitude": "107.09",
+            "latitude": "34.22"
+        },
+        {
+            "province": "陕西省",
+            "city": "韩城",
+            "longitude": "110.27",
+            "latitude": "35.28"
+        },
+        {
+            "province": "陕西省",
+            "city": "汉中",
+            "longitude": "107.01",
+            "latitude": "33.04"
+        },
+        {
+            "province": "陕西省",
+            "city": "华阴",
+            "longitude": "110.05",
+            "latitude": "34.34"
+        },
+        {
+            "province": "陕西省",
+            "city": "商州",
+            "longitude": "109.57",
+            "latitude": "33.52"
+        },
+        {
+            "province": "陕西省",
+            "city": "铜川",
+            "longitude": "109.07",
+            "latitude": "35.06"
+        },
+        {
+            "province": "陕西省",
+            "city": "渭南",
+            "longitude": "109.30",
+            "latitude": "34.30"
+        },
+        {
+            "province": "陕西省",
+            "city": "咸阳",
+            "longitude": "108.43",
+            "latitude": "34.20"
+        },
+        {
+            "province": "陕西省",
+            "city": "兴平",
+            "longitude": "108.29",
+            "latitude": "34.18"
+        },
+        {
+            "province": "陕西省",
+            "city": "延安",
+            "longitude": "109.28",
+            "latitude": "36.35"
+        },
+        {
+            "province": "陕西省",
+            "city": "榆林",
+            "longitude": "109.47",
+            "latitude": "38.18"
+        },
+        {
+            "province": "上海市",
+            "city": "上海市",
+            "longitude": "121.29",
+            "latitude": "31.14"
+        },
+        {
+            "province": "四川省",
+            "city": "成都",
+            "longitude": "104.04",
+            "latitude": "30.40"
+        },
+        {
+            "province": "四川省",
+            "city": "巴中",
+            "longitude": "106.43",
+            "latitude": "31.51"
+        },
+        {
+            "province": "四川省",
+            "city": "崇州",
+            "longitude": "103.40",
+            "latitude": "30.39"
+        },
+        {
+            "province": "四川省",
+            "city": "达川",
+            "longitude": "107.29",
+            "latitude": "31.14"
+        },
+        {
+            "province": "四川省",
+            "city": "德阳",
+            "longitude": "104.22",
+            "latitude": "31.09"
+        },
+        {
+            "province": "四川省",
+            "city": "都江堰",
+            "longitude": "103.37",
+            "latitude": "31.01"
+        },
+        {
+            "province": "四川省",
+            "city": "峨眉山",
+            "longitude": "103.29",
+            "latitude": "29.36"
+        },
+        {
+            "province": "四川省",
+            "city": "涪陵",
+            "longitude": "107.22",
+            "latitude": "29.42"
+        },
+        {
+            "province": "四川省",
+            "city": "广汉",
+            "longitude": "104.15",
+            "latitude": "30.58"
+        },
+        {
+            "province": "四川省",
+            "city": "广元",
+            "longitude": "105.51",
+            "latitude": "32.28"
+        },
+        {
+            "province": "四川省",
+            "city": "华蓥",
+            "longitude": "106.44",
+            "latitude": "30.26"
+        },
+        {
+            "province": "四川省",
+            "city": "简阳",
+            "longitude": "104.32",
+            "latitude": "30.24"
+        },
+        {
+            "province": "四川省",
+            "city": "江油",
+            "longitude": "104.42",
+            "latitude": "31.48"
+        },
+        {
+            "province": "四川省",
+            "city": "阆中",
+            "longitude": "105.58",
+            "latitude": "31.36"
+        },
+        {
+            "province": "四川省",
+            "city": "乐山",
+            "longitude": "103.44",
+            "latitude": "29.36"
+        },
+        {
+            "province": "四川省",
+            "city": "泸州",
+            "longitude": "105.24",
+            "latitude": "28.54"
+        },
+        {
+            "province": "四川省",
+            "city": "绵阳",
+            "longitude": "104.42",
+            "latitude": "31.30"
+        },
+        {
+            "province": "四川省",
+            "city": "南充",
+            "longitude": "106.04",
+            "latitude": "30.49"
+        },
+        {
+            "province": "四川省",
+            "city": "内江",
+            "longitude": "105.02",
+            "latitude": "29.36"
+        },
+        {
+            "province": "四川省",
+            "city": "攀枝花",
+            "longitude": "101.43",
+            "latitude": "26.34"
+        },
+        {
+            "province": "四川省",
+            "city": "彭州",
+            "longitude": "103.57",
+            "latitude": "30.59"
+        },
+        {
+            "province": "四川省",
+            "city": "邛崃",
+            "longitude": "103.28",
+            "latitude": "30.26"
+        },
+        {
+            "province": "四川省",
+            "city": "遂宁",
+            "longitude": "105.33",
+            "latitude": "30.31"
+        },
+        {
+            "province": "四川省",
+            "city": "万县",
+            "longitude": "108.21",
+            "latitude": "30.50"
+        },
+        {
+            "province": "四川省",
+            "city": "万源",
+            "longitude": "108.03",
+            "latitude": "32.03"
+        },
+        {
+            "province": "四川省",
+            "city": "西昌",
+            "longitude": "102.16",
+            "latitude": "27.54"
+        },
+        {
+            "province": "四川省",
+            "city": "雅安",
+            "longitude": "102.59",
+            "latitude": "29.59"
+        },
+        {
+            "province": "四川省",
+            "city": "宜宾",
+            "longitude": "104.34",
+            "latitude": "28.47"
+        },
+        {
+            "province": "四川省",
+            "city": "自贡",
+            "longitude": "104.46",
+            "latitude": "29.23"
+        },
+        {
+            "province": "四川省",
+            "city": "资阳",
+            "longitude": "104.38",
+            "latitude": "30.09"
+        },
+        {
+            "province": "台湾省",
+            "city": "台北市",
+            "longitude": "121.30",
+            "latitude": "25.03"
+        },
+        {
+            "province": "天津市",
+            "city": "天津市",
+            "longitude": "117.12",
+            "latitude": "39.02"
+        },
+        {
+            "province": "西藏自治区",
+            "city": "拉萨",
+            "longitude": "91.08",
+            "latitude": "29.39"
+        },
+        {
+            "province": "西藏自治区",
+            "city": "日喀则",
+            "longitude": "88.51",
+            "latitude": "29.16"
+        },
+        {
+            "province": "香港",
+            "city": "香港市",
+            "longitude": "115.12",
+            "latitude": "21.23"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "乌鲁木齐",
+            "longitude": "87.36",
+            "latitude": "43.45"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "阿克苏",
+            "longitude": "80.19",
+            "latitude": "41.09"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "阿勒泰",
+            "longitude": "88.12",
+            "latitude": "47.50"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "阿图什",
+            "longitude": "76.08",
+            "latitude": "39.42"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "博乐",
+            "longitude": "82.08",
+            "latitude": "44.57"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "昌吉",
+            "longitude": "87.18",
+            "latitude": "44.02"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "阜康",
+            "longitude": "87.58",
+            "latitude": "44.09"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "哈密",
+            "longitude": "93.28",
+            "latitude": "42.50"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "和田",
+            "longitude": "79.55",
+            "latitude": "37.09"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "克拉玛依",
+            "longitude": "84.51",
+            "latitude": "45.36"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "喀什",
+            "longitude": "75.59",
+            "latitude": "39.30"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "库尔勒",
+            "longitude": "86.07",
+            "latitude": "41.46"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "奎屯",
+            "longitude": "84.56",
+            "latitude": "44.27"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "石河子",
+            "longitude": "86.00",
+            "latitude": "44.18"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "塔城",
+            "longitude": "82.59",
+            "latitude": "46.46"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "吐鲁番",
+            "longitude": "89.11",
+            "latitude": "42.54"
+        },
+        {
+            "province": "新疆自治区",
+            "city": "伊宁",
+            "longitude": "81.20",
+            "latitude": "43.55"
+        },
+        {
+            "province": "云南省",
+            "city": "昆明",
+            "longitude": "102.42",
+            "latitude": "25.04"
+        },
+        {
+            "province": "云南省",
+            "city": "保山",
+            "longitude": "99.10",
+            "latitude": "25.08"
+        },
+        {
+            "province": "云南省",
+            "city": "楚雄",
+            "longitude": "101.32",
+            "latitude": "25.01"
+        },
+        {
+            "province": "云南省",
+            "city": "大理",
+            "longitude": "100.13",
+            "latitude": "25.34"
+        },
+        {
+            "province": "云南省",
+            "city": "东川",
+            "longitude": "103.12",
+            "latitude": "26.06"
+        },
+        {
+            "province": "云南省",
+            "city": "个旧",
+            "longitude": "103.09",
+            "latitude": "23.21"
+        },
+        {
+            "province": "云南省",
+            "city": "景洪",
+            "longitude": "100.48",
+            "latitude": "22.01"
+        },
+        {
+            "province": "云南省",
+            "city": "开远",
+            "longitude": "103.13",
+            "latitude": "23.43"
+        },
+        {
+            "province": "云南省",
+            "city": "曲靖",
+            "longitude": "103.48",
+            "latitude": "25.30"
+        },
+        {
+            "province": "云南省",
+            "city": "瑞丽",
+            "longitude": "97.50",
+            "latitude": "24.00"
+        },
+        {
+            "province": "云南省",
+            "city": "思茅",
+            "longitude": "100.58",
+            "latitude": "22.48"
+        },
+        {
+            "province": "云南省",
+            "city": "畹町",
+            "longitude": "98.04",
+            "latitude": "24.06"
+        },
+        {
+            "province": "云南省",
+            "city": "宣威",
+            "longitude": "104.06",
+            "latitude": "26.13"
+        },
+        {
+            "province": "云南省",
+            "city": "玉溪",
+            "longitude": "102.32",
+            "latitude": "24.22"
+        },
+        {
+            "province": "云南省",
+            "city": "昭通",
+            "longitude": "103.42",
+            "latitude": "27.20"
+        },
+        {
+            "province": "浙江省",
+            "city": "杭州",
+            "longitude": "120.10",
+            "latitude": "30.16"
+        },
+        {
+            "province": "浙江省",
+            "city": "慈溪",
+            "longitude": "121.15",
+            "latitude": "30.11"
+        },
+        {
+            "province": "浙江省",
+            "city": "东阳",
+            "longitude": "120.14",
+            "latitude": "29.16"
+        },
+        {
+            "province": "浙江省",
+            "city": "奉化",
+            "longitude": "121.24",
+            "latitude": "29.39"
+        },
+        {
+            "province": "浙江省",
+            "city": "富阳",
+            "longitude": "119.57",
+            "latitude": "30.03"
+        },
+        {
+            "province": "浙江省",
+            "city": "海宁",
+            "longitude": "120.42",
+            "latitude": "30.32"
+        },
+        {
+            "province": "浙江省",
+            "city": "湖州",
+            "longitude": "120.06",
+            "latitude": "30.52"
+        },
+        {
+            "province": "浙江省",
+            "city": "建德",
+            "longitude": "119.16",
+            "latitude": "29.29"
+        },
+        {
+            "province": "浙江省",
+            "city": "江山",
+            "longitude": "118.37",
+            "latitude": "28.45"
+        },
+        {
+            "province": "浙江省",
+            "city": "嘉兴",
+            "longitude": "120.45",
+            "latitude": "30.46"
+        },
+        {
+            "province": "浙江省",
+            "city": "金华",
+            "longitude": "119.39",
+            "latitude": "29.07"
+        },
+        {
+            "province": "浙江省",
+            "city": "兰溪",
+            "longitude": "119.28",
+            "latitude": "29.12"
+        },
+        {
+            "province": "浙江省",
+            "city": "临海",
+            "longitude": "121.08",
+            "latitude": "28.51"
+        },
+        {
+            "province": "浙江省",
+            "city": "丽水",
+            "longitude": "119.54",
+            "latitude": "28.27"
+        },
+        {
+            "province": "浙江省",
+            "city": "龙泉",
+            "longitude": "119.08",
+            "latitude": "28.04"
+        },
+        {
+            "province": "浙江省",
+            "city": "宁波",
+            "longitude": "121.33",
+            "latitude": "29.52"
+        },
+        {
+            "province": "浙江省",
+            "city": "平湖",
+            "longitude": "121.01",
+            "latitude": "30.42"
+        },
+        {
+            "province": "浙江省",
+            "city": "衢州",
+            "longitude": "118.52",
+            "latitude": "28.58"
+        },
+        {
+            "province": "浙江省",
+            "city": "瑞安",
+            "longitude": "120.38",
+            "latitude": "27.48"
+        },
+        {
+            "province": "浙江省",
+            "city": "上虞",
+            "longitude": "120.52",
+            "latitude": "30.01"
+        },
+        {
+            "province": "浙江省",
+            "city": "绍兴",
+            "longitude": "120.34",
+            "latitude": "30.00"
+        },
+        {
+            "province": "浙江省",
+            "city": "台州",
+            "longitude": "121.27",
+            "latitude": "28.41"
+        },
+        {
+            "province": "浙江省",
+            "city": "桐乡",
+            "longitude": "120.32",
+            "latitude": "30.38"
+        },
+        {
+            "province": "浙江省",
+            "city": "温岭",
+            "longitude": "121.21",
+            "latitude": "28.22"
+        },
+        {
+            "province": "浙江省",
+            "city": "温州",
+            "longitude": "120.39",
+            "latitude": "28.01"
+        },
+        {
+            "province": "浙江省",
+            "city": "萧山",
+            "longitude": "120.16",
+            "latitude": "30.09"
+        },
+        {
+            "province": "浙江省",
+            "city": "义乌",
+            "longitude": "120.04",
+            "latitude": "29.18"
+        },
+        {
+            "province": "浙江省",
+            "city": "乐清",
+            "longitude": "120.58",
+            "latitude": "28.08"
+        },
+        {
+            "province": "浙江省",
+            "city": "余杭",
+            "longitude": "120.18",
+            "latitude": "30.26"
+        },
+        {
+            "province": "浙江省",
+            "city": "余姚",
+            "longitude": "121.10",
+            "latitude": "30.02"
+        },
+        {
+            "province": "浙江省",
+            "city": "永康",
+            "longitude": "120.01",
+            "latitude": "29.54"
+        },
+        {
+            "province": "浙江省",
+            "city": "舟山",
+            "longitude": "122.06",
+            "latitude": "30.01"
+        },
+        {
+            "province": "浙江省",
+            "city": "诸暨",
+            "longitude": "120.14",
+            "latitude": "29.43"
+        },
+        {
+            "province": "重庆市",
+            "city": "重庆市",
+            "longitude": "106.33",
+            "latitude": "29.35"
+        },
+        {
+            "province": "重庆市",
+            "city": "合川市",
+            "longitude": "106.15",
+            "latitude": "30.02"
+        },
+        {
+            "province": "重庆市",
+            "city": "江津市",
+            "longitude": "106.16",
+            "latitude": "29.18"
+        },
+        {
+            "province": "重庆市",
+            "city": "南川市",
+            "longitude": "107.05",
+            "latitude": "29.10"
+        },
+        {
+            "province": "重庆市",
+            "city": "永川市",
+            "longitude": "105.53",
+            "latitude": "29.23"
+        }
+    ]
+}

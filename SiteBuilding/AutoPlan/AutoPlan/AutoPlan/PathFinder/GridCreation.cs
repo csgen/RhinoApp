@@ -70,9 +70,9 @@ namespace AutoPlan.AutoPlan.PathFinder
             double width = domainY.Length;
             double distance = this.startPoint.DistanceTo(this.endPoint);
             double DPI = Math.Sqrt(length * length + width * width) / this.resolution;
-            if (DPI > distance / 3)
-                DPI = distance / 3;
-
+            if (DPI > distance / 4)
+                DPI = distance / 4;
+            //DPI = 5;
             worldLength = Math.Max((int)Math.Ceiling((length - length % DPI) / DPI), 4);
             worldWidth = Math.Max((int)Math.Ceiling((width - width % DPI) / DPI), 4);
             List<Interval> segX = DivideDomain(domainX, worldLength);
@@ -117,6 +117,9 @@ namespace AutoPlan.AutoPlan.PathFinder
                     else EnvValue[x, y] = 1;
                 }
             }
+            //将起始和终点所在网格强制设置为可通行，以暂时解决一些bug，之后若有更完善优雅的方法再修改
+            EnvValue[StartNodeId[0], StartNodeId[1]] = 1;
+            EnvValue[EndNodeId[0], EndNodeId[1]] = 1;
 
             //return box;
         }

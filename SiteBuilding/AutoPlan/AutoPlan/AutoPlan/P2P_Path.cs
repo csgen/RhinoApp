@@ -225,11 +225,11 @@ namespace AutoPlan.AutoPlan
             BasePath = basePath;
             //return basePath;
         }
-        private Point3d GetBuildingOffsetPoint(Building baseBuilding)
+        private Point3d GetBuildingOffsetPoint(Building baseBuilding, Point3d point, double distance)
         {
             //GetBaseBuilding(buildings);
-            Curve paddingCrv = PaddingBox(baseBuilding.BuildingCurve, baseBuilding.AvoidDistance + 0.5);
-            bool findScondPt = paddingCrv.ClosestPoint(StartPoint, out double secondPoint_t);
+            Curve paddingCrv = PaddingBox(baseBuilding.BuildingCurve, baseBuilding.AvoidDistance + distance);
+            bool findScondPt = paddingCrv.ClosestPoint(point, out double secondPoint_t);
             Point3d secondPoint = paddingCrv.PointAt(secondPoint_t);//找到路径上处于paddingbox上的点,即路径上的第二个点
             return secondPoint;
         }
@@ -259,7 +259,7 @@ namespace AutoPlan.AutoPlan
             if (BaseBuildings.Count == 1)
             {
                 Building baseBuilding = BaseBuildings[0].Building;
-                point1 = GetBuildingOffsetPoint(baseBuilding);
+                point1 = GetBuildingOffsetPoint(baseBuilding,StartPoint,2);
                 GetBasePath(planeObjectM);
                 if (BasePath != null)
                 {
@@ -270,8 +270,8 @@ namespace AutoPlan.AutoPlan
             {
                 Building baseBuilding1 = BaseBuildings[0].Building;
                 Building baseBuilding2 = BaseBuildings[1].Building;
-                point1 = GetBuildingOffsetPoint(baseBuilding1);
-                point2 = GetBuildingOffsetPoint(baseBuilding2);
+                point1 = GetBuildingOffsetPoint(baseBuilding1,StartPoint,10);
+                point2 = GetBuildingOffsetPoint(baseBuilding2,EndPoint,10);
             }
             List<Point3d> points = new List<Point3d> { point1, point2 };
             return points;

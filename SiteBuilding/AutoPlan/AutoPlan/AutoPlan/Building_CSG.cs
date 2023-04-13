@@ -23,6 +23,7 @@ namespace AutoPlan.AutoPlan
             set
             {
                 avoidDistance = value;
+                DataSet.Set("AvoidDistance", avoidDistance);
                 UpdateData();
             }
         }
@@ -35,9 +36,11 @@ namespace AutoPlan.AutoPlan
                 BuildingCurve = new ObjRef(doc, id).Curve();
                 Profile = BuildingCurve.ToPolyline(0.001, 1000, 0.001, double.MaxValue);
                 UpdateData();
+                DataSet.Set("ID", id);
             }
         }
         public ArchivableDictionary ClassData { get; private set; }
+        public ArchivableDictionary DataSet { get; private set; }
         public Building(Guid buildingID, RhinoDoc doc, double avoidDistance = 3)
         {
             this.doc = doc;

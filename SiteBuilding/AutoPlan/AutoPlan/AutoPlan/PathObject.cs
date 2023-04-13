@@ -257,7 +257,7 @@ namespace AutoPlan.AutoPlan
                 Point3d p2 = c.PointAtEnd;
                 double d1 = p1.DistanceTo(p);
                 double d2 = p2.DistanceTo(p);
-                P2P_Path path1 = new P2P_Path(path.MidCurve,planeObjectM);
+                P2P_Path path1 = new P2P_Path(path.MidCurve,planeObjectM);//为了让P2P_path有一个新的引用
                 path1.Width = path.Width;
                 if (d1 < d2)
                 {

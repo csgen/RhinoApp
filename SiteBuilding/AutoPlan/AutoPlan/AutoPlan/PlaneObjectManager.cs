@@ -4,10 +4,13 @@ using Rhino.DocObjects;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Text.Json;
 
 namespace AutoPlan.AutoPlan
 {
@@ -46,15 +49,18 @@ namespace AutoPlan.AutoPlan
             if (null == dictionary)
                 return;
             RhinoApp.WriteLine(dictionary.Name);
+            
 
             Buildings = GetBuildingData(dictionary, doc);
-            foreach(Building building in Buildings)
+            foreach (Building building in Buildings)
             {
-                RefBuildings.Add(new ObjRef(doc,building.ID));
+                RefBuildings.Add(new ObjRef(doc, building.ID));
             }
             OuterPath = GetOuterPathData(dictionary, doc);
             MainPath = GetMainPathData(dictionary, doc);
             P2P_Path = GetP2P_PathData(dictionary, doc, this);
+
+
             Paths.AddRange(MainPath);
             Paths.AddRange(P2P_Path);
             Paths.Add(OuterPath);
@@ -63,10 +69,12 @@ namespace AutoPlan.AutoPlan
         {
             if (null == dictionary)
                 return;
+
             Curve[] buildingCurves = new Curve[Buildings.Count];
             double[] buildingAvoidDist = new double[Buildings.Count];
             Guid[] buildingIDs = new Guid[Buildings.Count];
-            for(int i = 0; i < Buildings.Count; i++)
+            
+            for (int i = 0; i < Buildings.Count; i++)
             {
                 buildingCurves[i] = Buildings[i].BuildingCurve;
                 buildingAvoidDist[i] = Buildings[i].avoidDistance;
@@ -75,7 +83,6 @@ namespace AutoPlan.AutoPlan
             dictionary.Set("BuildingCurves", buildingCurves);
             dictionary.Set("BuildingAvoidDist", buildingAvoidDist);
             dictionary.Set("BuildingIDs", buildingIDs);
-            
 
             dictionary.Set("OuterPathCurve", OuterPath.MidCurve);
             dictionary.Set("OuterPathWidth", OuterPath.Width);
@@ -102,17 +109,31 @@ namespace AutoPlan.AutoPlan
             double[] p2p_pathWidths = new double[P2P_Path.Count];
             double[] p2p_pathFilletRadi = new double[P2P_Path.Count];
             Guid[] p2p_pathGuids = new Guid[P2P_Path.Count];
+            int[] baseBuildingCounts = new int[P2P_Path.Count];
+            List<Guid> baseBuildingIDs = new List<Guid>();
+            List<double> baseBuildingtVs = new List<double>();
             for (int i = 0; i < P2P_Path.Count; i++)
             {
                 p2p_pathCurves[i] = P2P_Path[i].MidCurve;
                 p2p_pathWidths[i] = P2P_Path[i].Width;
                 p2p_pathFilletRadi[i] = P2P_Path[i].FilletRadi;
                 p2p_pathGuids[i] = P2P_Path[i].ID;
+                int n = P2P_Path[i].BaseBuildings.Count;
+                baseBuildingCounts[i] = n;
+                for(int j = 0; j < n; j++)
+                {
+                    var b = P2P_Path[i].BaseBuildings[j];
+                    baseBuildingIDs.Add(b.Building.ID);
+                    baseBuildingtVs.Add(b.tValue);
+                }
             }
             dictionary.Set("p2p_pathCurves", p2p_pathCurves);
             dictionary.Set("p2p_pathWidths", p2p_pathWidths);
             dictionary.Set("p2p_pathFilletRadi", p2p_pathFilletRadi);
             dictionary.Set("p2p_pathIDs", p2p_pathGuids);
+            dictionary.Set("p2p_pathBaseBuidingCounts", baseBuildingCounts);
+            dictionary.Set("p2p_pathBaseBuildingIDs", baseBuildingIDs);
+            dictionary.Set("p2p_pathBasetValues", baseBuildingtVs);
         }
         public static List<Building> GetBuildingData(ArchivableDictionary dictionary, RhinoDoc doc)
         {
@@ -160,6 +181,7 @@ namespace AutoPlan.AutoPlan
         {
             List<MainPath> mainPaths = new List<MainPath>();
             if (null == dictionary) return mainPaths;
+
             if (dictionary.ContainsKey("MainPathCurves"))
             {
                 Curve[] mainPathCurves = dictionary["MainPathCurves"] as Curve[];
@@ -195,23 +217,45 @@ namespace AutoPlan.AutoPlan
         {
             List<P2P_Path> p2p_Paths = new List<P2P_Path>();
             if (null == dictionary) return p2p_Paths;
+
             if (dictionary.ContainsKey("p2p_pathCurves") && dictionary.ContainsKey("p2p_pathWidths") && dictionary.ContainsKey("p2p_pathFilletRadi"))
             {
                 Curve[] p2p_pathCurves = dictionary["p2p_pathCurves"] as Curve[];
                 double[] p2p_pathWidths = dictionary["p2p_pathWidths"] as double[];
                 double[] p2p_pathFilletRadi = dictionary["p2p_pathFilletRadi"] as double[];
                 Guid[] guids = dictionary["p2p_pathIDs"] as Guid[];
+                int[] baseBuildingCounts = dictionary["p2p_pathBaseBuidingCounts"] as int[];
+                List<Guid> baseBuildingIDs = dictionary["p2p_pathBaseBuildingIDs"] as List<Guid>;
+                List<double> baseBuildingtVs = dictionary["p2p_pathBasetValues"] as List<double>;
                 if (guids != null && guids.Length > 0)
                 {
                     for (int i = 0; i < guids.Length; i++)
                     {
                         if (doc.Objects.Find(guids[i]) != null)
                         {
-                            P2P_Path path = new P2P_Path(new ObjRef(doc, guids[i]).Curve(), planeObjectM);
+                            P2P_Path path = new P2P_Path(guids[i], planeObjectM);
                             path.Width = MyLib.MyLib.P2P_PathWidth;
                             //path.Width = p2p_pathWidths[i];
                             path.FilletRadi = p2p_pathFilletRadi[i];
-                            path.ID = guids[i];
+                            int n = baseBuildingCounts[i];
+                            if (n == 1)
+                            {
+                                P2P_Path.BaseBuilding bbuilding = new P2P_Path.BaseBuilding();
+                                bbuilding.Building = new Building(baseBuildingIDs[i], doc);
+                                bbuilding.tValue = baseBuildingtVs[i];
+                                path.BaseBuildings.Add(bbuilding);
+                            }
+                            if (n == 2)
+                            {
+                                P2P_Path.BaseBuilding bbuilding = new P2P_Path.BaseBuilding();
+                                bbuilding.Building = new Building(baseBuildingIDs[i], doc);
+                                bbuilding.tValue = baseBuildingtVs[i];
+                                path.BaseBuildings.Add(bbuilding);
+                                P2P_Path.BaseBuilding bbuilding2 = new P2P_Path.BaseBuilding();
+                                bbuilding2.Building = new Building(baseBuildingIDs[i+1], doc);
+                                bbuilding2.tValue = baseBuildingtVs[i+1];
+                                path.BaseBuildings.Add(bbuilding2);
+                            }
                             p2p_Paths.Add(path);
                         }
                         else

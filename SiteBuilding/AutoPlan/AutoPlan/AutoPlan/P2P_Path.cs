@@ -45,17 +45,29 @@ namespace AutoPlan.AutoPlan
             public Building Building { get; set; }
             public double tValue { get; set; }
         }
-        public P2P_Path(Curve curve, PlaneObjectManager planeObjectM)//用于选择已有P2P,将P2P_Path所有几何信息与guid挂钩
+        public P2P_Path(Curve curve, PlaneObjectManager planeObjectM)
         {
-            ID = id;
-            FilletRadi = 1;
-            Width = 4;//宽度太小创建Object时有问题，可能是boolean/fillet其中之一的bug，目前经验值最小是4
             MidCurve = curve;
+            FilletRadi = 1;
+            Width = 4;
             Point3d p1 = MidCurve.PointAtStart;
             Point3d p2 = MidCurve.PointAtEnd;
             List<Point3d> points = new List<Point3d> { p1, p2 };
             StartPoint = PairPoint(points, planeObjectM.Buildings)[0];
             EndPoint = PairPoint(points, planeObjectM.Buildings)[1];
+        }
+        public P2P_Path(Guid id, PlaneObjectManager planeObjectM)//用于选择已有P2P,将P2P_Path所有几何信息与guid挂钩
+        {
+            ID = id;
+            FilletRadi = 1;
+            Width = 4;//宽度太小创建Object时有问题，可能是boolean/fillet其中之一的bug，目前经验值最小是4
+            //MidCurve = curve;
+            Point3d p1 = MidCurve.PointAtStart;
+            Point3d p2 = MidCurve.PointAtEnd;
+            List<Point3d> points = new List<Point3d> { p1, p2 };
+            StartPoint = PairPoint(points, planeObjectM.Buildings)[0];
+            EndPoint = PairPoint(points, planeObjectM.Buildings)[1];
+            BaseBuildings = new List<BaseBuilding>();
         }
         public P2P_Path(List<Point3d> points, PlaneObjectManager planeObjectM)//用于新绘制建立P2P
         {
@@ -71,6 +83,11 @@ namespace AutoPlan.AutoPlan
             MidCurve = CreatePath(planeObjectM);
             //SetData();
         }
+        //public P2P_Path(PlaneObjectManager planeObjectM)//用于从basebuilding重建P2P
+        //{
+        //    int n = this.BaseBuildings.Count;
+        //    if(n)
+        //}
         //public void SetData()
         //{
         //    ClassData = new ArchivableDictionary();

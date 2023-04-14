@@ -13,7 +13,7 @@ namespace AutoPlan.AutoPlan
     internal class Path
     {
         public RhinoDoc Doc { private get; set; }
-        public ArchivableDictionary DataSet { get; private set; }
+        public ArchivableDictionary DataSet { get; set; }
         private Curve midCurve;
         public Curve MidCurve 
         {

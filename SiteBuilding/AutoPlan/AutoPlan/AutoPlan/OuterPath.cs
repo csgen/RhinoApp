@@ -17,6 +17,7 @@ namespace AutoPlan.AutoPlan
         public OuterPath(RhinoDoc doc,double width = 6)
         {
             this.Doc = doc;
+            this.DataSet = new ArchivableDictionary();
             FilletRadi = 8;
             Width = width;
             if (MyLib.MyLib.OuterPathWidth > 6)

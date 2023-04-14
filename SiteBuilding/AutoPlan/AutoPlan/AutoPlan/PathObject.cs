@@ -30,10 +30,11 @@ namespace AutoPlan.AutoPlan
         public PathObject(PlaneObjectManager planeObjectM, RhinoDoc rhinoDoc)
         {
             this.planeObjectM = planeObjectM;
+            RhinoDoc = rhinoDoc;
             OuterPath = planeObjectM.OuterPath;
             MainPaths = planeObjectM.MainPath;
             P2P_Paths = planeObjectM.P2P_Path;
-            RhinoDoc = rhinoDoc;
+            
             OuterPathEdge = OuterPathBrep();
             MainPathEdge = MainPathBrep();
             P2P_PathEdge = P2P_PathBrep();
@@ -257,7 +258,7 @@ namespace AutoPlan.AutoPlan
                 Point3d p2 = c.PointAtEnd;
                 double d1 = p1.DistanceTo(p);
                 double d2 = p2.DistanceTo(p);
-                P2P_Path path1 = new P2P_Path(path.MidCurve,planeObjectM);//为了让P2P_path有一个新的引用
+                P2P_Path path1 = new P2P_Path(RhinoDoc, path.MidCurve,planeObjectM);//为了让P2P_path有一个新的引用
                 path1.Width = path.Width;
                 if (d1 < d2)
                 {

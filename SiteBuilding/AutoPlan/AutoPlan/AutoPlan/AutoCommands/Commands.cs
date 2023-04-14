@@ -55,7 +55,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             List<MainPath> mainPaths = new List<MainPath>();
             using (GetObject getPath = new GetObject())
             {
-                Selector.SelectMainPathCurve(planeObjectM, mainPaths, getPath, "选主路");
+                Selector.SelectMainPathCurve(planeObjectM, mainPaths, getPath, doc, "选主路");
             }
             planeObjectM.MainPath = mainPaths;
             planeObjectM.SetMainPathData(AutoPlanPlugin.Instance.Dictionary);
@@ -66,7 +66,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             List<P2P_Path> p2p_Paths = new List<P2P_Path>();
             using (GetObject getPath = new GetObject())
             {
-                Selector.SelectP2P_PathCurve(planeObjectM, p2p_Paths, getPath, "选小路");
+                Selector.SelectP2P_PathCurve(doc, planeObjectM, p2p_Paths, getPath, "选小路");
             }
             planeObjectM.P2P_Path = p2p_Paths;
             planeObjectM.SetP2P_PathData(AutoPlanPlugin.Instance.Dictionary);
@@ -184,7 +184,8 @@ namespace AutoPlan.AutoPlan.AutoCommands
                     bool b = doc.Objects.Delete(id, true);
                 }
             }
-            List<Building> buildings = PlaneObjectManager.GetBuildingData(AutoPlanPlugin.Instance.Dictionary, doc);
+            var d = AutoPlanPlugin.Instance.Dictionary.GetDictionary("BuildingsData");
+            List<Building> buildings = PlaneObjectManager.GetBuildingData(d, doc);
             List<LinearDimension> dims = new List<LinearDimension>();
             List<Guid> dimIDs = new List<Guid>();
             for (int i = 0; i < buildings.Count - 1; i++)
@@ -217,7 +218,18 @@ namespace AutoPlan.AutoPlan.AutoCommands
         public static void ShowBuildingArea(RhinoDoc doc)
         {
             var dictionary = AutoPlanPlugin.Instance.Dictionary;
-            Guid[] ids = dictionary["BuildingIDs"] as Guid[];
+            var bDict = dictionary.GetDictionary("BuildingsData");
+            List<Guid> ids = new List<Guid>();
+            foreach(string k in bDict.Keys)
+            {
+                if (k.StartsWith("Building"))
+                {
+                    var d = bDict.GetDictionary(k);
+                    ids.Add(d.GetGuid("ID"));
+                }
+            }
+
+            //Guid[] ids = dictionary["BuildingIDs"] as Guid[];
             double totalArea = 0;
             foreach(Guid id in ids)
             {
@@ -321,13 +333,13 @@ namespace AutoPlan.AutoPlan.AutoCommands
             List<MainPath> mainPaths = new List<MainPath>();
             using (GetObject getPath = new GetObject())
             {
-                Selector.SelectMainPathCurve(planeObjectM, mainPaths, getPath, "选主路");
+                Selector.SelectMainPathCurve(planeObjectM, mainPaths, getPath, doc, "选主路");
             }
 
             List<P2P_Path> p2p_Paths = new List<P2P_Path>();
             using (GetObject getPath = new GetObject())
             {
-                Selector.SelectP2P_PathCurve(planeObjectM, p2p_Paths, getPath, "选小路");
+                Selector.SelectP2P_PathCurve(doc, planeObjectM, p2p_Paths, getPath, "选小路");
             }
 
             List<Building> buildings = new List<Building>();
@@ -361,7 +373,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             List<MainPath> mainPaths = new List<MainPath>();
             using (GetObject getPath = new GetObject())
             {
-                Selector.SelectMainPathCurve(planeObjectM, mainPaths, getPath, "选主路");
+                Selector.SelectMainPathCurve(planeObjectM, mainPaths, getPath, doc, "选主路");
             }
             foreach(MainPath path in mainPaths)
             {
@@ -370,7 +382,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             List<P2P_Path> p2p_Paths = new List<P2P_Path>();
             using (GetObject getPath = new GetObject())
             {
-                Selector.SelectP2P_PathCurve(planeObjectM, p2p_Paths, getPath, "选小路");
+                Selector.SelectP2P_PathCurve(doc, planeObjectM, p2p_Paths, getPath, "选小路");
             }
             foreach(P2P_Path path in p2p_Paths)
             {
@@ -420,7 +432,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             List<MainPath> mainPaths = new List<MainPath>();
             using (GetObject getPath = new GetObject())
             {
-                Selector.SelectMainPathCurve(planeObjectM, mainPaths, getPath, "选主路");
+                Selector.SelectMainPathCurve(planeObjectM, mainPaths, getPath, doc, "选主路");
             }
 
             List<Building> buildings = new List<Building>();

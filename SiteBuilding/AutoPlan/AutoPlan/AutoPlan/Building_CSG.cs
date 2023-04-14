@@ -43,6 +43,7 @@ namespace AutoPlan.AutoPlan
         public ArchivableDictionary DataSet { get; private set; }
         public Building(Guid buildingID, RhinoDoc doc, double avoidDistance = 3)
         {
+            this.DataSet = new ArchivableDictionary();
             this.doc = doc;
             ID = buildingID;
             Initialization();

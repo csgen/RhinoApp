@@ -18,6 +18,7 @@ namespace AutoPlan.AutoPlan
 {
     internal class P2P_Path : Path
     {
+        //public RhinoDoc doc { get; set; }
         public Point3d StartPoint { get; set; }
         public Point3d EndPoint { get; set; }
         private List<BaseBuilding> baseBuildings;
@@ -51,8 +52,10 @@ namespace AutoPlan.AutoPlan
             public Building Building { get; set; }
             public double tValue { get; set; }
         }
-        public P2P_Path(Curve curve, PlaneObjectManager planeObjectM)
+        public P2P_Path(RhinoDoc doc, Curve curve, PlaneObjectManager planeObjectM)
         {
+            this.DataSet = new ArchivableDictionary();
+            this.Doc = doc;
             MidCurve = curve;
             FilletRadi = 1;
             Width = 4;
@@ -62,8 +65,10 @@ namespace AutoPlan.AutoPlan
             StartPoint = PairPoint(points, planeObjectM.Buildings)[0];
             EndPoint = PairPoint(points, planeObjectM.Buildings)[1];
         }
-        public P2P_Path(Guid id, PlaneObjectManager planeObjectM)//用于选择已有P2P,将P2P_Path所有几何信息与guid挂钩
+        public P2P_Path(RhinoDoc doc, Guid id, PlaneObjectManager planeObjectM)//用于选择已有P2P,将P2P_Path所有几何信息与guid挂钩
         {
+            this.DataSet = new ArchivableDictionary();
+            this.Doc = doc;
             ID = id;
             FilletRadi = 1;
             Width = 4;//宽度太小创建Object时有问题，可能是boolean/fillet其中之一的bug，目前经验值最小是4
@@ -77,6 +82,7 @@ namespace AutoPlan.AutoPlan
         }
         public P2P_Path(List<Point3d> points, PlaneObjectManager planeObjectM)//用于新绘制建立P2P
         {
+            this.DataSet = new ArchivableDictionary();
             FilletRadi = 1;
             Width = 4;
             
@@ -95,7 +101,7 @@ namespace AutoPlan.AutoPlan
             double filletRadi = dictionary.GetDouble("FilletRadi");
             List<Guid> baseBuildingIDs = dictionary["baseBuildingIDs"] as List<Guid>;
             List<double> baseBuildingtValues = dictionary["baseBuildingtValues"] as List<double>;
-            P2P_Path p = new P2P_Path(id, planeObjectM);
+            P2P_Path p = new P2P_Path(doc, id, planeObjectM);
             p.FilletRadi = filletRadi;
             p.Width = MyLib.MyLib.P2P_PathWidth;
             for(int i = 0; i < baseBuildingIDs.Count; i++)

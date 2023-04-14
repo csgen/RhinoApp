@@ -92,7 +92,7 @@ namespace AutoPlan.AutoPlan
             return Result.Success;
         }
     }
-    public class GetOuterPathCommand : Command
+    public class GetOuterPathCommand : Command//使用中
     {
         public GetOuterPathCommand()
         {
@@ -110,7 +110,7 @@ namespace AutoPlan.AutoPlan
             return Result.Success;
         }
     }
-    public class GetMainPathCommand : Command
+    public class GetMainPathCommand : Command//使用中
     {
         public GetMainPathCommand()
         {
@@ -128,7 +128,7 @@ namespace AutoPlan.AutoPlan
             return Result.Success;
         }
     }
-    public class GetP2P_PathCommand : Command
+    public class GetP2P_PathCommand : Command//使用中
     {
         public GetP2P_PathCommand()
         {
@@ -146,7 +146,7 @@ namespace AutoPlan.AutoPlan
             return Result.Success;
         }
     }
-    public class GeneratePathObjectCommand : Command
+    public class GeneratePathObjectCommand : Command//使用中
     {
         public GeneratePathObjectCommand()
         {
@@ -182,7 +182,7 @@ namespace AutoPlan.AutoPlan
             return Result.Success;
         }
     }
-    public class AutoDrawCommand : Command
+    public class AutoDrawCommand : Command//使用中
     {
         public const int HISTORY_VERSION = 20230324;
         public AutoDrawCommand()
@@ -250,7 +250,7 @@ namespace AutoPlan.AutoPlan
             return Result.Success;
         }
     }
-    public class AddPathCommand : Command
+    public class AddPathCommand : Command//使用中
     {
         public AddPathCommand()
         {
@@ -637,7 +637,7 @@ namespace AutoPlan.AutoPlan
             List<MainPath> mainPaths = new List<MainPath>();
             using (GetObject getPath = new GetObject())
             {
-                Selector.SelectMainPathCurve(planeObjectM, mainPaths, getPath, "选主路");
+                Selector.SelectMainPathCurve(planeObjectM, mainPaths, getPath, doc, "选主路");
             }
 
             List<Building> buildings = new List<Building>();

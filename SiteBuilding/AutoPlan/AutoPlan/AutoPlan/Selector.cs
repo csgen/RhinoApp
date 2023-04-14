@@ -7,6 +7,7 @@ using Rhino.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,7 +44,7 @@ namespace AutoPlan.AutoPlan
             outerPath.MidCurve = midCurve;
 
         }
-        public static void SelectMainPathCurve(PlaneObjectManager planeObjectM, List<MainPath> paths, GetObject getPath, string prompt = "请选择")
+        public static void SelectMainPathCurve(PlaneObjectManager planeObjectM, List<MainPath> paths, GetObject getPath, RhinoDoc doc, string prompt = "请选择")
         {
             getPath.EnablePreSelect(false, true);
             getPath.SetCommandPrompt(prompt);
@@ -52,14 +53,14 @@ namespace AutoPlan.AutoPlan
             for (int i = 0; i < getPath.ObjectCount; i++)
             {
                 Curve midCurve = getPath.Object(i).Curve();
-                MainPath path = new MainPath();
+                MainPath path = new MainPath(doc);
                 path.MidCurve = midCurve;
                 path.ID = getPath.Object(i).ObjectId;
                 paths.Add(path);
 
             }
         }
-        public static void SelectP2P_PathCurve(PlaneObjectManager planeObjectM, List<P2P_Path> paths, GetObject getPath, string prompt = "请选择")
+        public static void SelectP2P_PathCurve(RhinoDoc doc, PlaneObjectManager planeObjectM, List<P2P_Path> paths, GetObject getPath, string prompt = "请选择")
         {
             getPath.EnablePreSelect(false, true);
             getPath.SetCommandPrompt(prompt);
@@ -69,7 +70,7 @@ namespace AutoPlan.AutoPlan
             {
                 Curve midCurve = getPath.Object(i).Curve();
                 Guid id = getPath.Object(i).ObjectId;
-                P2P_Path path = new P2P_Path(id, planeObjectM);
+                P2P_Path path = new P2P_Path(doc, id, planeObjectM);
                 path.ID = getPath.Object(i).ObjectId;
                 paths.Add(path);
                 planeObjectM.Paths.Add(path);

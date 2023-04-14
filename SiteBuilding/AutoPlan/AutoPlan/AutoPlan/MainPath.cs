@@ -1,4 +1,6 @@
-﻿using Rhino.Geometry;
+﻿using Rhino;
+using Rhino.Collections;
+using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,9 @@ namespace AutoPlan.AutoPlan
 {
     internal class MainPath : Path
     {
-        public MainPath(double width = 4)
+        public MainPath(RhinoDoc doc, double width = 4)
         {
+            this.Doc = doc;
             FilletRadi = 4;
             Width = 4;
             if (MyLib.MyLib.MainPathWidth > width)
@@ -18,6 +21,16 @@ namespace AutoPlan.AutoPlan
                 Width = MyLib.MyLib.MainPathWidth;
             }
         }
-        public Guid ID { get; set; }
+        public static MainPath BuiltFromDict(ArchivableDictionary dictionary, RhinoDoc doc)
+        {
+            double width = dictionary.GetDouble("Width");
+            double filletRadi = dictionary.GetDouble("FilletRadi");
+            Guid id = dictionary.GetGuid("ID");
+            MainPath p = new MainPath(doc, width);
+            p.ID = id;
+            p.FilletRadi = filletRadi;
+            p.Width = MyLib.MyLib.MainPathWidth;
+            return p;
+        }
     }
 }

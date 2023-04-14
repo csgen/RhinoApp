@@ -13,10 +13,9 @@ namespace AutoPlan.AutoPlan
     internal partial class Building
     {
         public Curve BuildingCurve { get; set; }
-        public double avoidDistance;
         public TextEntity Text_Annotation { get; set; }
-        public Guid id;
         public RhinoDoc doc { get; set; }
+        private double avoidDistance;
         public double AvoidDistance 
         {
             get { return avoidDistance; }
@@ -27,6 +26,7 @@ namespace AutoPlan.AutoPlan
                 UpdateData();
             }
         }
+        private Guid id;
         public Guid ID
         {
             get { return id; }
@@ -102,6 +102,13 @@ namespace AutoPlan.AutoPlan
             plane.Origin = p0 + v1 * 5 + v2 * 5;
             plane.OriginZ = 1;
             return plane;
+        }
+        public static Building BuiltFromDict(ArchivableDictionary dictionary,RhinoDoc doc)
+        {
+            Guid id = dictionary.GetGuid("ID");
+            double avoidDistance = dictionary.GetDouble("AvoidDistance");
+            Building building = new Building(id, doc, avoidDistance);
+            return building;
         }
     }
 }

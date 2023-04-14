@@ -14,27 +14,17 @@ namespace AutoPlan.AutoPlan
 {
     internal class OuterPath : Path
     {
-        public RhinoDoc doc;
         public OuterPath(RhinoDoc doc,double width = 6)
         {
+            this.Doc = doc;
             FilletRadi = 8;
             Width = width;
             if (MyLib.MyLib.OuterPathWidth > 6)
             {
                 Width = MyLib.MyLib.OuterPathWidth;
             }
-            this.doc = doc;
         }
-        private Guid id;
-        public Guid ID 
-        {
-            get => id;
-            set
-            {
-                id = value;
-                MidCurve = new ObjRef(doc,id).Curve();
-            }
-        }
+        
         private double area;
         public double Area
         {
@@ -47,6 +37,17 @@ namespace AutoPlan.AutoPlan
             {
                 area = value;
             }
+        }
+        public static OuterPath BuiltFromDict(ArchivableDictionary dictionary, RhinoDoc doc)
+        {
+            Guid id = dictionary.GetGuid("ID");
+            double filletRadi = dictionary.GetDouble("FilletRadi");
+            double width = dictionary.GetDouble("Width");
+            OuterPath p = new OuterPath(doc, width);
+            p.ID = id;
+            p.Width = MyLib.MyLib.OuterPathWidth;
+            p.FilletRadi = filletRadi;
+            return p;
         }
     }
     

@@ -18,28 +18,34 @@ namespace AutoPlan.AutoPlan
 {
     internal class P2P_Path : Path
     {
-        //public double Width { get; set; }
-        //public Curve MidCurve { get; set; }
-        //public double FilletRadi { get; set; }
-        public RhinoDoc doc { private get; set; }
-        public Guid id;
-        public Guid ID
-        {
-            get => id;
-            set
-            {
-                id = value;
-                MidCurve = new ObjRef(doc,id).Curve();//指定ID时关联midcurve
-            }
-        }
         public Point3d StartPoint { get; set; }
         public Point3d EndPoint { get; set; }
-        public List<BaseBuilding> BaseBuildings { get; set; }
+        private List<BaseBuilding> baseBuildings;
+        public List<BaseBuilding> BaseBuildings 
+        {
+            get => baseBuildings;
+            set
+            {
+                if(value!= null)
+                {
+                    baseBuildings = value;
+                    List<Guid> guids = new List<Guid>();
+                    List<double> ts = new List<double>();
+                    foreach (BaseBuilding b in baseBuildings)
+                    {
+                        guids.Add(b.Building.ID);
+                        ts.Add(b.tValue);
+                    }
+                    DataSet.Set("baseBuildingIDs", guids);
+                    DataSet.Set("baseBuildingtValues", ts);
+                    DataSet.Set("baseBuildingCount", baseBuildings.Count);
+                }
+            }
+        }
         //public Building BaseBuilding { get; set; }
         public double BaseBuildingtValue { get; set; }
         public Guid BaseBuildingID { get; set; }
         public Path BasePath { get; set; }
-        public ArchivableDictionary ClassData { get; set; }
         public class BaseBuilding
         {
             public Building Building { get; set; }
@@ -82,6 +88,24 @@ namespace AutoPlan.AutoPlan
             //pathList.Add(planeObjectM.OuterPath);
             MidCurve = CreatePath(planeObjectM);
             //SetData();
+        }
+        public static P2P_Path BuiltFromDict(ArchivableDictionary dictionary,RhinoDoc doc,PlaneObjectManager planeObjectM)
+        {
+            Guid id = dictionary.GetGuid("ID");
+            double filletRadi = dictionary.GetDouble("FilletRadi");
+            List<Guid> baseBuildingIDs = dictionary["baseBuildingIDs"] as List<Guid>;
+            List<double> baseBuildingtValues = dictionary["baseBuildingtValues"] as List<double>;
+            P2P_Path p = new P2P_Path(id, planeObjectM);
+            p.FilletRadi = filletRadi;
+            p.Width = MyLib.MyLib.P2P_PathWidth;
+            for(int i = 0; i < baseBuildingIDs.Count; i++)
+            {
+                BaseBuilding bb = new BaseBuilding();
+                bb.Building = new Building(baseBuildingIDs[i], doc);
+                bb.tValue = baseBuildingtValues[i];
+                p.baseBuildings.Add(bb);
+            }
+            return p;
         }
         //public P2P_Path(PlaneObjectManager planeObjectM)//用于从basebuilding重建P2P
         //{

@@ -16,10 +16,68 @@ namespace AutoPlan.AutoPlan
 {
     internal class PlaneObjectManager
     {
-        public List<Building> Buildings { get; set; }
-        public OuterPath OuterPath { get; set; }
-        public List<MainPath> MainPath { get; set; }
-        public List<P2P_Path> P2P_Path { get; set; }
+        public ArchivableDictionary dictionary = AutoPlanPlugin.Instance.Dictionary;
+        private List<Building> buildings;
+        public List<Building> Buildings 
+        {
+            get => buildings;
+            set
+            {
+                if (value != null)
+                    buildings = value;
+
+                foreach(Building b in buildings)
+                {
+                    string tag = "Building" + b.ID.ToString();
+                    dictionary.Set(tag, b.DataSet);
+                }
+            }
+        }
+        private OuterPath outerPath;
+        public OuterPath OuterPath 
+        {
+            get => outerPath;
+            set
+            {
+                outerPath = value;
+                string tag = "OuterPath" + outerPath.ID.ToString();
+                dictionary.Set(tag, outerPath.DataSet);
+            }
+        }
+        private List<MainPath> mainPath;
+        public List<MainPath> MainPath 
+        {
+            get => mainPath;
+            set
+            {
+                if (value != null)
+                {
+                    mainPath = value;
+                    foreach (MainPath p in mainPath)
+                    {
+                        string tag = "MainPath" + p.ID.ToString();
+                        dictionary.Set(tag, p.DataSet);
+                    }
+                }
+            }
+        }
+        private List<P2P_Path> p2p_Path;
+        public List<P2P_Path> P2P_Path 
+        {
+            get => p2p_Path;
+            set
+            {
+                if (value != null)
+                {
+                    p2p_Path = value;
+                    foreach(P2P_Path p in p2p_Path)
+                    {
+                        string tag = "P2P_Path" + p.ID.ToString();
+                        dictionary.Set(tag, p.DataSet);//以ID作为存入字典时对应的key
+                    }
+                }
+            }
+        }
         public List<Path> Paths { get; set; }
         public PlantingTrees PlantingTrees { get; set; }
         public double OuterPathWidth { get; set; }
@@ -73,16 +131,19 @@ namespace AutoPlan.AutoPlan
             Curve[] buildingCurves = new Curve[Buildings.Count];
             double[] buildingAvoidDist = new double[Buildings.Count];
             Guid[] buildingIDs = new Guid[Buildings.Count];
+            List<ArchivableDictionary> datas = new List<ArchivableDictionary>();
             
             for (int i = 0; i < Buildings.Count; i++)
             {
                 buildingCurves[i] = Buildings[i].BuildingCurve;
-                buildingAvoidDist[i] = Buildings[i].avoidDistance;
+                buildingAvoidDist[i] = Buildings[i].AvoidDistance;
                 buildingIDs[i] = Buildings[i].ID;
+                datas.Add(Buildings[i].DataSet);
             }
             dictionary.Set("BuildingCurves", buildingCurves);
             dictionary.Set("BuildingAvoidDist", buildingAvoidDist);
             dictionary.Set("BuildingIDs", buildingIDs);
+            
 
             dictionary.Set("OuterPathCurve", OuterPath.MidCurve);
             dictionary.Set("OuterPathWidth", OuterPath.Width);
@@ -134,11 +195,23 @@ namespace AutoPlan.AutoPlan
             dictionary.Set("p2p_pathBaseBuidingCounts", baseBuildingCounts);
             dictionary.Set("p2p_pathBaseBuildingIDs", baseBuildingIDs);
             dictionary.Set("p2p_pathBasetValues", baseBuildingtVs);
+
         }
         public static List<Building> GetBuildingData(ArchivableDictionary dictionary, RhinoDoc doc)
         {
             List<Building> buildings = new List<Building>();
             if (null == dictionary) return buildings;
+            foreach(string a in dictionary.Keys)
+            {
+                if (a.StartsWith("Building"))
+                {
+                    var d = dictionary.GetDictionary(a);
+                    Building building = Building.BuiltFromDict(d, doc);
+                    buildings.Add(building);
+                }
+            }
+            return buildings;
+            //下方待删除
             if (dictionary.ContainsKey("BuildingCurves"))
             {
                 double[] buildingAvoidDist = dictionary["BuildingAvoidDist"] as double[];
@@ -157,7 +230,6 @@ namespace AutoPlan.AutoPlan
                     }
                 }
             }
-            return buildings;
         }
         public static OuterPath GetOuterPathData(ArchivableDictionary dictionary,RhinoDoc doc)
         {
@@ -165,6 +237,17 @@ namespace AutoPlan.AutoPlan
             if (null == dictionary) return outerPath;
             RhinoApp.WriteLine(dictionary.Name);
 
+            foreach (string a in dictionary.Keys)
+            {
+                if (a.StartsWith("OuterPath"))
+                {
+                    var d = dictionary.GetDictionary(a);
+                    outerPath = OuterPath.BuiltFromDict(d, doc);
+                }
+            }
+            return outerPath;
+
+            //以下待删除
             dictionary.TryGetDouble("OuterPathWidth", out double OuterPathWidth);
             dictionary.TryGetDouble("OuterPathFilletRadi", out double OuterPathFilletRadi);
             dictionary.TryGetGuid("OuterPathID", out Guid OuterPathGuid);
@@ -175,13 +258,23 @@ namespace AutoPlan.AutoPlan
                 outerPath.FilletRadi = OuterPathFilletRadi;
                 outerPath.ID = OuterPathGuid;
             }
-            return outerPath;
         }
         public static List<MainPath> GetMainPathData(ArchivableDictionary dictionary, RhinoDoc doc)
         {
             List<MainPath> mainPaths = new List<MainPath>();
             if (null == dictionary) return mainPaths;
+            foreach (string a in dictionary.Keys)
+            {
+                if (a.StartsWith("MainPath"))
+                {
+                    var d = dictionary.GetDictionary(a);
+                    MainPath p = AutoPlan.MainPath.BuiltFromDict(dictionary, doc);
+                    mainPaths.Add(p);
+                }
+            }
+            return mainPaths;
 
+            //以下待删除
             if (dictionary.ContainsKey("MainPathCurves"))
             {
                 Curve[] mainPathCurves = dictionary["MainPathCurves"] as Curve[];
@@ -211,13 +304,23 @@ namespace AutoPlan.AutoPlan
                     }
                 }
             }
-            return mainPaths;
         }
         public static List<P2P_Path> GetP2P_PathData(ArchivableDictionary dictionary, RhinoDoc doc,PlaneObjectManager planeObjectM)
         {
             List<P2P_Path> p2p_Paths = new List<P2P_Path>();
             if (null == dictionary) return p2p_Paths;
+            foreach (string a in dictionary.Keys)
+            {
+                if (a.StartsWith("P2P_Path"))
+                {
+                    var d = dictionary.GetDictionary(a);
+                    P2P_Path p = AutoPlan.P2P_Path.BuiltFromDict(dictionary, doc, planeObjectM);
+                    p2p_Paths.Add(p);
+                }
+            }
+            return p2p_Paths;
 
+            //以下待删除
             if (dictionary.ContainsKey("p2p_pathCurves") && dictionary.ContainsKey("p2p_pathWidths") && dictionary.ContainsKey("p2p_pathFilletRadi"))
             {
                 Curve[] p2p_pathCurves = dictionary["p2p_pathCurves"] as Curve[];
@@ -267,7 +370,6 @@ namespace AutoPlan.AutoPlan
                     }
                 }
             }
-            return p2p_Paths;
         }
         public void SetBuildingData(ArchivableDictionary dictionary)
         {

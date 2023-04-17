@@ -10,6 +10,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,8 +20,32 @@ namespace AutoPlan.AutoPlan
     internal class P2P_Path : Path
     {
         //public RhinoDoc doc { get; set; }
-        public Point3d StartPoint { get; set; }
-        public Point3d EndPoint { get; set; }
+        private Point3d startPoint;
+        public Point3d StartPoint 
+        {
+            get => startPoint;
+            set
+            {
+                if (value != null)
+                {
+                    startPoint = value;
+                    DataSet.Set("StartPoint", startPoint);
+                }
+            }
+        }
+        private Point3d endPoint;
+        public Point3d EndPoint 
+        {
+            get => endPoint;
+            set
+            {
+                if (value != null)
+                {
+                    endPoint = value;
+                    DataSet.Set("EndPoint", endPoint);
+                }
+            }
+        }
         private List<BaseBuilding> baseBuildings;
         public List<BaseBuilding> BaseBuildings 
         {
@@ -78,7 +103,8 @@ namespace AutoPlan.AutoPlan
             List<Point3d> points = new List<Point3d> { p1, p2 };
             StartPoint = PairPoint(points, planeObjectM.Buildings)[0];
             EndPoint = PairPoint(points, planeObjectM.Buildings)[1];
-            BaseBuildings = new List<BaseBuilding>();
+            GetBaseBuilding(planeObjectM.Buildings);
+            //BaseBuildings = new List<BaseBuilding>();
         }
         public P2P_Path(List<Point3d> points, PlaneObjectManager planeObjectM)//用于新绘制建立P2P
         {
@@ -101,23 +127,42 @@ namespace AutoPlan.AutoPlan
             double filletRadi = dictionary.GetDouble("FilletRadi");
             List<Guid> baseBuildingIDs = dictionary["baseBuildingIDs"] as List<Guid>;
             List<double> baseBuildingtValues = dictionary["baseBuildingtValues"] as List<double>;
-            P2P_Path p = new P2P_Path(doc, id, planeObjectM);
-            p.FilletRadi = filletRadi;
-            p.Width = MyLib.MyLib.P2P_PathWidth;
-            for(int i = 0; i < baseBuildingIDs.Count; i++)
+            int baseBuildingCount;
+            dictionary.TryGetInteger("baseBuildingCount", out baseBuildingCount);
+            if (baseBuildingCount == 2)
             {
-                BaseBuilding bb = new BaseBuilding();
-                bb.Building = new Building(baseBuildingIDs[i], doc);
-                bb.tValue = baseBuildingtValues[i];
-                p.baseBuildings.Add(bb);
+                Point3d p1 = new ObjRef(doc, baseBuildingIDs[0]).Curve().PointAt(baseBuildingtValues[0]);
+                Point3d p2 = new ObjRef(doc, baseBuildingIDs[1]).Curve().PointAt(baseBuildingtValues[1]);
+                P2P_Path p = new P2P_Path(new List<Point3d> { p1, p2 }, planeObjectM);
+                p.FilletRadi = filletRadi;
+                p.Width = MyLib.MyLib.P2P_PathWidth;
+                return p;
             }
-            return p;
+            else
+            {
+                Point3d p1 = new ObjRef(doc, baseBuildingIDs[0]).Curve().PointAt(baseBuildingtValues[0]);
+                Point3d p2 = dictionary.GetPoint3d("EndPoint");
+                P2P_Path p = new P2P_Path(new List<Point3d> { p1, p2 }, planeObjectM);
+                p.Width = MyLib.MyLib.P2P_PathWidth;
+                return p;
+            }
         }
-        //public P2P_Path(PlaneObjectManager planeObjectM)//用于从basebuilding重建P2P
-        //{
-        //    int n = this.BaseBuildings.Count;
-        //    if(n)
-        //}
+        public P2P_Path(List<BaseBuilding> bbList, PlaneObjectManager planeObjectM)//用于从basebuilding重建P2P
+        {
+            this.DataSet = new ArchivableDictionary();
+            FilletRadi = 1;
+            Width = 4;
+            List<Point3d> pList = new List<Point3d>();
+            foreach(BaseBuilding bb in bbList)
+            {
+                double t = bb.tValue;
+                Curve c = bb.Building.BuildingCurve;
+                Point3d p = c.PointAt(t);
+                pList.Add(p);
+            }
+            this.StartPoint = pList[0];
+            this.EndPoint = pList[1];
+        }
         //public void SetData()
         //{
         //    ClassData = new ArchivableDictionary();

@@ -1,0 +1,57 @@
+{
+  "BuildingsData": {
+    "Building00000000-0000-0000-0000-000000000000": {
+      "ID": "Building.ID",
+      "AvoidDistance": "Building.Avoidance"
+    },
+    "Building00000000-0000-0000-0000-000000000001": {
+      "ID": "Building.ID",
+      "AvoidDistance": "Building.Avoidance"
+    }
+  },
+
+  "OuterPathData": {
+    "OuterPath00000000-0000-0000-0000-000000000002": {
+      "ID": "OuterPath.ID",
+      "FilletRadi": "OuterPath.FilletRadi",
+      "Width": "OuterPath.Width",
+      "MidCurve": "OuterPath.MidCurve"
+    }
+  },
+
+  "MainPathData": {
+    "MainPath00000000-0000-0000-0000-000000000003": {
+      "ID": "MainPath.ID",
+      "FilletRadi": "MainPath.FilletRadi",
+      "Width": "MainPath.Width"
+    },
+    "MainPath00000000-0000-0000-0000-000000000004": {
+      "ID": "MainPath.ID",
+      "FilletRadi": "MainPath.FilletRadi",
+      "Width": "MainPath.Width"
+    }
+  },
+
+  "P2P_PathData": {
+    "P2P_Path00000000-0000-0000-0000-000000000005": {
+      "ID": "P2P_Path.ID",
+      "FilletRadi": "P2P_Path.FilletRadi",
+      "Width": "P2P_Path.Width",
+      "StartPoint": "P2P_Path.StartPoint",
+      "EndPoint": "P2P_Path.EndPoint",
+      "baseBuildingIDs": "P2P_Path.BaseBuilding.Building.ID",
+      "baseBuildingtValues": "P2P_Path.BaseBuilding.tValue",
+      "baseBuildingCount": "baseBuildings.Count"
+    },
+    "P2P_Path00000000-0000-0000-0000-000000000006": {
+      "ID": "P2P_Path.ID",
+      "FilletRadi": "P2P_Path.FilletRadi",
+      "Width": "P2P_Path.Width",
+      "StartPoint": "P2P_Path.StartPoint",
+      "EndPoint": "P2P_Path.EndPoint",
+      "baseBuildingIDs": "P2P_Path.BaseBuilding.Building.ID",
+      "baseBuildingtValues": "P2P_Path.BaseBuilding.tValue",
+      "baseBuildingCount": "baseBuildings.Count"
+    }
+  }
+}

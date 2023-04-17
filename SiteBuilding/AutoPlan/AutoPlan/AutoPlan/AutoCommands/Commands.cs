@@ -119,13 +119,16 @@ namespace AutoPlan.AutoPlan.AutoCommands
                         doc.Objects.Delete(id, true);
                     }
                 }
-                List<Building> buildings = PlaneObjectManager.GetBuildingData(AutoPlanPlugin.Instance.Dictionary, doc);
+                var buildingsDict = AutoPlanPlugin.Instance.Dictionary.GetDictionary("BuildingsData");
+                List<Building> buildings = PlaneObjectManager.GetBuildingData(buildingsDict, doc);
                 List<Guid> shadowCrvIDs = new List<Guid>();//阴影边缘线
                 List<Guid> shadowHatchIDs = new List<Guid>();//阴影hatch
                 List<Guid> shadowBuildingIDs = new List<Guid>();
                 List<Guid> textIDs = new List<Guid>();//楼层标注文字
                 foreach (Building building in buildings)
                 {
+                    UserDictionary ud = new UserDictionary();
+                    ud.Dictionary.Set("ParentID", building.ID);
                     var shadowAttribute = new Rhino.DocObjects.ObjectAttributes
                     {
                         Mode = ObjectMode.Locked,
@@ -142,8 +145,10 @@ namespace AutoPlan.AutoPlan.AutoCommands
                     };
 
                     Guid shadowCrvID = doc.Objects.AddCurve(building.buildingShadow.boundary, shadowAttribute);
+                    var s1 = new ObjRef(doc, shadowCrvID).Curve().SetUserString("ParentID", building.ID.ToString());
                     shadowCrvIDs.Add(shadowCrvID);
                     Guid shadowHatchID = doc.Objects.AddHatch(building.buildingShadow.Hatch, hatchAttribute);
+                    var s2 = new ObjRef(doc,shadowHatchID).Hatch().SetUserString("ParentID",building.ID.ToString());
                     shadowHatchIDs.Add(shadowHatchID);
 
 
@@ -151,7 +156,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
                     {
                         Mode = ObjectMode.Locked,
                         LayerIndex = layer.Index,
-                        ColorSource = ObjectColorSource.ColorFromLayer
+                        ColorSource = ObjectColorSource.ColorFromLayer,
                     };
                     Guid buildingID = doc.Objects.AddBrep(Brep.CreatePlanarBreps(building.BuildingCurve,RhinoDoc.ActiveDoc.ModelAbsoluteTolerance)[0],buildingAttribute);
                     shadowBuildingIDs.Add(buildingID);

@@ -89,6 +89,7 @@ namespace AutoPlan.AutoPlan
             List<Point3d> points = new List<Point3d> { p1, p2 };
             StartPoint = PairPoint(points, planeObjectM.Buildings)[0];
             EndPoint = PairPoint(points, planeObjectM.Buildings)[1];
+            GetBaseBuilding(planeObjectM.Buildings);
         }
         public P2P_Path(RhinoDoc doc, Guid id, PlaneObjectManager planeObjectM)//用于选择已有P2P,将P2P_Path所有几何信息与guid挂钩
         {

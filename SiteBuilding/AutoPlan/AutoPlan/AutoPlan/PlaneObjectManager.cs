@@ -44,8 +44,11 @@ namespace AutoPlan.AutoPlan
             set
             {
                 outerPath = value;
-                string tag = "OuterPath" + outerPath.ID.ToString();
-                OuterPathDict.Set(tag, outerPath.DataSet);
+                if (outerPath.ID != Guid.Empty)
+                {
+                    string tag = "OuterPath" + outerPath.ID.ToString();
+                    OuterPathDict.Set(tag, outerPath.DataSet);
+                }
             }
         }
         private List<MainPath> mainPath;
@@ -115,18 +118,31 @@ namespace AutoPlan.AutoPlan
             if (null == dictionary)
                 return;
             RhinoApp.WriteLine(dictionary.Name);
-            var bDict = dictionary.GetDictionary("BuildingsData");
-            Buildings = GetBuildingData(bDict, doc);
 
-            var oDict = dictionary.GetDictionary("OuterPathData");
-            OuterPath = GetOuterPathData(oDict, doc);
+            if (dictionary.ContainsKey("BuildingsData"))
+            {
+                var bDict = dictionary.GetDictionary("BuildingsData");
+                Buildings = GetBuildingData(bDict, doc);
+            }
 
-            var mDict = dictionary.GetDictionary("MainPathData");
-            MainPath = GetMainPathData(mDict, doc);
+            if (dictionary.ContainsKey("OuterPathData"))
+            {
+                var oDict = dictionary.GetDictionary("OuterPathData");
+                OuterPath = GetOuterPathData(oDict, doc);
+            }
+            
+            if (dictionary.ContainsKey("MainPathData"))
+            {
+                var mDict = dictionary.GetDictionary("MainPathData");
+                MainPath = GetMainPathData(mDict, doc);
+            }
 
-            var pDict = dictionary.GetDictionary("P2P_PathData");
-            P2P_Path = GetP2P_PathData(pDict, doc, this);
-
+            if (dictionary.ContainsKey("P2P_PathData"))
+            {
+                var pDict = dictionary.GetDictionary("P2P_PathData");
+                P2P_Path = GetP2P_PathData(pDict, doc, this);
+            }
+            
             Paths.AddRange(MainPath);
             Paths.AddRange(P2P_Path);
             Paths.Add(OuterPath);
@@ -187,7 +203,7 @@ namespace AutoPlan.AutoPlan
                 if (a.StartsWith("MainPath"))
                 {
                     var d = dictionary.GetDictionary(a);
-                    MainPath p = AutoPlan.MainPath.BuiltFromDict(dictionary, doc);
+                    MainPath p = AutoPlan.MainPath.BuiltFromDict(d, doc);
                     mainPaths.Add(p);
                 }
             }
@@ -202,7 +218,7 @@ namespace AutoPlan.AutoPlan
                 if (a.StartsWith("P2P_Path"))
                 {
                     var d = dictionary.GetDictionary(a);
-                    P2P_Path p = AutoPlan.P2P_Path.BuiltFromDict(dictionary, doc, planeObjectM);
+                    P2P_Path p = AutoPlan.P2P_Path.BuiltFromDict(d, doc, planeObjectM);
                     p2p_Paths.Add(p);
                 }
             }

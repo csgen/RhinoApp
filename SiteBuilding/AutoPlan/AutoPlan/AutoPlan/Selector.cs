@@ -71,7 +71,7 @@ namespace AutoPlan.AutoPlan
                 Curve midCurve = getPath.Object(i).Curve();
                 Guid id = getPath.Object(i).ObjectId;
                 P2P_Path path = new P2P_Path(doc, id, planeObjectM);
-                path.ID = getPath.Object(i).ObjectId;
+                //path.ID = getPath.Object(i).ObjectId;
                 paths.Add(path);
                 planeObjectM.Paths.Add(path);
             }

@@ -63,6 +63,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
         public static void GetP2P_Path(RhinoDoc doc)
         {
             PlaneObjectManager planeObjectM = new PlaneObjectManager();//创建新场景管理器
+            planeObjectM.GetData(AutoPlanPlugin.Instance.Dictionary, doc);
             List<P2P_Path> p2p_Paths = new List<P2P_Path>();
             using (GetObject getPath = new GetObject())
             {
@@ -145,10 +146,10 @@ namespace AutoPlan.AutoPlan.AutoCommands
                     };
 
                     Guid shadowCrvID = doc.Objects.AddCurve(building.buildingShadow.boundary, shadowAttribute);
-                    var s1 = new ObjRef(doc, shadowCrvID).Curve().SetUserString("ParentID", building.ID.ToString());
+                    //var s1 = new ObjRef(doc, shadowCrvID).Curve().SetUserString("ParentID", building.ID.ToString());
                     shadowCrvIDs.Add(shadowCrvID);
                     Guid shadowHatchID = doc.Objects.AddHatch(building.buildingShadow.Hatch, hatchAttribute);
-                    var s2 = new ObjRef(doc,shadowHatchID).Hatch().SetUserString("ParentID",building.ID.ToString());
+                    //var s2 = new ObjRef(doc,shadowHatchID).Hatch().SetUserString("ParentID",building.ID.ToString());
                     shadowHatchIDs.Add(shadowHatchID);
 
 

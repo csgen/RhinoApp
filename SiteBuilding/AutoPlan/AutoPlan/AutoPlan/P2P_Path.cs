@@ -135,6 +135,8 @@ namespace AutoPlan.AutoPlan
                 Point3d p1 = new ObjRef(doc, baseBuildingIDs[0]).Curve().PointAt(baseBuildingtValues[0]);
                 Point3d p2 = new ObjRef(doc, baseBuildingIDs[1]).Curve().PointAt(baseBuildingtValues[1]);
                 P2P_Path p = new P2P_Path(new List<Point3d> { p1, p2 }, planeObjectM);
+                p.Doc = doc;
+                p.ID = id;
                 p.FilletRadi = filletRadi;
                 p.Width = MyLib.MyLib.P2P_PathWidth;
                 return p;
@@ -144,6 +146,8 @@ namespace AutoPlan.AutoPlan
                 Point3d p1 = new ObjRef(doc, baseBuildingIDs[0]).Curve().PointAt(baseBuildingtValues[0]);
                 Point3d p2 = dictionary.GetPoint3d("EndPoint");
                 P2P_Path p = new P2P_Path(new List<Point3d> { p1, p2 }, planeObjectM);
+                p.Doc = doc;
+                p.ID = id;
                 p.Width = MyLib.MyLib.P2P_PathWidth;
                 return p;
             }
@@ -280,7 +284,8 @@ namespace AutoPlan.AutoPlan
                     bb.Building = building;
                     bb.tValue = t;
                     //basebuilding = building;
-                    BaseBuildings.Add(bb);
+                    baseBuildings.Add(bb);
+                    BaseBuildings = baseBuildings;
                     break;
                 }
             }
@@ -294,7 +299,8 @@ namespace AutoPlan.AutoPlan
                     bb.Building = building;
                     bb.tValue = t;
                     //basebuilding = building;
-                    BaseBuildings.Add(bb);
+                    baseBuildings.Add(bb);
+                    BaseBuildings = baseBuildings;
                     break;
                 }
             }

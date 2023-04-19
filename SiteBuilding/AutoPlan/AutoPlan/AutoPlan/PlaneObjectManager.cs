@@ -113,6 +113,10 @@ namespace AutoPlan.AutoPlan
             //Paths.Add(OuterPath);
             //TreeM = new TreeManager(this);
         }
+        public void UpdateP2P_Path()
+        {
+            P2P_Path = P2P_Path;
+        }
         public void GetData(ArchivableDictionary dictionary, RhinoDoc doc)//从字典中获取数据重建planeObjectManager
         {
             if (null == dictionary)

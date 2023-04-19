@@ -219,6 +219,7 @@ namespace AutoPlan.AutoPlan
             HistoryRecord history = new HistoryRecord(this, HISTORY_VERSION);
             P2P_Path.WriteHistory(history, refBuildings, new List<Point3d> { pt0, pt1 }, path);
             Guid id = doc.Objects.AddCurve(path.MidCurve, null, history, false);
+            path.Doc = doc;
             path.ID = id;
             PlaneObjectM.SetP2P_PathData(AutoPlanPlugin.Instance.Dictionary);
 

@@ -118,9 +118,13 @@ namespace AutoPlan.AutoPlan.PathFinder
                 }
             }
             //将起始和终点所在网格强制设置为可通行，以暂时解决一些bug，之后若有更完善优雅的方法再修改
-            EnvValue[StartNodeId[0], StartNodeId[1]] = 1;
-            EnvValue[EndNodeId[0], EndNodeId[1]] = 1;
-
+            int nx = Math.Abs(StartNodeId[0] - EndNodeId[0]);
+            int ny = Math.Abs(StartNodeId[1] - EndNodeId[1]);
+            if (nx >= 2 && ny >= 2)
+            {
+                EnvValue[StartNodeId[0], StartNodeId[1]] = 1;
+                EnvValue[EndNodeId[0], EndNodeId[1]] = 1;
+            }
             //return box;
         }
         private void AdjustGrids()

@@ -520,6 +520,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             pt0 = points[0];
             pt1 = points[1];
             planeObjectManager.P2P_Path.Add(path);
+            planeObjectManager.UpdateP2P_Path();
             
             //PathObject pathObject = new PathObject(planeObjectM, doc);
 

@@ -72,6 +72,29 @@ namespace AutoPlan.AutoPlan.AutoCommands
             planeObjectM.P2P_Path = p2p_Paths;
             planeObjectM.SetP2P_PathData(AutoPlanPlugin.Instance.Dictionary);
         }
+        public static void UpdateP2P_Paths(RhinoDoc doc)
+        {
+            var dictionary = AutoPlanPlugin.Instance.Dictionary;
+            if (dictionary.ContainsKey("P2P_PathData"))
+            {
+                var pdict = dictionary.GetDictionary("P2P_PathData");
+                foreach(string a in pdict.Keys)
+                {
+                    if (a.StartsWith("P2P_Path"))
+                    {
+                        var dict = pdict.GetDictionary(a);
+                        Guid id = dict.GetGuid("ID");
+                        bool delete = doc.Objects.Delete(id, true);
+                    }
+                }
+                PlaneObjectManager planeObjectM = new PlaneObjectManager();
+                planeObjectM.GetData(dictionary, RhinoDoc.ActiveDoc);
+                foreach(P2P_Path p in planeObjectM.P2P_Path)
+                {
+                    p.ID = doc.Objects.AddCurve(p.MidCurve);
+                }
+            }
+        }
         public static void GetBuildingShadow(RhinoDoc doc)
         {
             if (AutoPlanPlugin.Instance.Dictionary.ContainsKey("ShadowClass"))
@@ -495,7 +518,12 @@ namespace AutoPlan.AutoPlan.AutoCommands
                 GPT.SetCommandPrompt("第二个点");
                 GPT.SetBasePoint(pt0, true);
                 GPT.DynamicDraw +=
-                    (sender, e) => e.Display.DrawCurve(new P2P_Path(new List<Point3d> { pt0, e.CurrentPoint }, planeObjectM).MidCurve, System.Drawing.Color.DarkRed);
+                    (sender, e) =>
+                    {
+                        var c = new P2P_Path(new List<Point3d> { pt0, e.CurrentPoint }, planeObjectM).MidCurve;
+                        e.Display.DrawCurve(c, System.Drawing.Color.DarkRed);
+                        
+                    };
                 if (GPT.Get() != GetResult.Point)
                 {
                     RhinoApp.WriteLine("No end point was selected.");
@@ -519,8 +547,8 @@ namespace AutoPlan.AutoPlan.AutoCommands
             List<Point3d> points = DrawP2PPolyline(planeObjectManager, out path);
             pt0 = points[0];
             pt1 = points[1];
-            planeObjectManager.P2P_Path.Add(path);
-            planeObjectManager.UpdateP2P_Path();
+            //planeObjectManager.P2P_Path.Add(path);
+            //planeObjectManager.UpdateP2P_Path();
             
             //PathObject pathObject = new PathObject(planeObjectM, doc);
 

@@ -42,7 +42,7 @@ namespace AutoPlan.AutoPlan
             var objs = e.RhinoObjects; //获得选择到的objects
 
             RhinoObject obj0 = objs[0];//我们只选第1个
-            
+            int buildingN = 0;
             foreach(RhinoObject obj in objs)
             {
                 var data = obj.UserDictionary; //可以直接从RhinoObject获得userDictionary或者data
@@ -54,6 +54,7 @@ namespace AutoPlan.AutoPlan
                     }
                     if (data["AutoPlan"] as string == "BuildingClass")
                     {
+                        buildingN++;
                         Commands.GetBuildingShadow(RhinoDoc.ActiveDoc);
                         Commands.ShowBuildingArea(RhinoDoc.ActiveDoc);
                         Commands.ShowIllegalDimension(RhinoDoc.ActiveDoc);
@@ -63,7 +64,16 @@ namespace AutoPlan.AutoPlan
                 if (MyLib.MyLib.LandArea != 0)
                     MainWindow.myArgs.AreaRatio= string.Format("{0:0.00}", MyLib.MyLib.area / MyLib.MyLib.LandArea);
             }
-            
+            //if (buildingN > 0)
+            //{
+            //    var dictionary = AutoPlanPlugin.Instance.Dictionary;
+            //    if (dictionary.ContainsKey("P2P_PathData"))
+            //    {
+            //        Commands.UpdateP2P_Paths(RhinoDoc.ActiveDoc);
+            //    }
+            //}
+
+
 
             //if (obj.ObjectType == ObjectType.Curve)
             //{
@@ -221,6 +231,8 @@ namespace AutoPlan.AutoPlan
             Guid id = doc.Objects.AddCurve(path.MidCurve, null, history, false);
             path.Doc = doc;
             path.ID = id;
+            PlaneObjectM.P2P_Path.Add(path);
+            PlaneObjectM.UpdateP2P_Path();
             PlaneObjectM.SetP2P_PathData(AutoPlanPlugin.Instance.Dictionary);
 
             doc.Views.Redraw();

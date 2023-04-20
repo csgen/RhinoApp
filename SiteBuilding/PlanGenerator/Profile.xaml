@@ -3,14 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:fa="http://schemas.fontawesome.io/icons/"
-        mc:Ignorable="d"
+        xmlns:fa="http://schemas.fontawesome.io/icons/" xmlns:local="clr-namespace:PlanGenerator"
+      mc:Ignorable="d"
         Background="Transparent" 
         d:DesignHeight="700" d:DesignWidth="480"
         Title="Profile">
 
     <Page.Resources>
-        <ResourceDictionary Source="Styles.xaml"/>
+        <ResourceDictionary>
+            <local:myArgs x:Key="MyArgs"/>
+            <ResourceDictionary.MergedDictionaries>
+                
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Page.Resources>
     
     <Grid>
@@ -41,10 +47,21 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="层数" Style="{StaticResource textLabel}" />
-                    <TextBox Grid.Row="1" Margin="0 10 5 20" Text="30"/>
+                    <TextBox Grid.Row="1" Margin="0 10 5 20" 
+                             DataContext="{StaticResource MyArgs}" 
+                             Text="{Binding Layers,Mode=TwoWay}"  
+                             TextChanged="Layers_Changed" 
+                             PreviewTextInput="NumericTextBox_PreviewTextInput"
+                             PreviewKeyDown="NumericTextBox_PreviewKeyDown"/>
 
                     <TextBlock Text="层高 单位:m" Style="{StaticResource textLabel}" Grid.Column="1" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5 10 0 20" Text="3"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" 
+                             Margin="5 10 0 20" 
+                             DataContext="{StaticResource MyArgs}" 
+                             Text="{Binding TempSdHeight,Mode=TwoWay}" 
+                             TextChanged="SdHeight_Changed" 
+                             PreviewTextInput="NumericTextBox_PreviewTextInput"
+                             PreviewKeyDown="NumericTextBox_PreviewKeyDown"/>
 
                     <TextBlock Text="Total : 90m" Style="{StaticResource textLabel}" Grid.Row="2" Grid.Column="1" Margin="0 4 0 3"/>
                 </Grid>

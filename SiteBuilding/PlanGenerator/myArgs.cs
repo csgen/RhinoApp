@@ -15,6 +15,26 @@ namespace PlanGenerator
         private string greenArea;
         private string concentrationGreenArea;
         private string greenAreaRatio;
+        private string layers;
+        public string Layers//层数
+        {
+            get => layers;
+            set
+            {
+                layers = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Layers"));
+            }
+        }
+        private string tempSdHeight;
+        public string TempSdHeight
+        {
+            get => tempSdHeight;
+            set
+            {
+                tempSdHeight = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SdHeight"));
+            }
+        }
         public string Area//计容面积
         {
             get => area;

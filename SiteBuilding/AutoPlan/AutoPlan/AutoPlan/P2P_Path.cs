@@ -68,6 +68,16 @@ namespace AutoPlan.AutoPlan
                 }
             }
         }
+        private bool userEdit;
+        public bool UserEdit//判断是否为用户手动选择或修改过的,用户选择的为true，即不属于计算修改范畴
+        {
+            get => userEdit;
+            set
+            {
+                userEdit = value;
+                DataSet.Set("UserEdit", userEdit);
+            }
+        }
         //public Building BaseBuilding { get; set; }
         public double BaseBuildingtValue { get; set; }
         public Guid BaseBuildingID { get; set; }
@@ -125,31 +135,43 @@ namespace AutoPlan.AutoPlan
         public static P2P_Path BuiltFromDict(ArchivableDictionary dictionary,RhinoDoc doc,PlaneObjectManager planeObjectM)
         {
             Guid id = dictionary.GetGuid("ID");
+            bool userEdit = dictionary.GetBool("UserEdit");
             double filletRadi = dictionary.GetDouble("FilletRadi");
             List<Guid> baseBuildingIDs = dictionary["baseBuildingIDs"] as List<Guid>;
             List<double> baseBuildingtValues = dictionary["baseBuildingtValues"] as List<double>;
             int baseBuildingCount;
             dictionary.TryGetInteger("baseBuildingCount", out baseBuildingCount);
-            if (baseBuildingCount == 2)
+            if (userEdit)
             {
-                Point3d p1 = new ObjRef(doc, baseBuildingIDs[0]).Curve().PointAt(baseBuildingtValues[0]);
-                Point3d p2 = new ObjRef(doc, baseBuildingIDs[1]).Curve().PointAt(baseBuildingtValues[1]);
-                P2P_Path p = new P2P_Path(new List<Point3d> { p1, p2 }, planeObjectM);
-                p.Doc = doc;
-                p.ID = id;
-                p.FilletRadi = filletRadi;
-                p.Width = MyLib.MyLib.P2P_PathWidth;
+                P2P_Path p = new P2P_Path(doc, id, planeObjectM);
+                p.UserEdit = true;
                 return p;
             }
             else
             {
-                Point3d p1 = new ObjRef(doc, baseBuildingIDs[0]).Curve().PointAt(baseBuildingtValues[0]);
-                Point3d p2 = dictionary.GetPoint3d("EndPoint");
-                P2P_Path p = new P2P_Path(new List<Point3d> { p1, p2 }, planeObjectM);
-                p.Doc = doc;
-                p.ID = id;
-                p.Width = MyLib.MyLib.P2P_PathWidth;
-                return p;
+                if (baseBuildingCount == 2)
+                {
+                    Point3d p1 = new ObjRef(doc, baseBuildingIDs[0]).Curve().PointAt(baseBuildingtValues[0]);
+                    Point3d p2 = new ObjRef(doc, baseBuildingIDs[1]).Curve().PointAt(baseBuildingtValues[1]);
+                    P2P_Path p = new P2P_Path(new List<Point3d> { p1, p2 }, planeObjectM);
+                    p.Doc = doc;
+                    p.ID = id;
+                    p.FilletRadi = filletRadi;
+                    p.Width = MyLib.MyLib.P2P_PathWidth;
+                    p.UserEdit = false;
+                    return p;
+                }
+                else
+                {
+                    Point3d p1 = new ObjRef(doc, baseBuildingIDs[0]).Curve().PointAt(baseBuildingtValues[0]);
+                    Point3d p2 = dictionary.GetPoint3d("EndPoint");
+                    P2P_Path p = new P2P_Path(new List<Point3d> { p1, p2 }, planeObjectM);
+                    p.Doc = doc;
+                    p.ID = id;
+                    p.Width = MyLib.MyLib.P2P_PathWidth;
+                    p.UserEdit = false;
+                    return p;
+                }
             }
         }
         public P2P_Path(List<BaseBuilding> bbList, PlaneObjectManager planeObjectM)//用于从basebuilding重建P2P

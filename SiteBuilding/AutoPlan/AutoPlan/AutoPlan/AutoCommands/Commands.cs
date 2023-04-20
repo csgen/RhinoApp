@@ -83,16 +83,28 @@ namespace AutoPlan.AutoPlan.AutoCommands
                     if (a.StartsWith("P2P_Path"))
                     {
                         var dict = pdict.GetDictionary(a);
-                        Guid id = dict.GetGuid("ID");
-                        bool delete = doc.Objects.Delete(id, true);
+                        bool modify = dict.GetBool("UserEdit") == false;
+                        if (modify)
+                        {
+                            Guid id = dict.GetGuid("ID");
+                            if (doc.Objects.FindId(id) != null)
+                            {
+                                bool delete = doc.Objects.Delete(id, true);
+                                var f = doc.Objects.FindId(id);
+                            }
+                        }
                     }
                 }
                 PlaneObjectManager planeObjectM = new PlaneObjectManager();
                 planeObjectM.GetData(dictionary, RhinoDoc.ActiveDoc);
                 foreach(P2P_Path p in planeObjectM.P2P_Path)
                 {
-                    p.ID = doc.Objects.AddCurve(p.MidCurve);
+                    if (p.UserEdit == false)
+                    {
+                        p.ID = doc.Objects.AddCurve(p.MidCurve);
+                    }
                 }
+                planeObjectM.SetData(AutoPlanPlugin.Instance.Dictionary);
             }
         }
         public static void GetBuildingShadow(RhinoDoc doc)
@@ -270,6 +282,27 @@ namespace AutoPlan.AutoPlan.AutoCommands
             }
             MyLib.MyLib.area = totalArea;
             MainWindow.myArgs.Area = string.Format("{0:0.00}㎡", MyLib.MyLib.area);
+        }
+        public static void SetBuildingInfo(RhinoDoc doc, RhinoObject obj,int layers,double sdHeight)
+        {
+            Guid id = obj.Id;
+            var dictionary = AutoPlanPlugin.Instance.Dictionary;
+            var bDict = dictionary.GetDictionary("BuildingsData");
+            foreach(string a in bDict.Keys)
+            {
+                if (a.StartsWith("Building"))
+                {
+                    var buildingDict = bDict.GetDictionary(a);
+                    Guid bID = buildingDict.GetGuid("ID");
+                    if (id == bID)
+                    {
+                        buildingDict.Set("Layers", layers);
+                        buildingDict.Set("SdHeight", sdHeight);
+                    }
+                }
+            }
+            //Profile.myArgs.Layers;
+            //Profile.myArgs.Area
         }
         public static void GeneratePathObject(RhinoDoc doc)
         {

@@ -12,6 +12,46 @@ namespace AutoPlan.AutoPlan
 {
     internal partial class Building
     {
+        private int layers;
+        public int Layers 
+        {
+            get => layers;
+            set
+            {
+                if (value != 0)
+                {
+                    layers = value;
+                }
+                if (value == 0)
+                {
+                    layers = 3;
+                }
+                if (StandardHeight != 0)
+                {
+                    Height = StandardHeight * layers;
+                }
+            }
+        }
+        private double standardHeight;
+        public double StandardHeight 
+        {
+            get => standardHeight;
+            set
+            {
+                if(value != 0)
+                {
+                    standardHeight = value;
+                }
+                if (value == 0)
+                {
+                    standardHeight = 3000;
+                }
+                if (Layers != 0)
+                {
+                    Height = Layers * standardHeight;
+                }
+            }
+        }
         public Curve BuildingCurve { get; set; }
         public TextEntity Text_Annotation { get; set; }
         public RhinoDoc doc { get; set; }
@@ -108,7 +148,19 @@ namespace AutoPlan.AutoPlan
         {
             Guid id = dictionary.GetGuid("ID");
             double avoidDistance = dictionary.GetDouble("AvoidDistance");
+            int layers = 0;
+            double sdHeight = 0;
+            if (dictionary.ContainsKey("Layers"))
+            {
+                dictionary.TryGetInteger("Layers", out layers);
+            }
+            if (dictionary.ContainsKey("SdHeight"))
+            {
+                dictionary.TryGetDouble("SdHeight", out sdHeight);
+            }
             Building building = new Building(id, doc, avoidDistance);
+            building.Layers = layers;
+            building.StandardHeight = sdHeight;
             return building;
         }
     }

@@ -14,6 +14,7 @@ using Rhino.Input.Custom;
 using siteUI.Functions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -55,6 +56,9 @@ namespace AutoPlan.AutoPlan
                     if (data["AutoPlan"] as string == "BuildingClass")
                     {
                         buildingN++;
+                        int layers = Convert.ToInt32(Profile.myArgs.Layers);
+                        double sdHeight = Convert.ToDouble(Profile.myArgs.TempSdHeight);
+                        Commands.SetBuildingInfo(RhinoDoc.ActiveDoc, obj, layers, sdHeight);
                         Commands.GetBuildingShadow(RhinoDoc.ActiveDoc);
                         Commands.ShowBuildingArea(RhinoDoc.ActiveDoc);
                         Commands.ShowIllegalDimension(RhinoDoc.ActiveDoc);
@@ -64,14 +68,14 @@ namespace AutoPlan.AutoPlan
                 if (MyLib.MyLib.LandArea != 0)
                     MainWindow.myArgs.AreaRatio= string.Format("{0:0.00}", MyLib.MyLib.area / MyLib.MyLib.LandArea);
             }
-            //if (buildingN > 0)
-            //{
-            //    var dictionary = AutoPlanPlugin.Instance.Dictionary;
-            //    if (dictionary.ContainsKey("P2P_PathData"))
-            //    {
-            //        Commands.UpdateP2P_Paths(RhinoDoc.ActiveDoc);
-            //    }
-            //}
+            if (buildingN > 0)
+            {
+                var dictionary = AutoPlanPlugin.Instance.Dictionary;
+                if (dictionary.ContainsKey("P2P_PathData"))
+                {
+                    Commands.UpdateP2P_Paths(RhinoDoc.ActiveDoc);
+                }
+            }
 
 
 
@@ -231,6 +235,7 @@ namespace AutoPlan.AutoPlan
             Guid id = doc.Objects.AddCurve(path.MidCurve, null, history, false);
             path.Doc = doc;
             path.ID = id;
+            path.UserEdit = false;
             PlaneObjectM.P2P_Path.Add(path);
             PlaneObjectM.UpdateP2P_Path();
             PlaneObjectM.SetP2P_PathData(AutoPlanPlugin.Instance.Dictionary);

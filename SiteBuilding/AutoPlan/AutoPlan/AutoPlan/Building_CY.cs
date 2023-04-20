@@ -14,7 +14,26 @@ namespace AutoPlan.AutoPlan
     internal partial class Building
     {
         public Plane basePlane;
-        public double Height { get; set; }
+        private double height;
+        public double Height 
+        {
+            get
+            {
+                if (height == 0)
+                {
+                    return 1000;
+                }
+                else
+                    return height;
+            }
+            set
+            {
+                if (value != 0)
+                {
+                    height = value;
+                }
+            }
+        }
         public PolylineCurve Profile { get; set; }
         public List<Point3d> Corners { get; set; }
         public Shadow buildingShadow { get; set; }
@@ -51,13 +70,13 @@ namespace AutoPlan.AutoPlan
             var corner1 = Corners
                 .OrderBy(x => -1 * Toolkit.Intersept(x, v1))
                 .First();
-            var corner1_height = corner1 + new Vector3d(0, 0, 1000);
+            var corner1_height = corner1 + new Vector3d(0, 0, Height);
             var p1 = Toolkit.GetPoint(corner1_height, v1);
 
             var corner2 = Corners
                 .OrderBy(x => -1 * Toolkit.Intersept(x, v2))
                 .First();
-            var corner2_height = corner1 + new Vector3d(0, 0, 1000);
+            var corner2_height = corner1 + new Vector3d(0, 0, Height);
             var p2 = Toolkit.GetPoint(corner2_height, v2);
 
 

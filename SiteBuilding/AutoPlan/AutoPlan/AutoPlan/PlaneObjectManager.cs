@@ -140,15 +140,15 @@ namespace AutoPlan.AutoPlan
                 var mDict = dictionary.GetDictionary("MainPathData");
                 MainPath = GetMainPathData(mDict, doc);
             }
-
+            Paths.AddRange(MainPath);
+            Paths.AddRange(P2P_Path);
             if (dictionary.ContainsKey("P2P_PathData"))
             {
                 var pDict = dictionary.GetDictionary("P2P_PathData");
                 P2P_Path = GetP2P_PathData(pDict, doc, this);
             }
             
-            Paths.AddRange(MainPath);
-            Paths.AddRange(P2P_Path);
+            
             Paths.Add(OuterPath);
 
             //以下待删除

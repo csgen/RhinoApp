@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteBuilding", "..\SiteBuil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoPlan", "..\AutoPlan\AutoPlan\AutoPlan.csproj", "{8A4080DB-6543-4A11-907A-01B9E3D25D28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyArgs", "..\MyArgs\MyArgs.csproj", "{8CF96662-3E98-4BB1-829B-8A00DEE636D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyArgs", "..\MyArgs\MyArgs.csproj", "{8CF96662-3E98-4BB1-829B-8A00DEE636D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLib", "..\MyLib\MyLib.csproj", "{2C762591-CCD0-4F46-A20C-D9529FDE4D5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLib", "..\MyLib\MyLib.csproj", "{2C762591-CCD0-4F46-A20C-D9529FDE4D5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

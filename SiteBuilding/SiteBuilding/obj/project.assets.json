@@ -361,7 +361,9 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.8",
         "dependencies": {
-          "RhinoCommon": "7.13.21348.13001"
+          "Newtonsoft.Json": "13.0.3",
+          "RhinoCommon": "7.13.21348.13001",
+          "System.Text.Json": "7.0.2"
         },
         "compile": {
           "bin/placeholder/MyLib.dll": {}

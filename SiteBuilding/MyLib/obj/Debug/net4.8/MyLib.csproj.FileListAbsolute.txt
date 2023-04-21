@@ -7,3 +7,14 @@ D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\MyLib.dll
 D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\MyLib.pdb
 D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\obj\Debug\net4.8\MyLib.dll
 D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\obj\Debug\net4.8\MyLib.pdb
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\Microsoft.Bcl.AsyncInterfaces.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\Newtonsoft.Json.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\System.Buffers.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\System.Memory.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\System.Numerics.Vectors.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\System.Runtime.CompilerServices.Unsafe.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\System.Text.Encodings.Web.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\System.Text.Json.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\System.Threading.Tasks.Extensions.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\bin\Debug\net4.8\System.ValueTuple.dll
+D:\华东院\平面生成\RhinoApp\SiteBuilding\MyLib\obj\Debug\net4.8\MyLib.csproj.CopyComplete

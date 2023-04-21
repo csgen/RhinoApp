@@ -64,10 +64,28 @@ namespace PlanGenerator
 
         private void Layers_Changed(object sender, TextChangedEventArgs e)
         {
+            
             TextBox textBox = sender as TextBox;
-            if(textBox != null)
+            if (textBox != null)
             {
                 myArgs.Layers = textBox.Text;
+            }
+            Rhino.RhinoDoc.SelectObjects += RhinoDoc_SelectObjects;
+        }
+        
+        private void RhinoDoc_SelectObjects(object sender, RhinoObjectSelectionEventArgs e)
+        {
+            var objs = e.RhinoObjects;
+            foreach (RhinoObject obj in objs)
+            {
+                var data = obj.UserDictionary; //可以直接从RhinoObject获得userDictionary或者data
+                if (data.ContainsKey("AutoPlan"))
+                {
+                    if (data["AutoPlan"] as string == "BuildingClass")
+                    {
+                        
+                    }
+                }
             }
         }
 

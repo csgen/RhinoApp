@@ -283,7 +283,7 @@ namespace AutoPlan.AutoPlan.AutoCommands
             MyLib.MyLib.area = totalArea;
             MainWindow.myArgs.Area = string.Format("{0:0.00}㎡", MyLib.MyLib.area);
         }
-        public static void SetBuildingInfo(RhinoDoc doc, RhinoObject obj,int layers,double sdHeight)
+        public static void SetBuildingInfo(RhinoDoc doc, RhinoObject obj,int layers,double sdHeight)//设置层数和高度
         {
             Guid id = obj.Id;
             var dictionary = AutoPlanPlugin.Instance.Dictionary;
@@ -303,6 +303,33 @@ namespace AutoPlan.AutoPlan.AutoCommands
             }
             //Profile.myArgs.Layers;
             //Profile.myArgs.Area
+        }
+        public static void ShowBuildingInfo(RhinoDoc doc, RhinoObject obj)//显示层数和高度
+        {
+            Guid id = obj.Id;
+            var dictionary = AutoPlanPlugin.Instance.Dictionary;
+            var bDict = dictionary.GetDictionary("BuildingsData");
+            foreach(string a in bDict.Keys)
+            {
+                if (a.StartsWith("Building"))
+                {
+                    var buildingDict = bDict.GetDictionary(a);
+                    Guid bID = buildingDict.GetGuid("ID");
+                    if (id == bID)
+                    {
+                        if (buildingDict.ContainsKey("Layers"))
+                        {
+                            int layers;
+                            buildingDict.TryGetInteger("Layers", out layers);
+                            Profile.myArgs.Layers = layers.ToString();
+                        }
+                        if (buildingDict.ContainsKey("SdHeight"))
+                        {
+                            Profile.myArgs.TempSdHeight = buildingDict.GetDouble("SdHeight").ToString();
+                        }
+                    }
+                }
+            }
         }
         public static void GeneratePathObject(RhinoDoc doc)
         {

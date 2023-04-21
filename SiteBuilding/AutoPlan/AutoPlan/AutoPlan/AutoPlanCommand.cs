@@ -18,6 +18,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Windows.Controls;
 
 namespace AutoPlan.AutoPlan
 {
@@ -56,6 +57,8 @@ namespace AutoPlan.AutoPlan
                     if (data["AutoPlan"] as string == "BuildingClass")
                     {
                         buildingN++;
+                        Commands.ShowBuildingInfo(RhinoDoc.ActiveDoc, obj);
+                        
                         int layers = Convert.ToInt32(Profile.myArgs.Layers);
                         double sdHeight = Convert.ToDouble(Profile.myArgs.TempSdHeight);
                         Commands.SetBuildingInfo(RhinoDoc.ActiveDoc, obj, layers, sdHeight);

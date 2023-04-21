@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "6v5eTHoahLD4VJ9iuyuAIePmT/nylLIKrqI1gqbczHmS6dp30yUHPUBXrTCD1AmZixlWA9uYU4JWoyLmFZqXyQ==",
+  "success": true,
+  "projectFilePath": "D:\\华东院\\平面生成\\RhinoApp\\SiteBuilding\\RhinoUtility\\RhinoUtility.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\rhinocommon\\7.13.21348.13001\\rhinocommon.7.13.21348.13001.nupkg.sha512"
+  ],
+  "logs": []
+}
